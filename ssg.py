@@ -9,9 +9,12 @@ import os, random, sys
 from glob import glob
 import json
 import datetime
+from dateutil.parser import parse
 from jinja2 import Environment, PackageLoader
 from markdown2 import markdown
 import typer
+from time import sleep
+from progress.bar import IncrementalBar
 
 # The template for storing meta information of the blog post
 METATEMPLATE = """
@@ -27,6 +30,9 @@ Start writing your content here.
 
 # Using Typer as the CLI tool
 app = typer.Typer()
+
+# Jinja2 Environment
+env = Environment(loader=PackageLoader('ssg','templates'))
 
 """
     View all written blog posts
@@ -46,17 +52,83 @@ def generate_json(section: str):
 def generate_rss(section: str):
     return False
 
-"""
-Build entire or section(s) of the blog
-"""
+# Format date
+def formattedDate(dateTimeStr: str):
+    dateTimeObj = parse(dateTimeStr)
+    return "{0.year}-{0:%m}-{0:%d}".format(dateTimeObj)
+
+# Get posts required to render
+def getPosts(section=""):
+    
+    # List of posts
+    posts = []
+    
+    # Refer to https://github.com/trentm/python-markdown2/wiki/Extras for documentation
+    extras = ['metadata', 'fenced-code-blocks']
+    
+    # Directory where all the content is stored
+    contentDirectory = "content/" + section
+    
+    # Look for Markdown file recursively in the specified directory
+    with IncrementalBar('Processing...', suffix='%(percent)d%%') as bar:
+        for root, directories, files in os.walk(contentDirectory):
+            for post in files:
+                filepath = os.path.join(root, post)
+                if post.endswith('.md'):
+                    with open(filepath, 'r') as file:
+                        postContent = markdown(file.read(), extras=extras)
+                        
+                        # Fetch metadata of each article
+                        title = postContent.metadata['title']
+                        date = formattedDate(postContent.metadata['date'])
+                        slug = postContent.metadata['slug']
+                        category = postContent.metadata['category']
+                        summary = postContent.metadata['summary'] if 'summary' in postContent.metadata else 'n/a'
+                        status = postContent.metadata['status'] if 'status' in postContent.metadata else 'inactive'
+
+                        posts.extend([
+                            {
+                                'title': title,
+                                'date': date,
+                                'slug': slug,
+                                'category': category,
+                                'summary': summary,
+                                'filename': filepath,
+                                'status': status,
+                                'content': postContent,
+                            }
+                        ])
+                        bar.next()
+                    
+    # sort posts by filename and date
+    posts = sorted(posts, key=lambda x: (x['filename'], x['date']), reverse=True)
+    return posts
+                
+
+#Build entire or section(s) of the blog
 @app.command()
 def build():
-    
-    section = typer.prompt("Which section do you want to render? Type 'all' for entire blog.")
-    template = typer.prompt("Which template do you want to use?")
+    sections = [
+        {
+            'title': 'Main blog',
+            'directory': 'articles'
+        },
+        {
+            'title': 'TIL Posts',
+            'directory': 'til-posts'
+        },
+        {
+            'title': 'About page',
+            'directory': 'about'
+        }
+    ]
 
-    typer.echo("This is the build section of the blog engine")
-
+    sectionStr = '\n'.join([str(idx+1) + ". " + item['title'] for idx, item in enumerate(sections)])
+    typer.echo("""Which section do you want to render? Hit '0' for all sections.\n""" + sectionStr)
+    option = typer.prompt("Enter number")
+    sectionToRender = sections[int(option)-1]['directory'] if int(option) > 0 else ''
+    getPosts(sectionToRender)
+    typer.echo('Files are processed.')
 
 """
 Create a blog post
@@ -115,6 +187,7 @@ def generateFileNumber(path):
     
     # Get existing files
     existingFiles = glob(path + "*.md");
+
     """
     If there are no posts under this section,
     then this is the first file        
@@ -138,6 +211,12 @@ def generateSlug(title: str):
 # Check if the section/directory exists
 def sectionExists(section: str):
     return os.path.exists(section)
+
+# Write to file
+def writeToFile(path, content):
+    with open(path, 'w') as file:
+        file.write(content)
+        file.close()
 
 # Create a new directory
 def createDirectory(directory: str):
