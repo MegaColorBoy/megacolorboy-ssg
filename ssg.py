@@ -15,6 +15,50 @@ from markdown2 import markdown
 import typer
 from time import sleep
 from progress.bar import IncrementalBar
+from itertools import islice
+import shutil
+
+# General configuration for the blog
+config = {
+    'name': 'megacolorboy',
+    'author': 'Abdush Shakoor',
+    'description': "I like problem solving and building stuff for fun.",
+}
+
+# Sections of the blog
+sections = [
+    {
+        'title': 'Main blog',
+        'directory': 'articles',
+        'template': {
+            'index': 'index-alt-v4.html',
+            'paginationIndex': 'index-alt-v5.html',
+            'details': 'post-detail-v3.html',
+        },
+        'root': True,
+        'pagination': False
+    },
+    {
+        'title': 'TIL Posts',
+        'directory': 'til',
+        'template': {
+            'index': 'til_index.html',
+            'paginationIndex': 'index-alt-v5.html',
+            'details': 'til-detail.html',
+        },
+        'root': False,
+        'pagination': False
+    },
+    {
+        'title': 'About page',
+        'directory': 'about',
+        'template': {
+            'index': 'about-alt-2.html',
+        },
+        'root': False,
+        'pagination': False
+    }
+]
 
 # The template for storing meta information of the blog post
 METATEMPLATE = """
@@ -44,18 +88,17 @@ def view_all_posts(section: str):
 
 
 # Generate JSON dump of blog
-def generate_json(section: str):
+def generateJSON(section: str):
     return False
 
 
 # Generate RSS Feed in XML
-def generate_rss(section: str):
+def generateRSS(section: str):
     return False
 
-# Format date
+# Format date in YYYY-MM-DD
 def formattedDate(dateTimeStr: str):
-    dateTimeObj = parse(dateTimeStr)
-    return "{0.year}-{0:%m}-{0:%d}".format(dateTimeObj)
+    return "{0.year}-{0:%m}-{0:%d}".format(parse(dateTimeStr))
 
 # Get posts required to render
 def getPosts(section=""):
@@ -84,51 +127,135 @@ def getPosts(section=""):
                         slug = postContent.metadata['slug']
                         category = postContent.metadata['category']
                         summary = postContent.metadata['summary'] if 'summary' in postContent.metadata else 'n/a'
-                        status = postContent.metadata['status'] if 'status' in postContent.metadata else 'inactive'
-
-                        posts.extend([
-                            {
-                                'title': title,
-                                'date': date,
-                                'slug': slug,
-                                'category': category,
-                                'summary': summary,
-                                'filename': filepath,
-                                'status': status,
-                                'content': postContent,
-                            }
-                        ])
+                        status = postContent.metadata['status'] if 'status' in postContent.metadata else 'active'
+                        
+                        # Only active posts must be stored
+                        if status == 'active':
+                            posts.extend([
+                                {
+                                    'section': root,
+                                    'title': title,
+                                    'date': date,
+                                    'dateRaw': postContent.metadata['date'],
+                                    'slug': slug,
+                                    'category': category,
+                                    'summary': summary,
+                                    'filename': filepath,
+                                    'status': status,
+                                    'content': postContent,
+                                }
+                            ])
                         bar.next()
                     
     # sort posts by filename and date
     posts = sorted(posts, key=lambda x: (x['filename'], x['date']), reverse=True)
     return posts
-                
+
+# Generate index page with pagination links
+def generateIndexWithPaginator(section, postsPerPage):
+    
+    # Template required for pagination
+    template = env.get_template(section['template']['paginationIndex'])
+
+    # Total number of posts per section
+    totalPosts = len(section['posts'])
+    
+    # Number of pagination links to generate
+    numberOfPages = int(totalPosts/postsPerPage)
+
+    # Create a directory to store the pagination links (By default, it's root)
+    rootDirectory = 'output/'
+
+    # If the current section is not root, then create it as a subdirectory instead.
+    if not section['root']: 
+        rootDirectory = 'output/' + section['directory'] + '/'
+
+    createDirectory(rootDirectory)    
+
+    """
+    Split the posts in even chunks
+    """
+    it = iter(section['posts'])
+    chunkedPosts = list(iter(lambda: tuple(islice(it, postsPerPage)), ()))
+
+    for pageNumber in range(0, numberOfPages + 1):
+        currentPageNumber = pageNumber + 1
+        
+        subDirectory = ''
+        
+        # Don't create a subdirectory for the first page        
+        if currentPageNumber > 1:
+            subDirectory = 'pages/{page}/'.format(page=currentPageNumber)
+            createDirectory(rootDirectory + subDirectory)
+        
+        # Path of the index page for each pagination link
+        pageFile = ''.join([rootDirectory, subDirectory, 'index.html'])
+
+        # Create links for previous and next pages
+        prevPage = 0 if currentPageNumber == 1 else currentPageNumber-1
+        nextPage = 0 if currentPageNumber == numberOfPages+1 else currentPageNumber+1
+
+        # Render the page
+        renderedHtml = template.render(
+            posts=chunkedPosts[pageNumber],
+            curr=currentPageNumber,
+            prev=prevPage,
+            next=nextPage,
+            total=numberOfPages+1
+        )
+
+        writeToFile(pageFile, renderedHtml.encode('utf-8'))
+
+# Generate index page without pagination links
+def generateIndexWithoutPaginator(section):
+    template = env.get_template(section['template']['index'])
+    renderedHtml = template.render(posts=section['posts'])
+    
+    # if the current section is the root of the blog
+    if section['root']:
+        createDirectory('output/')
+        filepath = os.path.join('output', 'index.html')
+    else:
+        createDirectory('output/' + section['directory'] + '/')
+        filepath = os.path.join('output/' + section['directory'], 'index.html')
+    
+    writeToFile(filepath, renderedHtml.encode('utf-8'))
+
+# Generate index/listing page
+def generateIndexPage(section):
+    
+    # Check if this section has an index page
+    if 'index' in section['template']:
+        # If pagination is not active
+        if not section['pagination']:
+            generateIndexWithoutPaginator(section)
+        # If pagination is active
+        else:
+            generateIndexWithPaginator(section, 8)
 
 #Build entire or section(s) of the blog
 @app.command()
 def build():
-    sections = [
-        {
-            'title': 'Main blog',
-            'directory': 'articles'
-        },
-        {
-            'title': 'TIL Posts',
-            'directory': 'til-posts'
-        },
-        {
-            'title': 'About page',
-            'directory': 'about'
-        }
-    ]
+    sectionList = '\n'.join([str(idx+1) + ". " + item['title'] for idx, item in enumerate(sections)])
+    typer.echo("""Which section do you want to render? Hit '0' for all sections.\n""" + sectionList)
+    option = int(typer.prompt("Enter number"))
+    
+    # If it's a specific section
+    if option != 0:
+        section = sections[option-1]
+        section['posts'] = getPosts(section['directory'])
+        generateIndexPage(section)
 
-    sectionStr = '\n'.join([str(idx+1) + ". " + item['title'] for idx, item in enumerate(sections)])
-    typer.echo("""Which section do you want to render? Hit '0' for all sections.\n""" + sectionStr)
-    option = typer.prompt("Enter number")
-    sectionToRender = sections[int(option)-1]['directory'] if int(option) > 0 else ''
-    getPosts(sectionToRender)
-    typer.echo('Files are processed.')
+    # Else, generate all sections of the blog
+    else:
+        # Delete directory before generating a new set of files
+        deleteDirectory('output/')
+        
+        for section in sections:
+            section['posts'] = getPosts(section['directory'])
+            generateIndexPage(section)
+        
+    typer.echo('Your posts are succesfully generated.')
 
 """
 Create a blog post
@@ -214,7 +341,7 @@ def sectionExists(section: str):
 
 # Write to file
 def writeToFile(path, content):
-    with open(path, 'w') as file:
+    with open(path, 'wb') as file:
         file.write(content)
         file.close()
 
@@ -222,7 +349,12 @@ def writeToFile(path, content):
 def createDirectory(directory: str):
     if not os.path.exists(directory):
         os.makedirs(os.path.dirname(directory))
-    
+
+# Delete existing directory
+def deleteDirectory(directory: str):
+    if os.path.exists(directory):
+        shutil.rmtree(directory)
+
 """
 Execute app
 """
