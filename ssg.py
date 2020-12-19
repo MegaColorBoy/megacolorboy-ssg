@@ -97,7 +97,7 @@ def generateRSS(section: str):
     return False
 
 # Format date in YYYY-MM-DD
-def formattedDate(dateTimeStr: str):
+def convertToRawDate(dateTimeStr: str):
     return "{0.year}-{0:%m}-{0:%d}".format(parse(dateTimeStr))
 
 # Get posts required to render
@@ -123,10 +123,13 @@ def getPosts(section=""):
                         
                         # Fetch metadata of each article
                         title = postContent.metadata['title']
-                        date = formattedDate(postContent.metadata['date'])
+                        date = postContent.metadata['date']
+                        dateRaw = convertToRawDate(postContent.metadata['date'])
                         slug = postContent.metadata['slug']
                         category = postContent.metadata['category']
                         summary = postContent.metadata['summary'] if 'summary' in postContent.metadata else 'n/a'
+
+                        # if the status is not present in the file, it's assumed that the post is active.
                         status = postContent.metadata['status'] if 'status' in postContent.metadata else 'active'
                         
                         # Only active posts must be stored
@@ -136,7 +139,7 @@ def getPosts(section=""):
                                     'section': root,
                                     'title': title,
                                     'date': date,
-                                    'dateRaw': postContent.metadata['date'],
+                                    'dateRaw': dateRaw,
                                     'slug': slug,
                                     'category': category,
                                     'summary': summary,
@@ -148,7 +151,7 @@ def getPosts(section=""):
                         bar.next()
                     
     # sort posts by filename and date
-    posts = sorted(posts, key=lambda x: (x['filename'], x['date']), reverse=True)
+    posts = sorted(posts, key=lambda x: (x['filename'], x['dateRaw']), reverse=True)
     return posts
 
 # Generate index page with pagination links
