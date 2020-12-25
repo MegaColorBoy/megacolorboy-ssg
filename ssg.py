@@ -78,19 +78,23 @@ app = typer.Typer()
 # Jinja2 Environment
 env = Environment(loader=PackageLoader('ssg','templates'))
 
-"""
-    View all written blog posts
-    @section: By default, it'll be for everything, else you can specify
-    the section that you want to view
-"""
-def view_all_posts(section: str):
-    return False
-
-
-# Generate JSON dump of blog
-def generateJSON(section: str):
-    return False
-
+# Generate JSON dump
+def generateJSON(section):
+    posts = section['posts']
+    
+    jsonData = {
+        'posts': []
+    }
+    
+    for post in posts:
+        jsonData['posts'].append(post)
+    
+    jsonDirectory = 'output/json/'
+    createDirectory(jsonDirectory)
+    
+    with open(jsonDirectory + section['directory'] + '.json', 'w') as file:
+        json.dump(jsonData, file)
+    
 
 # Generate RSS Feed in XML
 def generateRSS(section: str):
@@ -153,6 +157,10 @@ def getPosts(section=""):
     # sort posts by filename and date
     posts = sorted(posts, key=lambda x: (x['filename'], x['dateRaw']), reverse=True)
     return posts
+
+# Generate archive based on section
+def archive(section: str):
+    return False
 
 # Generate index page with pagination links
 def generateIndexWithPaginator(section, postsPerPage):
@@ -236,6 +244,27 @@ def generateIndexPage(section):
         else:
             generateIndexWithPaginator(section, 8)
 
+# Generate pages with content
+def generateContent(section):
+    posts = section['posts']
+    postsDirectory = 'output/posts/'
+    template = env.get_template(section['template']['details'])
+    
+    # Create a directory to store all the posts based on the section
+    createDirectory(postsDirectory)
+
+    if not section['root']:
+        postsDirectory = 'output/' + section['directory'] + '/posts/'
+
+    for post in posts:
+        renderedHtml = template.render(post=post)
+        filepath = postsDirectory + '{slug}/index.html'.format(slug=post['slug'])
+
+        # Create directory for the post
+        createDirectory(filepath)
+        writeToFile(filepath, renderedHtml.encode('utf-8'))
+            
+
 #Build entire or section(s) of the blog
 @app.command()
 def build():
@@ -245,9 +274,17 @@ def build():
     
     # If it's a specific section
     if option != 0:
+
         section = sections[option-1]
         section['posts'] = getPosts(section['directory'])
+
+        # Delete subdirectory before generating new posts
+        deleteDirectory('output/' + section['directory'] + '/')
         generateIndexPage(section)
+
+        if 'details' in section['template']:
+            generateContent(section)
+            generateJSON(section)
 
     # Else, generate all sections of the blog
     else:
@@ -257,7 +294,10 @@ def build():
         for section in sections:
             section['posts'] = getPosts(section['directory'])
             generateIndexPage(section)
-        
+            if 'details' in section['template']:
+                generateContent(section)
+                generateJSON(section)
+
     typer.echo('Your posts are succesfully generated.')
 
 """
