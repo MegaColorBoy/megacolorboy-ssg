@@ -1,9 +1,7 @@
 """
 Author: Abdush Shakoor
 megacolorboy-ssg: A simple static site generator written in Python 3
-
 Updated on: 26-12-2020
-
 """
 
 #!/usr/bin/env python3
@@ -213,7 +211,7 @@ def getPosts(section=""):
     return posts
 
 # Generate archive based on section
-def archive(section: str):
+def archive(section):
     return False
 
 # Generate index page with pagination links
@@ -318,45 +316,72 @@ def generateContent(section):
         createDirectory(filepath)
         writeToFile(filepath, renderedHtml.encode('utf-8'))
             
-
-#Build entire or section(s) of the blog
-@app.command()
-def build():
-    sectionList = '\n'.join([str(idx+1) + ". " + item['title'] for idx, item in enumerate(sections)])
-    typer.echo("""Which section do you want to render? Hit '0' for all sections.\n""" + sectionList)
-    option = int(typer.prompt("Enter number"))
-    
-    # If it's a specific section
-    if option != 0:
-
-        section = sections[option-1]
-        section['posts'] = getPosts(section['directory'])
-
-        # Delete subdirectory before generating new posts
-        deleteDirectory('output/' + section['directory'] + '/')
-        generatePages(section)
-
-    # Else, generate all sections of the blog
-    else:
-        # Delete directory before generating a new set of files
-        deleteDirectory('output/')
-        for section in sections:
-            section['posts'] = getPosts(section['directory'])
-            generatePages(section)
-
-    typer.echo('Your posts are succesfully generated.')
-
 # Generate all pages i.e. index, details and RSS required for the section
 def generatePages(section):
+    
+    # Deletes section related files only
+    directoryToDelete = "output/posts/"
+
+    if not section['root']:
+        directoryToDelete = "output/{directory}/".format(directory=section['directory'])
+
+    # Delete the RSS and JSON files related to the section
+    filesToDelete = [
+        'output/rss/' + section['directory'] + '.xml',
+        'output/json/' + section['directory'] + '.json',
+    ];
+
+    for file in filesToDelete:
+        deleteFile(file)
+
+    # Generate the main page
     generateIndexPage(section)
+
+    # Generate details page, if it has one
     if 'details' in section['template']:
         generateContent(section)
         generateJSON(section)
         generateRSS(section)
 
-"""
-Create a blog post
-"""
+# Build all sections
+def buildAllSections():
+    for section in sections:
+        buildSection(section)
+
+# Build a specific section
+def buildSection(section):
+    section['posts'] = getPosts(section['directory'])
+    generatePages(section)
+
+# Build entire or section(s) of the blog
+@app.command()
+def build(mode=""):
+    message = "The posts for all sections are generated successfully!"
+    
+    # if no mode has been specified, prompt the user
+    if len(mode) == 0:
+        sectionList = '\n'.join([str(idx+1) + ". " + item['title'] for idx, item in enumerate(sections)])
+        typer.echo("""Which section do you want to render? Hit '0' for all sections.\n""" + sectionList)
+        option = int(typer.prompt("Enter number"))
+    
+        # If it's a specific section
+        if option != 0:
+            section = sections[option-1]
+            message = "The posts for {section} section is generated successfully!".format(section=section['title'])
+            buildSection(section)            
+        # Else, generate all sections of the blog
+        else:
+            buildAllSections()
+    # If it's all, then build all sections
+    elif mode == "all":
+        buildAllSections()
+    # Else, that option is not available
+    else:
+        message = "Invalid build mode specified."
+
+    typer.echo(message)
+
+# Create a blog post
 @app.command()
 def create():
     
@@ -451,6 +476,11 @@ def createDirectory(directory: str):
 def deleteDirectory(directory: str):
     if os.path.exists(directory):
         shutil.rmtree(directory)
+
+# Delete File
+def deleteFile(file: str):
+    if os.path.exists(file):
+        os.remove(file)
 
 """
 Execute app
