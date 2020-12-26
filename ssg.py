@@ -1,6 +1,9 @@
 """
 Author: Abdush Shakoor
 megacolorboy-ssg: A simple static site generator written in Python 3
+
+Updated on: 26-12-2020
+
 """
 
 #!/usr/bin/env python3
@@ -20,9 +23,9 @@ import shutil
 
 # General configuration for the blog
 config = {
-    'name': 'megacolorboy',
-    'author': 'Abdush Shakoor',
-    'description': "I like problem solving and building stuff for fun.",
+    "name": "megacolorboy",
+    "url": "https://www.megacolorboy.com",
+    "author": "Abdush Shakoor"
 }
 
 # Sections of the blog
@@ -30,6 +33,8 @@ sections = [
     {
         'title': 'Main blog',
         'directory': 'articles',
+        'seoTitle': "Abdush Shakoor's Blog",
+        'seoDescription': "Writings about Computer Science, Mathematics, Software Engineering and lots of cool stuff.",
         'template': {
             'index': 'index-alt-v4.html',
             'paginationIndex': 'index-alt-v5.html',
@@ -41,6 +46,8 @@ sections = [
     {
         'title': 'TIL Posts',
         'directory': 'til',
+        'seoTitle': "Today I Learned",
+        'seoDescription': "This project is a collection of short write-ups on the things that I learn on a day-to-day basis across a variety of fields such as Computer Science, Mathematics, Software Engineering and Digital Design.",
         'template': {
             'index': 'til_index.html',
             'paginationIndex': 'index-alt-v5.html',
@@ -97,8 +104,55 @@ def generateJSON(section):
     
 
 # Generate RSS Feed in XML
-def generateRSS(section: str):
-    return False
+def generateRSS(section):
+    posts = section['posts']
+
+    postUrl = "posts"
+
+    if not section['root']:
+        postUrl = '/'.join([section['directory'], "posts"])
+
+    xmlDirectory = 'output/rss/'
+    createDirectory(xmlDirectory)
+
+    xmlItems = []
+
+    for post in posts:
+        title = post['title']
+        link = '/'.join([config['url'], postUrl, post['slug']])
+        date = post['dateRaw']
+        summary = post['summary']
+
+        xmlItems.append("""
+            <item>
+                <title>{title}</title>
+                <link>{link}</link>
+                <guid isPermaLink="true">{link}</guid>
+                <pubDate>{date}</pubDate>
+                <description>{summary}</description>
+            </item>
+        """.format(title=title, link=link, date=date, summary=summary)
+        )
+    
+    rssTitle = ' | '.join([section['seoTitle'], config['name']])
+    rssLink = config['url'] if section['root'] else '/'.join([config['url'], section['directory']])
+    rssDescription = section['seoDescription']
+
+    xml = """
+      <?xml version="1.0" encoding="UTF-8"?>
+      <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+        <channel>
+            <title>{title}</title>
+            <link>{link}</link>
+            <description>{description}</description>
+            <atom:link href="{link}" rel="self" type="application/rss+xml" />'
+            {items}
+        </channel>
+       </rss>
+    """.format(title=rssTitle, link=rssLink, description=rssDescription, items=''.join(xmlItems).strip())
+
+    filepath = xmlDirectory + section['directory'] + '.xml'
+    writeToFile(filepath, xml.strip().encode('utf-8'))
 
 # Format date in YYYY-MM-DD
 def convertToRawDate(dateTimeStr: str):
@@ -280,25 +334,25 @@ def build():
 
         # Delete subdirectory before generating new posts
         deleteDirectory('output/' + section['directory'] + '/')
-        generateIndexPage(section)
-
-        if 'details' in section['template']:
-            generateContent(section)
-            generateJSON(section)
+        generatePages(section)
 
     # Else, generate all sections of the blog
     else:
         # Delete directory before generating a new set of files
         deleteDirectory('output/')
-        
         for section in sections:
             section['posts'] = getPosts(section['directory'])
-            generateIndexPage(section)
-            if 'details' in section['template']:
-                generateContent(section)
-                generateJSON(section)
+            generatePages(section)
 
     typer.echo('Your posts are succesfully generated.')
+
+# Generate all pages i.e. index, details and RSS required for the section
+def generatePages(section):
+    generateIndexPage(section)
+    if 'details' in section['template']:
+        generateContent(section)
+        generateJSON(section)
+        generateRSS(section)
 
 """
 Create a blog post
