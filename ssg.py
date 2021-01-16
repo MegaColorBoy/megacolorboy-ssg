@@ -9,14 +9,14 @@ Updated on: 26-12-2020
 import os, random, sys
 from glob import glob
 import json
-import datetime
+from datetime import datetime
 from dateutil.parser import parse
 from jinja2 import Environment, PackageLoader
 from markdown2 import markdown
 import typer
 from time import sleep
 from progress.bar import IncrementalBar
-from itertools import islice
+from itertools import islice, groupby
 import shutil
 
 # General configuration for the blog
@@ -157,7 +157,7 @@ def convertToRawDate(dateTimeStr: str):
     return "{0.year}-{0:%m}-{0:%d}".format(parse(dateTimeStr))
 
 # Get posts required to render
-def getPosts(section=""):
+def getPosts(section="", mode=""):
     
     # List of posts
     posts = []
@@ -205,14 +205,13 @@ def getPosts(section=""):
                                 }
                             ])
                         bar.next()
-                    
-    # sort posts by filename and date
-    posts = sorted(posts, key=lambda x: (x['filename'], x['dateRaw']), reverse=True)
+    
+    if mode == "group-by-year":
+        posts = [[list(group) for _, group in groupby(sorted(posts, key=lambda x: x['dateRaw']), key=lambda y: datetime.fromisoformat(y['dateRaw']).strftime("%Y"))]]
+    else:
+        # sort posts by filename and date
+        posts = sorted(posts, key=lambda x: (x['filename'], x['dateRaw']), reverse=True)
     return posts
-
-# Generate archive based on section
-def archive(section):
-    return False
 
 # Generate index page with pagination links
 def generateIndexWithPaginator(section, postsPerPage):
