@@ -13,7 +13,7 @@ fork it into your own version!
 
 # Things left to do:
 
-- [ ] Archive
+- [x] Archive
 - [ ] Tags/Categories
 - [ ] Bulk import/export
 - [ ] Better way to manage templates
