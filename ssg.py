@@ -1,7 +1,7 @@
 """
 Author: Abdush Shakoor
 megacolorboy-ssg: A simple static site generator written in Python 3
-Updated on: 26-12-2020
+Updated on: 22-01-2021
 """
 
 #!/usr/bin/env python3
