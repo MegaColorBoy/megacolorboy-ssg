@@ -9,7 +9,7 @@ Updated on: 26-12-2020
 import os, random, sys
 from glob import glob
 import json
-from datetime import datetime
+from datetime import datetime, date
 from dateutil.parser import parse
 from jinja2 import Environment, PackageLoader
 from markdown2 import markdown
@@ -18,70 +18,15 @@ from time import sleep
 from progress.bar import IncrementalBar
 from itertools import islice, groupby
 import shutil
-
-# General configuration for the blog
-config = {
-    "name": "megacolorboy",
-    "url": "https://www.megacolorboy.com",
-    "author": "Abdush Shakoor"
-}
-
-# Sections of the blog
-sections = [
-    {
-        'title': 'Main blog',
-        'directory': 'articles',
-        'seoTitle': "Abdush Shakoor's Blog",
-        'seoDescription': "Writings about Computer Science, Mathematics, Software Engineering and lots of cool stuff.",
-        'template': {
-            'index': 'index-alt-v4.html',
-            'paginationIndex': 'index-alt-v5.html',
-            'details': 'post-detail-v3.html',
-        },
-        'root': True,
-        'pagination': False
-    },
-    {
-        'title': 'TIL Posts',
-        'directory': 'til',
-        'seoTitle': "Today I Learned",
-        'seoDescription': "This project is a collection of short write-ups on the things that I learn on a day-to-day basis across a variety of fields such as Computer Science, Mathematics, Software Engineering and Digital Design.",
-        'template': {
-            'index': 'til_index.html',
-            'paginationIndex': 'index-alt-v5.html',
-            'details': 'til-detail.html',
-        },
-        'root': False,
-        'pagination': False
-    },
-    {
-        'title': 'About page',
-        'directory': 'about',
-        'template': {
-            'index': 'about-alt-2.html',
-        },
-        'root': False,
-        'pagination': False
-    }
-]
-
-# The template for storing meta information of the blog post
-METATEMPLATE = """
-title: {title}
-date: {date}
-slug: {slug}
-category: {category}
-summary: Write your summary here.
-status: inactive
-
-Start writing your content here.
-"""
+import re
+from bs4 import BeautifulSoup
+import ssgconfig as cfg
 
 # Using Typer as the CLI tool
 app = typer.Typer()
 
 # Jinja2 Environment
-env = Environment(loader=PackageLoader('ssg','templates'))
+env = Environment(loader=PackageLoader('ssg','templates/' + cfg.site['theme']))
 
 # Generate JSON dump
 def generateJSON(section):
@@ -117,7 +62,7 @@ def generateRSS(section):
 
     for post in posts:
         title = post['title']
-        link = '/'.join([config['url'], postUrl, post['slug']])
+        link = '/'.join([cfg.site['url'], postUrl, post['slug']])
         date = post['dateRaw']
         summary = post['summary']
 
@@ -132,8 +77,8 @@ def generateRSS(section):
         """.format(title=title, link=link, date=date, summary=summary)
         )
     
-    rssTitle = ' | '.join([section['seoTitle'], config['name']])
-    rssLink = config['url'] if section['root'] else '/'.join([config['url'], section['directory']])
+    rssTitle = ' | '.join([section['seoTitle'], cfg.site['name']])
+    rssLink = cfg.site['url'] if section['root'] else '/'.join([cfg.site['url'], section['directory']])
     rssDescription = section['seoDescription']
 
     xml = """
@@ -157,7 +102,7 @@ def convertToRawDate(dateTimeStr: str):
     return "{0.year}-{0:%m}-{0:%d}".format(parse(dateTimeStr))
 
 # Get posts required to render
-def getPosts(section="", mode=""):
+def getPosts(section=""):
     
     # List of posts
     posts = []
@@ -165,53 +110,80 @@ def getPosts(section="", mode=""):
     # Refer to https://github.com/trentm/python-markdown2/wiki/Extras for documentation
     extras = ['metadata', 'fenced-code-blocks']
     
+    # Index of the section
+    index = findIndex(cfg.sections, "directory", section)
+
     # Directory where all the content is stored
-    contentDirectory = "content/" + section
+
+    if 'multiple' in cfg.sections[index]:
+        paths = []
+        for directory in cfg.sections[index]['multiple']:
+            paths.append("content/" + directory)
+    else:
+        paths = ["content/" + section]
     
     # Look for Markdown file recursively in the specified directory
     with IncrementalBar('Processing...', suffix='%(percent)d%%') as bar:
-        for root, directories, files in os.walk(contentDirectory):
-            for post in files:
-                filepath = os.path.join(root, post)
-                if post.endswith('.md'):
-                    with open(filepath, 'r') as file:
-                        postContent = markdown(file.read(), extras=extras)
-                        
-                        # Fetch metadata of each article
-                        title = postContent.metadata['title']
-                        date = postContent.metadata['date']
-                        dateRaw = convertToRawDate(postContent.metadata['date'])
-                        slug = postContent.metadata['slug']
-                        category = postContent.metadata['category']
-                        summary = postContent.metadata['summary'] if 'summary' in postContent.metadata else 'n/a'
+        for path in paths:
+            for root, directories, files in os.walk(path):
+                for post in files:
+                    filepath = os.path.join(root, post)
+                    if post.endswith('.md'):
+                        with open(filepath, 'r') as file:
+                            postContent = markdown(file.read(), extras=extras)
+                            
+                            # Fetch metadata of each article
+                            title = postContent.metadata['title']
+                            postDate = postContent.metadata['date']
+                            dateRaw = convertToRawDate(postContent.metadata['date'])
+                            postYear = datetime.fromisoformat(dateRaw).strftime("%Y")
+                            slug = postContent.metadata['slug']
+                            category = postContent.metadata['category']
+                            summary = postContent.metadata['summary'] if 'summary' in postContent.metadata else 'Tips & Tricks &mdash; ' + category
 
-                        # if the status is not present in the file, it's assumed that the post is active.
-                        status = postContent.metadata['status'] if 'status' in postContent.metadata else 'active'
-                        
-                        # Only active posts must be stored
-                        if status == 'active':
-                            posts.extend([
-                                {
-                                    'section': root,
-                                    'title': title,
-                                    'date': date,
-                                    'dateRaw': dateRaw,
-                                    'slug': slug,
-                                    'category': category,
-                                    'summary': summary,
-                                    'filename': filepath,
-                                    'status': status,
-                                    'content': postContent,
-                                }
-                            ])
-                        bar.next()
+                            # if the status is not present in the file, it's assumed that the post is active.
+                            status = postContent.metadata['status'] if 'status' in postContent.metadata else 'active'
+                            
+                            # Only active posts must be stored
+                            if status == 'active':
+                                posts.extend([
+                                    {
+                                        'section': root,
+                                        'title': title,
+                                        'date': postDate,
+                                        'year': postYear,
+                                        'dateRaw': dateRaw,
+                                        'slug': slug,
+                                        'category': category,
+                                        'summary': summary,
+                                        'filename': filepath,
+                                        'status': status,
+                                        'content': postContent,
+                                    }
+                                ])
+                            bar.next()
     
-    if mode == "group-by-year":
-        posts = [[list(group) for _, group in groupby(sorted(posts, key=lambda x: x['dateRaw']), key=lambda y: datetime.fromisoformat(y['dateRaw']).strftime("%Y"))]]
+    # If archive mode is active
+    if cfg.sections[index]['archive']:
+        posts = [list(group) for _, group in groupby(sorted(posts, key=lambda x: x['dateRaw'], reverse=True), key=lambda y: datetime.fromisoformat(y['dateRaw']).strftime("%Y"))]
     else:
         # sort posts by filename and date
         posts = sorted(posts, key=lambda x: (x['filename'], x['dateRaw']), reverse=True)
     return posts
+
+def getFirstLine(content):
+    soup = BeautifulSoup(content.splitlines()[0], features="html.parser")
+    for x in soup.find_all():
+        if len(x.get_text(strip=True)) == 0:
+            x.extract()
+    return ' '.join(['<p>', soup.get_text(strip=True), '</p>'])
+
+# Return index in an array of dicts
+def findIndex(lst, key, value):
+    for i, dic in enumerate(lst):
+        if dic[key] == value:
+            return i
+    return -1
 
 # Generate index page with pagination links
 def generateIndexWithPaginator(section, postsPerPage):
@@ -271,7 +243,7 @@ def generateIndexWithPaginator(section, postsPerPage):
 # Generate index page without pagination links
 def generateIndexWithoutPaginator(section):
     template = env.get_template(section['template']['index'])
-    renderedHtml = template.render(posts=section['posts'])
+    renderedHtml = template.render(posts=section['posts'], page={'title': section['seoTitle'], 'description': section['seoDescription']}, site=cfg.site, menu=cfg.menu)
     
     # if the current section is the root of the blog
     if section['root']:
@@ -344,7 +316,7 @@ def generatePages(section):
 
 # Build all sections
 def buildAllSections():
-    for section in sections:
+    for section in cfg.sections:
         buildSection(section)
 
 # Build a specific section
@@ -359,13 +331,13 @@ def build(mode=""):
     
     # if no mode has been specified, prompt the user
     if len(mode) == 0:
-        sectionList = '\n'.join([str(idx+1) + ". " + item['title'] for idx, item in enumerate(sections)])
+        sectionList = '\n'.join([str(idx+1) + ". " + item['title'] for idx, item in enumerate(cfg.sections)])
         typer.echo("""Which section do you want to render? Hit '0' for all sections.\n""" + sectionList)
         option = int(typer.prompt("Enter number"))
     
         # If it's a specific section
         if option != 0:
-            section = sections[option-1]
+            section = cfg.sections[option-1]
             message = "The posts for {section} section is generated successfully!".format(section=section['title'])
             buildSection(section)            
         # Else, generate all sections of the blog
@@ -390,19 +362,19 @@ def create():
     category = typer.prompt("What category does it fall under?")
     
     # The directory of the post
-    directory = "content/" + section + "/"
+    directory = "content/" + section.lower() + "/"
 
     # Create a new section if it doesn't exist
     createDirectory(directory)
 
     # Post to be created on the current date
-    today = datetime.date.today()
+    today = date.today()
     slug = generateSlug(title)
     
     blogFilePath = generateFilePath(today, directory, slug)
 
     postDate = formatDate(today, '%B {S}, %Y')
-    meta = METATEMPLATE.strip().format(title=title, category=category, date=postDate, slug=slug)
+    meta = cfg.METATEMPLATE.strip().format(title=title, category=category, date=postDate, slug=slug)
 
     with open(blogFilePath, 'w') as file:
         file.write(meta)

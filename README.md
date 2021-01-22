@@ -14,8 +14,10 @@ fork it into your own version!
 # Things left to do:
 
 - [x] Archive
+- [x] Merging multiple writings of different sections
+- [x] Separate file for hold configurations  
 - [ ] Tags/Categories
 - [ ] Bulk import/export
-- [ ] Better way to manage templates
+- [x] Better way to manage templates and themes
 - [ ] Makefile to automate deployment / Deployment using Python tools
 - [ ] Interactive UI to select and delete posts (Look into something nCurses library)
