@@ -13,11 +13,15 @@ fork it into your own version!
 
 # Things left to do:
 
-- [x] Archive
+- [ ] Resume page
+- [ ] Projects page
+- [ ] A nice way to manage all static assets (CSS, JS and Images) 
+- [x] Minimal blog layout
+- [ ] Generate reading time
+- [x] Archive (currently supports group by year)
 - [x] Merging multiple writings of different sections
-- [x] Separate file for hold configurations  
-- [ ] Tags/Categories
+- [x] Separate file to preserve configurations
+- [x] Tags/Categories
 - [ ] Bulk import/export
 - [x] Better way to manage templates and themes
 - [ ] Makefile to automate deployment / Deployment using Python tools
-- [ ] Interactive UI to select and delete posts (Look into something nCurses library)

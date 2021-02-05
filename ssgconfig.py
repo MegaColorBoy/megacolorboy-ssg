@@ -35,7 +35,7 @@ sections = [
         'title': 'Home',
         'directory': 'home',
         'seoTitle': "Abdush Shakoor's Blog",
-        'seoDescription': "A not-so-typical software engineer and designer",
+        'seoDescription': "A not-so-typical software developer & designer with a passion for computer science, mathematics, software engineering, digital design & technology.",
         'template': {
             'index': 'index.html',
         },
@@ -51,7 +51,7 @@ sections = [
             'index': 'listing.html',
             # 'details': 'details.html',
         },
-        'multiple': ['writings', 'til'],
+        # 'multiple': ['writings', 'til'],
         "archive": True,
         'root': False,
         'pagination': False
