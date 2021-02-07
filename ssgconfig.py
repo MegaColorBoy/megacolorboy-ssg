@@ -7,7 +7,7 @@ site = {
     "url": "https://www.megacolorboy.com",
     "author": "Abdush Shakoor",
     "theme": "minimal/",
-    "color": "dark", 
+    #"color": "dark", 
 }
 
 menu = [
@@ -20,13 +20,17 @@ menu = [
 		'link': '/writings',
 	},
 	{
+		'title': 'Today I Learned',
+		'link': '/til',
+	},
+    {
 		'title': 'Projects',
 		'link': '/projects',
 	},
-	{
-		'title': 'Resume',
-		'link': '/resume',
-	}
+	#{
+	#	'title': 'Resume',
+	#	'link': '/resume',
+	#}
 ]
 
 # Sections of the blog
@@ -39,6 +43,7 @@ sections = [
         'template': {
             'index': 'index.html',
         },
+        'sectionsToShow': ['writings', 'til'],
         'root': True,
         'pagination': False   
     },
@@ -49,7 +54,7 @@ sections = [
         'seoDescription': "Sometimes, I write stuff about computers, math, technology & design.",
         'template': {
             'index': 'listing.html',
-            # 'details': 'details.html',
+            'details': 'details.html',
         },
         # 'multiple': ['writings', 'til'],
         "archive": True,
@@ -73,7 +78,7 @@ sections = [
         'title': 'About page',
         'directory': 'about',
         'template': {
-            'index': 'about.html',
+            'index': 'details.html',
         },
         'archive': False,
         'root': False,

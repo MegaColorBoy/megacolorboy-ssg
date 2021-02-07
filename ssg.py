@@ -19,6 +19,7 @@ from progress.bar import IncrementalBar
 from itertools import islice, groupby
 import shutil
 import re
+import bs4
 from bs4 import BeautifulSoup
 import ssgconfig as cfg
 
@@ -140,6 +141,7 @@ def getPosts(section=""):
                             slug = postContent.metadata['slug']
                             category = postContent.metadata['category']
                             summary = postContent.metadata['summary'] if 'summary' in postContent.metadata else 'Tips & Tricks &mdash; ' + category
+                            readingTime = estimateReadingTime(postContent)
 
                             # if the status is not present in the file, it's assumed that the post is active.
                             status = postContent.metadata['status'] if 'status' in postContent.metadata else 'active'
@@ -156,6 +158,7 @@ def getPosts(section=""):
                                         'slug': slug,
                                         'category': category,
                                         'summary': summary,
+                                        'readingTime': readingTime,
                                         'filename': filepath,
                                         'status': status,
                                         'content': postContent,
@@ -171,6 +174,46 @@ def getPosts(section=""):
         posts = sorted(posts, key=lambda x: (x['filename'], x['dateRaw']), reverse=True)
     return posts
 
+# Count the words in the text
+def countWordsInText(textList, wordLength):
+    totalWords = 0
+    for text in textList:
+        totalWords += len(text)/wordLength
+    return totalWords 
+
+# Estimate reading time of the article
+def estimateReadingTime(content):
+    texts = extractText(content)
+    filteredText = filterText(texts)
+    totalWords = round(countWordsInText(filteredText, 5)/200)
+    str = ""
+    if totalWords > 1:
+        str = "%d minute read" % {totalWords}
+    else:
+        str = "A minute read"
+    return str
+
+# Extract text from HTML
+def extractText(content):
+    soup = BeautifulSoup(content, features='html.parser')
+    texts = soup.findAll(text=True)
+    return texts
+
+# Strip out CSS, JS, Scripts or any HTML Tags
+def stripHtmlElements(element):
+    if element.parent.name in ['style', 'script', '[document]', 'head', 'title']:
+        return False
+    elif isinstance(element, bs4.element.Comment):
+        return False
+    elif element.string == '\n':
+        return False
+    return True
+
+# Filter text only
+def filterText(content):
+    return filter(stripHtmlElements, content)
+
+# Get the first line of the content
 def getFirstLine(content):
     soup = BeautifulSoup(content.splitlines()[0], features="html.parser")
     for x in soup.find_all():
