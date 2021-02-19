@@ -1,12 +1,11 @@
 # Custom configuration for the website
 
-
 # General configuration for the blog
 site = {
     "name": "megacolorboy",
     "url": "https://www.megacolorboy.com",
     "author": "Abdush Shakoor",
-    "theme": "minimal/",
+    "theme": "minimal-theme/",
     #"color": "dark", 
 }
 
@@ -23,10 +22,10 @@ menu = [
 		'title': 'Today I Learned',
 		'link': '/til',
 	},
-    {
-		'title': 'Projects',
-		'link': '/projects',
-	},
+    #{
+	# 	'title': 'Projects',
+	# 	'link': '/projects',
+	#},
 	#{
 	#	'title': 'Resume',
 	#	'link': '/resume',
@@ -44,7 +43,8 @@ sections = [
             'index': 'index.html',
         },
         'sectionsToShow': ['writings', 'til'],
-        'root': True,
+        'root': False,
+        'homepage': True,
         'pagination': False   
     },
     {
@@ -59,29 +59,34 @@ sections = [
         # 'multiple': ['writings', 'til'],
         "archive": True,
         'root': False,
+        'homepage': False,
         'pagination': False
     },
     {
         'title': 'TIL Posts',
         'directory': 'til',
         'seoTitle': "Today I Learned",
-        'seoDescription': "This project is a collection of short write-ups on the things that I learn on a day-to-day basis across a variety of fields such as Computer Science, Mathematics, Software Engineering and Digital Design.",
+        'seoDescription': "A collection of short write-ups on the things that I learn on a day-to-day basis.",
         'template': {
             'index': 'listing.html',
             'details': 'details.html',
         },
-        "archive": False,
+        "archive": True,
         'root': False,
+        'homepage': False,
         'pagination': False
     },
     {
         'title': 'About page',
         'directory': 'about',
+        'seoTitle': "A little bit about myself",
+        'seoDescription': "Here's a not-so-formal kind of introduction about myself.",
         'template': {
             'index': 'details.html',
         },
         'archive': False,
         'root': False,
+        'homepage': False,
         'pagination': False
     }
 ]

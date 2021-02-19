@@ -17,7 +17,7 @@ fork it into your own version!
 - [ ] Projects page
 - [ ] A nice way to manage all static assets (CSS, JS and Images) 
 - [x] Minimal blog layout
-- [ ] Generate reading time
+- [x] Generate reading time
 - [x] Archive (currently supports group by year)
 - [x] Merging multiple writings of different sections
 - [x] Separate file to preserve configurations

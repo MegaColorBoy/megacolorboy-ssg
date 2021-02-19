@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Can we eliminate traffic congestion with the help of Computer Vision? | megacolorboy</title>
+	<link rel="stylesheet" href="/static/css/main.css" type="text/css">
+	<link rel="stylesheet" href="/static/vendor/hljs/css/default.min.css">
+	<!-- Add OG tags  -->
+</head>
+<body class="details-page writings">
+	<!-- Navbar -->
+	<header class="header">
+	<div class="author">
+		<a href="/">
+			<div class="logo"></div>
+			<p>megacolorboy</p>
+		</a>
+	</div>
+	<nav>
+		<ul class="menu">
+			
+				<li><a href="/about">About</a></li>
+			
+				<li><a href="/writings">Writings</a></li>
+			
+				<li><a href="/til">Today I Learned</a></li>
+			
+		</ul>
+	</nav>
+</header>
+
+<div class="article-top">
+	<a class="back" href="/writings"><span>&larr;</span> Back</a>
+	<p class="date">Published on August 19th, 2018</p>	
+</div>
+
+<main>
+	<section class="article-head">
+		<p class="cat">Essay</p>
+		<h1>Can we eliminate traffic congestion with the help of Computer Vision?</h1>
+		
+			<p>Writing out my thoughts on eradicating traffic congestion in highly populated cities.</p>
+		
+		<p class="date">4 minutes read</p>
+	</section>
+	<article>
+		<p>Whether it's being implemented or not, I have been thinking on how we
+could use <strong><em>Computer Vision</em></strong> to solve traffic congestion.\</p>
+
+<p>Since, I live in the <strong><em>United Arab Emirates</em></strong>, I have always observed
+that people who commute from <strong><em>Sharjah</em></strong> to <strong><em>Dubai</em></strong> and vice-versa
+face a lot of traffic jams despite all the new roads and toll-gates
+(yes, I don't seem to understand how does that solve the problem).</p>
+
+<figure>
+    <img src="https://images.khaleejtimes.com/storyimage/KT/20160203/ARTICLE/302039854/AR/0/AR-302039854.jpg&MaxW=780&imageVersion=16by9&NCS_modified=20160203204300"/>
+    <figcaption>
+        Traffic in Al Ittihad Highway.
+    </figcaption>
+</figure>
+
+<p>Well, the problem is not only faced in this country but many countries
+such as China, Indonesia and so on.</p>
+
+<h2>What are the causes of traffic congestion?</h2>
+
+<p>Anyways, I jotted down some facts to consider what causes traffic
+congestion in the first place:</p>
+
+<ul>
+<li>Tail-gating</li>
+<li>Inconsistent travel speeds</li>
+<li>Uneven vehicular distances</li>
+<li>Spontaneous accidents and road rages</li>
+<li>Changing from one lane to another</li>
+<li>Increase in car population</li>
+<li>Peak hours i.e. people going to work and leaving from work</li>
+</ul>
+
+<p>I'm sure that there could be more but these are the facts that I can
+come up with for now.</p>
+
+<h2>How can Computer Vision solve this problem?</h2>
+
+<p><a href="https://en.wikipedia.org/wiki/Computer_vision">Computer Vision</a> is a
+field that intersects with multiple areas of technologies in which it
+aims to develop an understanding of objects by extracting information
+from various digital media sources like images and videos and automate
+those tasks that a normal human would do in their daily lives.</p>
+
+<figure>
+    <img src="https://www.onlinebooksreview.com/uploads/blog_images/2018/04/16_computer_vision.jpg"/>
+    <figcaption>
+        Visualization of Computer Vision.
+    </figcaption>
+</figure>
+
+<p>There are various types of problems that Computer Vision algorithms are
+able to solve but not limited to:</p>
+
+<ul>
+<li>Object Recognition or Object Classification</li>
+<li>Identification of Objects</li>
+<li>Object Detection</li>
+<li>Analysis of Motion</li>
+</ul>
+
+<p>Now, it's not only about implementing these <strong><em>CNN</em></strong>-based
+(<a href="https://en.wikipedia.org/wiki/Convolutional_neural_network">Convolutional Neural
+Network</a>)
+algorithms but you also need hardware to be able to compute and process
+data. </p>
+
+<h2>How would this work?</h2>
+
+<p>There are two scenarios that I had thought while writing this article
+and I hope that I'm able to translate my thoughts into accurate
+examples.</p>
+
+<p>Let's pretend we have four car drivers: Alex, Bob, Charlie and Dylan.</p>
+
+<h3>Speed-Distance equilibrium</h3>
+
+<p>Alex, Bob and Charlie are driving on the same lane. Alex hits the brake
+slowly to shift to another lane, the sensors of Bob's car detects a
+change in speed in Alex's car, Bob's car adjusts it's speed to match
+Alex's current speed based on the variables of distance and travel time,
+Charlie's car adapts the changes of Bob's car and thus, it's a chain
+reaction.</p>
+
+<h3>Shifting from one lane to another</h3>
+
+<p>Alex is driving in Lane A and Dylan is driving in Lane B. Alex wants to
+shift to Lane B, so he switches on the indicator and Dylan's car sensors
+identify that Alex's car wants to change lanes. So Dylan's car slows
+down and Alex is able to shift lanes with ease. I thought of it to be
+some sort of a <strong><em>"elastic"</em></strong> effect when this occurs.</p>
+
+<p>Well, you might argue that some cars have a system called <strong><em>"Cruise
+Control"</em></strong> but here's the part that I'm trying to pitch, as I had
+mentioned above, I just wanted to integrate sensors to the front and
+rear sides of a vehicle, which means that these sensors can be
+integrated in almost any vehicle.</p>
+
+<h2>How is this going to be helpful?</h2>
+
+<p>For starters, traffic congestion will gradually reduce, if not, be
+eliminated but there are other beneficial factors to it, such as:</p>
+
+<ul>
+<li>Less fuel consumption</li>
+<li>Less time is required to reach a destination</li>
+<li>No tail-gating</li>
+<li>Could prevent major road accidents</li>
+</ul>
+
+<p>However, if the sensors fail to work, the car driver will still be safe
+because it's surrounded by other cars that have the sensors. This made
+me think of another question, does that mean do all cars require sensors
+or only a few? I find it quite intriguing.</p>
+
+<h2>Conclusion</h2>
+
+<p>Although, these sensors might require a vehicle to have some intelligent
+capabilities, it may not require the type of network found in an
+autonomous vehicle.</p>
+
+<figure>
+    <img src="https://i.pinimg.com/originals/b4/7c/00/b47c00d89eb8527be3f47578958f691e.gif"/>
+</figure>
+
+<p>The idea of placing sensors in the front and rear of a vehicle can
+optimize the flow of traffic and thus, it might help eliminate traffic
+congestion.</p>
+
+<p>Hope you liked reading this article!</p>
+
+	</article>
+</main>
+
+<script src="/static/vendor/jquery/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="/static/vendor/hljs/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

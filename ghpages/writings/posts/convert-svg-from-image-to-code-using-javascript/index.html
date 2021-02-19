@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Convert SVG from Image to Code using Javascript | megacolorboy</title>
+	<link rel="stylesheet" href="/static/css/main.css" type="text/css">
+	<link rel="stylesheet" href="/static/vendor/hljs/css/default.min.css">
+	<!-- Add OG tags  -->
+</head>
+<body class="details-page writings">
+	<!-- Navbar -->
+	<header class="header">
+	<div class="author">
+		<a href="/">
+			<div class="logo"></div>
+			<p>megacolorboy</p>
+		</a>
+	</div>
+	<nav>
+		<ul class="menu">
+			
+				<li><a href="/about">About</a></li>
+			
+				<li><a href="/writings">Writings</a></li>
+			
+				<li><a href="/til">Today I Learned</a></li>
+			
+		</ul>
+	</nav>
+</header>
+
+<div class="article-top">
+	<a class="back" href="/writings"><span>&larr;</span> Back</a>
+	<p class="date">Published on February 24th, 2018</p>	
+</div>
+
+<main>
+	<section class="article-head">
+		<p class="cat">Programming</p>
+		<h1>Convert SVG from Image to Code using Javascript</h1>
+		
+			<p>Two weeks ago, I wrote a small script to convert SVG from Image to Code using Javascript that allowed me to play around with it's attributes and properties.</p>
+		
+		<p class="date">2 minutes read</p>
+	</section>
+	<article>
+		<p>Have you ever downloaded minimal and beautiful looking SVG icons and
+added them into your HTML code as an <strong><em>&lt;img&gt;</em></strong> instead of
+<strong><em>&lt;svg&gt;</em></strong> tag? The answer is: <strong><em>"yes, you're right!"</em></strong>.</p>
+
+<p>Okay, how about another question?</p>
+
+<p>What would you do if you want to change all of those SVG icons to black,
+red or blue? Your answer would be: <strong><em>"Well, I would edit the colors of
+all the vector images in Adobe Illustrator and then refresh my page to
+see the changes."</em></strong>, if that's your answer, then what would you do if
+you have to do it for multiple icons in multiple pages in a short amount
+of time?</p>
+
+<p>Two weeks ago, I faced this same scenario and I found a quick solution
+to it and I will be sharing it in this article on how to convert SVG
+from image to code using Javascript and how it allowed me to play around
+with attributes and properties.</p>
+
+<h2>Why convert from Image to Code?</h2>
+
+<p>Well, as a developer, it allows me to interact with every part of the
+SVG such as changing the colors, adjusting the height and width, animate
+it and so on. In this article, I will show you an example on how I could
+do a simple color change on an SVG image that I had downloaded from
+<a href="https://www.flaticon.com">flaticon</a>.</p>
+
+<figure>
+    <img src="/static/images/space.svg"/>
+    <figcaption>
+        Figure 1. Original SVG Space Icon
+    </figcaption>
+</figure>
+
+<h2>How to convert from Image to Code?</h2>
+
+<p>Simple, just convert the SVG image into an XML format using
+<strong><em>XMLSerializer()</em></strong> then give it a class name like <strong><em>"custom-svg-icon"</em></strong>
+and execute the code! Below, I have provided a code snippet, I hope the
+comments will help you out!</p>
+
+<p><strong>Code snippet:</strong></p>
+
+<pre>
+    <code class="js">
+    $(function(){
+     //Change the class name, if it has to be applied for more SVG elements
+     jQuery('img.custom-svg-icon').each(function(){
+     var $img = jQuery(this); // The image
+     var imgID = $img.attr('id'); // ID attribute
+     var imgClass = $img.attr('class'); // Class Name
+     var imgURL = $img.attr('src'); // URL of the SVG image
+
+     jQuery.get(imgURL, function(data) {
+     //The data param contains the XML data of the SVG image
+     //alert(new XMLSerializer().serializeToString(data));
+
+     // Get the SVG tag, ignore the rest
+     var $svg = jQuery(data).find('svg');
+
+     // Give the image's ID to the SVG
+     if(typeof imgID !== 'undefined') 
+     {
+     $svg = $svg.attr('id', imgID);
+     }
+
+     // Give the image's class to the SVG
+     if(typeof imgClass !== 'undefined') 
+     {
+     $svg = $svg.attr('class', imgClass+' replaced-svg');
+     }
+
+     // Remove any invalid XML tags as per http://validator.w3.org
+     $svg = $svg.removeAttr('xmlns:a');
+
+     // Check if the viewport is set, else we gonna set it if we can.
+     if(!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) 
+     {
+     $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'))
+     }
+
+     // Replace image with new SVG
+     $img.replaceWith($svg);
+
+     }, 'xml'); //Returns as XML
+     });
+    });
+    </code>
+</pre>
+
+<p>Give it some custom CSS to change the color and width of the SVG image:</p>
+
+<pre>
+    <code class="css">
+    svg path, svg rect
+    {
+        fill: #ff5a5f;
+    }
+
+    .custom-svg-icon
+    {
+        width: 170px;
+        height: 170px;
+    }
+    </code>
+</pre>
+
+<p>Right-click on the image, hit <strong><em>"Inspect Element"</em></strong> and view the
+converted image below but this time, you'll see it as an SVG element:</p>
+
+<script defer src="/static/projects/svg-img-to-code/script.js"></script>
+
+<figure>
+    <img class="custom-svg-icon" src="/static/images/space.svg"/>
+    <figcaption>
+        Figure 2. Converted SVG Space Icon
+    </figcaption>
+</figure>
+
+<p>However, there are a few downsides to this as SVG code is hard to
+maintain, pretty messy and sometimes quite complex especially if it
+contains a lot of paths, circles and rectangles but in a scenario that
+is similar to what I have faced, I think it's pretty useful, otherwise,
+just stick to adding your SVG images using the <strong><em>&lt;img&gt;</em></strong> tag.</p>
+
+<p>Hope you have found this article useful!</p>
+
+<h2>Credit</h2>
+
+<p>Icons made by <a href="https://www.flaticon.com/authors/eucalyp">Eucalyp</a> from <a href="https://www.flaticon.com/">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/">CC 3.0
+BY</a></p>
+
+	</article>
+</main>
+
+<script src="/static/vendor/jquery/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="/static/vendor/hljs/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

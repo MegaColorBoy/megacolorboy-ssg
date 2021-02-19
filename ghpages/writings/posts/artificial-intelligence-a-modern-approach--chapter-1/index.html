@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Artificial Intelligence: A Modern Approach - Chapter 1 | megacolorboy</title>
+	<link rel="stylesheet" href="/static/css/main.css" type="text/css">
+	<link rel="stylesheet" href="/static/vendor/hljs/css/default.min.css">
+	<!-- Add OG tags  -->
+</head>
+<body class="details-page writings">
+	<!-- Navbar -->
+	<header class="header">
+	<div class="author">
+		<a href="/">
+			<div class="logo"></div>
+			<p>megacolorboy</p>
+		</a>
+	</div>
+	<nav>
+		<ul class="menu">
+			
+				<li><a href="/about">About</a></li>
+			
+				<li><a href="/writings">Writings</a></li>
+			
+				<li><a href="/til">Today I Learned</a></li>
+			
+		</ul>
+	</nav>
+</header>
+
+<div class="article-top">
+	<a class="back" href="/writings"><span>&larr;</span> Back</a>
+	<p class="date">Published on September 1st, 2018</p>	
+</div>
+
+<main>
+	<section class="article-head">
+		<p class="cat">Artificial Intelligence</p>
+		<h1>Artificial Intelligence: A Modern Approach - Chapter 1</h1>
+		
+			<p>An introduction into the foundations of Artificial Intelligence.</p>
+		
+		<p class="date">9 minutes read</p>
+	</section>
+	<article>
+		<p>It's something that I had in my mind for a long time but never got the
+time to execute it but finally, I decided to get out of my comfort zone
+to learn new concepts and techniques that would enable me to solve new
+problems. Hence, I chose to study <strong><em>Artificial Intelligence</em></strong>.</p>
+
+<figure>
+    <img src="http://www-fp.pearsonhighered.com/assets/hip/images/bigcovers/0132071487.jpg"/>
+    <figcaption>
+        Artificial Intelligence, A Modern Approach (3rd Edition)
+    </figcaption>
+</figure>
+
+<p>I did some online research and found out a really good book named
+<a href="https://www.amazon.com/Artificial-Intelligence-Modern-Approach-3rd/dp/0136042597">Artificial Intelligence, A Modern Approach (3rd
+Edition)</a> by
+the <a href="https://en.wikipedia.org/wiki/Stuart_J._Russell">Stuart Russell</a>
+and one of my favorite computer scientists, <a href="https://en.wikipedia.org/wiki/Peter_Norvig">Peter
+Norvig</a> (Director of
+Research at Google) to learn about it's concepts and techniques. The
+book has 1000+ pages and it's a book used for undergraduate and graduate
+level courses in university.</p>
+
+<p>My current knowledge of Artificial Intelligence is pretty basic (e.g:
+write game AI) and I want to learn more about it and be able absorb any
+information related to it and build toy AI projects.</p>
+
+<p>I've completed the first chapter of the book, so let's dive in because
+this going to be a long read.</p>
+
+<h2>What is Artificial Intelligence?</h2>
+
+<p>We read about it in the news, it's being deployed in our mobile
+applications that we use everyday such as Facebook, Instagram, Twitter,
+Reddit and so on to filter out graphic content, fake information and
+insensitive political content. It's also being used in games such as
+chess, scientific research, diagnosis of several diseases and
+self-driving cars.</p>
+
+<p>But do we know what is it? According to Google Search, it means:</p>
+
+<blockquote>
+  <p>The theory and development of computer systems able to perform tasks
+  normally requiring human intelligence such as visual perception,
+  speech recognition, decision-making and translation between
+  languages. </p>
+</blockquote>
+
+<p>It encompasses a huge number of fields and sub-fields and AI is already
+the next big thing that it's shaping our everyday life.</p>
+
+<h2>Approaches towards AI</h2>
+
+<p>The book states that there are four types of approaches when it comes to
+creating an AI:</p>
+
+<figure>
+    <img src="https://cs.shaunlgs.com/wp-content/uploads/2017/02/slide_3.jpg"/>
+    <figcaption>
+        Four approaches towards AI.
+    </figcaption>
+</figure>
+
+<h3>Acting Humanly</h3>
+
+<p>Proposed by British computer scientist <a href="https://en.wikipedia.org/wiki/Alan_Turing">Alan
+Turing</a>, the <a href="https://en.wikipedia.org/wiki/Turing_test">Turing
+Test</a> approach was designed
+to provide a functional definition of Artificial Intelligence. The test
+is proved positive only when a human is unable to tell the difference
+between the results of a computer or a human. In order to think like a
+human, it should possess the following capabilities:</p>
+
+<ul>
+<li><strong><em>Natural Language Processing</em></strong> to enable communication in any
+language with the human</li>
+<li><strong><em>Knowledge Representation</em></strong> to store what it knows or hears</li>
+<li><strong><em>Automated Reasoning</em></strong> to make conclusions based on the repository
+of information to answer questions</li>
+<li><strong><em>Machine Learning</em></strong> to learn and adapt to new patterns and
+extrapolations</li>
+</ul>
+
+<p>It is to be noted that the test deliberately avoided interaction with
+the human because physical interaction with the human wasn't necessary
+for intelligence.</p>
+
+<p>Then came another test called <strong><em>Total Turing Test</em></strong>, this was made to
+test the computer's ability of visual perception. The computer passes
+this test when it's possess the following abilities:</p>
+
+<ul>
+<li><strong><em>Computer Vision</em></strong> to be able to perceive and identify objects</li>
+<li><strong><em>Robotics</em></strong> to be able to manipulate physical objects</li>
+</ul>
+
+<figure>
+    <img src="https://www.sony.net/SonyInfo/CorporateInfo/newbusiness/AI_Robotics/img/image_movie_sp.jpg"/>
+    <figcaption>
+        Sony's AIBO Home Entertainment robot.
+    </figcaption>
+</figure>
+
+<p>The abilities mentioned above, composes most of what modern AI is today
+and Turing deserves a huge credit for designing this test that still
+remains relevant for more than 60+ years.</p>
+
+<h3>Thinking Humanly</h3>
+
+<p>Do we know how humans think? Maybe, but for us to be able to determine
+that, we would need to achieve a deep understanding of the human mind
+works. There are a few ways such as:</p>
+
+<ul>
+<li><strong><em>Introspection</em></strong> by catching our own thoughts as they pass by</li>
+<li><strong><em>Psychological experiments</em></strong> by observing the actions or behavior
+of a human</li>
+<li><strong><em>Brain imaging</em></strong> by observing the brain in action</li>
+</ul>
+
+<figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Cognitive_Science_Hexagon.svg/800px-Cognitive_Science_Hexagon.svg.png"/>
+    <figcaption>
+        Fields that contributed to the birth of cognitive science.
+    </figcaption>
+</figure>
+
+<p>Once we have sufficient information, it's possible to theorize that a
+computer program behaves like a human. <a href="https://en.wikipedia.org/wiki/Cognitive_science">Cognitive
+Science</a> enables you to
+combine both computational models of an AI and psychological
+experimentation techniques to provide testable theories as to how the
+human mind works.</p>
+
+<h3>Thinking Rationally</h3>
+
+<p>Greek Philosopher <a href="https://en.wikipedia.org/wiki/Aristotle">Aristotle</a>
+attempted to arrange information based on irrefutable evidence based on
+the process of reasoning. His rules of inference a.k.a <strong><em>syllogisms</em></strong> (a
+form of reasoning in which conclusions are drawn from various
+propositions or a set of premises) provided patterns that yielded
+correct conclusions from correct premises. For example: <em>"Socrates is a
+man; All men are mortal; therefore, Socrates is a mortal being"</em>. These
+laws of thought initiated the study of logic, which gave hope to 19th
+century logicians to help create intelligent systems.</p>
+
+<figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aristotle_Altemps_Inv8575.jpg/448px-Aristotle_Altemps_Inv8575.jpg"/>
+    <figcaption>
+        Marble bust of Greek Philosopher Aristotle.
+    </figcaption>
+</figure>
+
+<p>However, there are two main obstacles to this logical approach. Firstly,
+it's difficult to convert informal information into formal terms
+required by logical notations especially when the information isn't 100%
+certain. Secondly, being able to solve a problem in theory vs. solving a
+problem in practice are two different things. You can have a computer
+that can solve a problem with a few hundred facts yet use up all of it's
+resources.</p>
+
+<h3>Acting Rationally</h3>
+
+<p>This is focused on creating <strong><em>intelligent agents</em></strong> that can perform
+various tasks like being able to operate autonomously, perceive objects,
+adapt to change, create new goals and pursue them. A <strong><em>rational
+agent</em></strong> is an agent that acts to achieve the best expected outcome.</p>
+
+<p>Making the right conclusions based on evidences i.e. <strong><em>correct
+inferences</em></strong> is part of a rational agent because to act rationally, an
+agent must be able to reason with logic to reach to a conclusion for a
+given action to achieve one's goals.</p>
+
+<p>However, it doesn't necessarily that it's always "correct", sometimes,
+it has there's no such thing as the "right" thing to do but something
+must be done.</p>
+
+<figure>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/IntelligentAgent-SimpleReflex.png"/>
+    <figcaption>
+        A simple agent reflex.
+    </figcaption>
+</figure>
+
+<p>The skills needed for a Turing Test allows an agent to act rationally
+especially on making good decisions using <strong><em>Knowledge
+Representation</em></strong> and <strong><em>Automated Reasoning</em></strong>, generating intelligible
+sentences using <strong><em>Natural Language Processing</em></strong> for a complex society,
+adapting to change and generating effective behavior using <strong><em>Machine
+Learning</em></strong>.</p>
+
+<p>But, there are some advantages to this approach. Firstly, it's more
+general in terms of the logical approach (mentioned in <strong><em>Thinking
+Rationally</em></strong>). Secondly, it's more open to scientific development
+compared to human behavior (mentioned in <strong><em>Acting Humanly</em></strong>) and human
+thought (mentioned in <strong><em>Thinking Humanly</em></strong>). The standard rationality of
+an agent is purely mathematically defined and completely general whereas
+human behavior adapts to a specific environment.</p>
+
+<p>Later, the book states that it's focus is going to be based on the
+general principles of rational agents and on components for constructing
+them.</p>
+
+<h2>Is AI a science, or is it engineering?</h2>
+
+<p>As I was reading the book, it was fascinating to see how various
+disciplines have contributed ideas, techniques and viewpoints to the
+field of Artificial Intelligence. The following disciplines are:</p>
+
+<ul>
+<li>Philosophy</li>
+<li>Neuroscience</li>
+<li>Mathematics</li>
+<li>Economics</li>
+<li>Linguistics</li>
+<li>Psychology</li>
+<li>Computer engineering</li>
+<li>Control theory and cybernetics</li>
+</ul>
+
+<p>Each disciplines had thoughtful questions like How does a human brain
+work? How are valid conclusions drawn from formal rules? How can we
+build an efficient computer? How to think and communicate in one's
+language? How does the brain process large amounts of information? How
+do humans and other living things think and act? How does language
+relate to thought?</p>
+
+<p>This part of the book is really long but it was a good way to understand
+about it's early foundations.</p>
+
+<h2>How is it useful today?</h2>
+
+<p>Well, that's not very easy to answer because it's being used in multiple
+fields and sub-fields. There are so many applications such as:</p>
+
+<ul>
+<li>Self Driving Cars</li>
+<li>Speech Recognition</li>
+<li>Facial Recognition</li>
+<li>Fighting Malware and Spam bots</li>
+<li>Filtering graphic content and fake information from social media</li>
+<li>Game playing AIs for different board games like Checkers, Go and Chess</li>
+</ul>
+
+<figure>
+    <img src="https://cdn1.i-scmp.com/sites/default/files/styles/980x551/public/images/methode/2018/04/25/2e2a124c-3b92-11e8-b6d9-57447a4b43e5_image_hires_135128.JPG?itok=uWX9_NQ4"/>
+    <figcaption>
+        Chinese Government surveillance system using Facial Recognition.
+    </figcaption>
+</figure>
+
+<p>All of this used to be science fiction but thanks to the advancements of
+Mathematics, Science and Engineering, it's become a reality in today's
+era.</p>
+
+<h2>Conclusion</h2>
+
+<p>Well, I don't know if this is one of the longest articles I have ever
+written but I really did enjoy writing this because this made me read
+the chapter again and gained a better understanding of the concepts.</p>
+
+<p>I will be writing more articles about it, write algorithms and build
+toy  implementations of Artificial Intelligence applications.</p>
+
+<p>In fact, I wrote this article to answer all, if not, most of the
+questions from the exercises section of this chapter.</p>
+
+<p>Hope you liked reading this article!</p>
+
+<p>Stay tuned for more!</p>
+
+<h2>Extras</h2>
+
+<ul>
+<li><a href="https://www.csee.umbc.edu/courses/471/papers/turing.pdf">Computing Machinery and Intelligence by Alan Turing</a></li>
+</ul>
+
+	</article>
+</main>
+
+<script src="/static/vendor/jquery/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="/static/vendor/hljs/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

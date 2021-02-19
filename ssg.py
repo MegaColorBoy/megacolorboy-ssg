@@ -1,7 +1,7 @@
 """
 Author: Abdush Shakoor
 megacolorboy-ssg: A simple static site generator written in Python 3
-Updated on: 22-01-2021
+Updated on: 19-02-2021
 """
 
 #!/usr/bin/env python3
@@ -21,6 +21,7 @@ import shutil
 import re
 import bs4
 from bs4 import BeautifulSoup
+import subprocess
 import ssgconfig as cfg
 
 # Using Typer as the CLI tool
@@ -103,6 +104,7 @@ def convertToRawDate(dateTimeStr: str):
     return "{0.year}-{0:%m}-{0:%d}".format(parse(dateTimeStr))
 
 # Get posts required to render
+# archiveMode is a flag to check if posts can be created in archive mode
 def getPosts(section=""):
     
     # List of posts
@@ -137,11 +139,14 @@ def getPosts(section=""):
                             title = postContent.metadata['title']
                             postDate = postContent.metadata['date']
                             dateRaw = convertToRawDate(postContent.metadata['date'])
+                            dateAlt = "{0:%d}.{0:%m}.{0.year}".format(parse(postContent.metadata['date']))
                             postYear = datetime.fromisoformat(dateRaw).strftime("%Y")
                             slug = postContent.metadata['slug']
                             category = postContent.metadata['category']
-                            summary = postContent.metadata['summary'] if 'summary' in postContent.metadata else 'Tips & Tricks &mdash; ' + category
+                            # summary = postContent.metadata['summary'] if 'summary' in postContent.metadata else 'Tips & Tricks &mdash; ' + category
+                            summary = postContent.metadata['summary'] if 'summary' in postContent.metadata else "".join(filterText(extractText(postContent)))
                             readingTime = estimateReadingTime(postContent)
+                            postUrl = '/'.join([section, 'posts', slug])
 
                             # if the status is not present in the file, it's assumed that the post is active.
                             status = postContent.metadata['status'] if 'status' in postContent.metadata else 'active'
@@ -152,7 +157,9 @@ def getPosts(section=""):
                                     {
                                         'section': root,
                                         'title': title,
+                                        'link': postUrl,
                                         'date': postDate,
+                                        'dateAlt': dateAlt,
                                         'year': postYear,
                                         'dateRaw': dateRaw,
                                         'slug': slug,
@@ -165,68 +172,14 @@ def getPosts(section=""):
                                     }
                                 ])
                             bar.next()
-    
-    # If archive mode is active
-    if cfg.sections[index]['archive']:
-        posts = [list(group) for _, group in groupby(sorted(posts, key=lambda x: x['dateRaw'], reverse=True), key=lambda y: datetime.fromisoformat(y['dateRaw']).strftime("%Y"))]
-    else:
-        # sort posts by filename and date
-        posts = sorted(posts, key=lambda x: (x['filename'], x['dateRaw']), reverse=True)
+
+    # sort posts by filename and date
+    posts = sorted(posts, key=lambda x: (x['filename'], x['dateRaw']), reverse=True)
     return posts
 
-# Count the words in the text
-def countWordsInText(textList, wordLength):
-    totalWords = 0
-    for text in textList:
-        totalWords += len(text)/wordLength
-    return totalWords 
-
-# Estimate reading time of the article
-def estimateReadingTime(content):
-    texts = extractText(content)
-    filteredText = filterText(texts)
-    totalWords = round(countWordsInText(filteredText, 5)/200)
-    str = ""
-    if totalWords > 1:
-        str = "%d minute read" % {totalWords}
-    else:
-        str = "A minute read"
-    return str
-
-# Extract text from HTML
-def extractText(content):
-    soup = BeautifulSoup(content, features='html.parser')
-    texts = soup.findAll(text=True)
-    return texts
-
-# Strip out CSS, JS, Scripts or any HTML Tags
-def stripHtmlElements(element):
-    if element.parent.name in ['style', 'script', '[document]', 'head', 'title']:
-        return False
-    elif isinstance(element, bs4.element.Comment):
-        return False
-    elif element.string == '\n':
-        return False
-    return True
-
-# Filter text only
-def filterText(content):
-    return filter(stripHtmlElements, content)
-
-# Get the first line of the content
-def getFirstLine(content):
-    soup = BeautifulSoup(content.splitlines()[0], features="html.parser")
-    for x in soup.find_all():
-        if len(x.get_text(strip=True)) == 0:
-            x.extract()
-    return ' '.join(['<p>', soup.get_text(strip=True), '</p>'])
-
-# Return index in an array of dicts
-def findIndex(lst, key, value):
-    for i, dic in enumerate(lst):
-        if dic[key] == value:
-            return i
-    return -1
+# Archive mode
+def archivePosts(posts):
+    return [list(group) for _, group in groupby(sorted(posts, key=lambda x: x['dateRaw'], reverse=True), key=lambda y: datetime.fromisoformat(y['dateRaw']).strftime("%Y"))]
 
 # Generate index page with pagination links
 def generateIndexWithPaginator(section, postsPerPage):
@@ -274,11 +227,18 @@ def generateIndexWithPaginator(section, postsPerPage):
 
         # Render the page
         renderedHtml = template.render(
+            bodyClass="",
             posts=chunkedPosts[pageNumber],
             curr=currentPageNumber,
             prev=prevPage,
             next=nextPage,
-            total=numberOfPages+1
+            total=numberOfPages+1,
+            page = {
+                'title': section['seoTitle'], 
+                'description': section['seoDescription']
+            }, 
+            site = cfg.site, 
+            menu = cfg.menu
         )
 
         writeToFile(pageFile, renderedHtml.encode('utf-8'))
@@ -286,7 +246,17 @@ def generateIndexWithPaginator(section, postsPerPage):
 # Generate index page without pagination links
 def generateIndexWithoutPaginator(section):
     template = env.get_template(section['template']['index'])
-    renderedHtml = template.render(posts=section['posts'], page={'title': section['seoTitle'], 'description': section['seoDescription']}, site=cfg.site, menu=cfg.menu)
+    renderedHtml = template.render(
+        bodyClass= "details-page" if len(section['posts']) == 1 else "",
+        posts = section['posts'] if not isArchiveModeEnabled(section) else section['archivePosts'], 
+        post = section['posts'][0],
+        page = {
+            'title': section['seoTitle'], 
+            'description': section['seoDescription']
+        }, 
+        site = cfg.site, 
+        menu = cfg.menu
+    )
     
     # if the current section is the root of the blog
     if section['root']:
@@ -300,7 +270,6 @@ def generateIndexWithoutPaginator(section):
 
 # Generate index/listing page
 def generateIndexPage(section):
-    
     # Check if this section has an index page
     if 'index' in section['template']:
         # If pagination is not active
@@ -316,46 +285,87 @@ def generateContent(section):
     postsDirectory = 'output/posts/'
     template = env.get_template(section['template']['details'])
     
-    # Create a directory to store all the posts based on the section
-    createDirectory(postsDirectory)
-
     if not section['root']:
         postsDirectory = 'output/' + section['directory'] + '/posts/'
 
+    # Create a directory to store all the posts based on the section
+    createDirectory(postsDirectory)
+
     for post in posts:
-        renderedHtml = template.render(post=post)
+        renderedHtml = template.render(
+            post=post, 
+            bodyClass="details-page" + " " + section['directory'], 
+            directory=section['directory'],
+            page = {
+                'title': post['title'], 
+                'description': post['summary']
+            }, 
+            site = cfg.site, 
+            menu = cfg.menu
+        )
         filepath = postsDirectory + '{slug}/index.html'.format(slug=post['slug'])
 
         # Create directory for the post
         createDirectory(filepath)
         writeToFile(filepath, renderedHtml.encode('utf-8'))
-            
+
+# Generate the homepage section of the blog
+def generateHomepage(section):
+    limit = 9
+    template = env.get_template(section['template']['index'])
+    sectionsToShow = {}
+
+    for selectedSection in section['sectionsToShow']:
+        sectionsToShow[selectedSection] = getPosts(selectedSection)[0:limit]
+
+    renderedHtml = template.render(
+        bodyClass="",
+        sections = sectionsToShow, 
+        page = {
+            'title': section['seoTitle'], 
+            'description': section['seoDescription']
+        }, 
+        site = cfg.site, 
+        menu = cfg.menu
+    )
+
+    createDirectory('output/')
+    filepath = os.path.join('output', 'index.html')
+
+    writeToFile(filepath, renderedHtml.encode('utf-8'))
+
 # Generate all pages i.e. index, details and RSS required for the section
 def generatePages(section):
     
-    # Deletes section related files only
-    directoryToDelete = "output/posts/"
+    # Check if it's a home page
+    if section['homepage']:
+        generateHomepage(section)
 
-    if not section['root']:
-        directoryToDelete = "output/{directory}/".format(directory=section['directory'])
+    # Otherwise, generate other pages    
+    else:
+        # Deletes section related files only
+        directoryToDelete = "output/posts/"
 
-    # Delete the RSS and JSON files related to the section
-    filesToDelete = [
-        'output/rss/' + section['directory'] + '.xml',
-        'output/json/' + section['directory'] + '.json',
-    ];
+        if not section['root']:
+            directoryToDelete = "output/{directory}/".format(directory=section['directory'])
 
-    for file in filesToDelete:
-        deleteFile(file)
+        # Delete the RSS and JSON files related to the section
+        filesToDelete = [
+            'output/rss/' + section['directory'] + '.xml',
+            'output/json/' + section['directory'] + '.json',
+        ];
 
-    # Generate the main page
-    generateIndexPage(section)
+        for file in filesToDelete:
+            deleteFile(file)
 
-    # Generate details page, if it has one
-    if 'details' in section['template']:
-        generateContent(section)
-        generateJSON(section)
-        generateRSS(section)
+        # Generate the main page
+        generateIndexPage(section)
+
+        # Generate details page, if it has one
+        if 'details' in section['template']:
+            generateContent(section)
+            # generateJSON(section)
+            # generateRSS(section)
 
 # Build all sections
 def buildAllSections():
@@ -365,7 +375,15 @@ def buildAllSections():
 # Build a specific section
 def buildSection(section):
     section['posts'] = getPosts(section['directory'])
+
+    # Create archive listing if archive mode is enabled
+    if isArchiveModeEnabled(section):
+        section['archivePosts'] = archivePosts(section['posts'])
+
     generatePages(section)
+
+def isArchiveModeEnabled(section):
+    return True if 'archive' in section and section['archive'] else False
 
 # Build entire or section(s) of the blog
 @app.command()
@@ -386,9 +404,11 @@ def build(mode=""):
         # Else, generate all sections of the blog
         else:
             buildAllSections()
+
     # If it's all, then build all sections
     elif mode == "all":
         buildAllSections()
+
     # Else, that option is not available
     else:
         message = "Invalid build mode specified."
@@ -423,7 +443,6 @@ def create():
         file.write(meta)
     
     typer.echo("Your file has been created: " + blogFilePath)
-
 
 # Generate file path
 def generateFilePath(date, directory, slug):
@@ -470,6 +489,62 @@ def generateFileNumber(path):
 def generateSlug(title: str):
     title = "".join(x for x in title if x.isalnum() or x == ' ')
     return title.lower().strip("").replace(' ', '-')
+
+# Count the words in the text
+def countWordsInText(textList, wordLength):
+    totalWords = 0
+    for text in textList:
+        totalWords += len(text)/wordLength
+    return totalWords 
+
+# Estimate reading time of the article
+def estimateReadingTime(content):
+    str = ""
+    WPM = 200
+    wordLength = 5
+    texts = extractText(content)
+    filteredText = filterText(texts)
+    minutes = round(countWordsInText(filteredText, wordLength) / WPM)
+    if minutes > 1:
+        str = "{minutes} minutes read".format(minutes=minutes)
+    else:
+        str = "1 minute read"
+    return str
+
+# Extract text from HTML
+def extractText(content):
+    soup = BeautifulSoup(content, features='html.parser')
+    texts = soup.findAll(text=True)
+    return texts
+
+# Strip out CSS, JS, Scripts or any HTML Tags
+def stripHtmlElements(element):
+    if element.parent.name in ['style', 'script', '[document]', 'head', 'title', 'pre', 'code']:
+        return False
+    elif isinstance(element, bs4.element.Comment):
+        return False
+    elif element.string == '\n':
+        return False
+    return True
+
+# Filter text only
+def filterText(content):
+    return filter(stripHtmlElements, content)
+
+# Get the first line of the content
+def getFirstLine(content):
+    soup = BeautifulSoup(content.splitlines()[0], features="html.parser")
+    for x in soup.find_all():
+        if len(x.get_text(strip=True)) == 0:
+            x.extract()
+    return ' '.join(['<p>', soup.get_text(strip=True), '</p>'])
+
+# Return index in an array of dicts
+def findIndex(lst, key, value):
+    for i, dic in enumerate(lst):
+        if dic[key] == value:
+            return i
+    return -1
 
 # Check if the section/directory exists
 def sectionExists(section: str):

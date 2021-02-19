@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Set up reCaptcha in Laravel | megacolorboy</title>
+	<link rel="stylesheet" href="/static/css/main.css" type="text/css">
+	<link rel="stylesheet" href="/static/vendor/hljs/css/default.min.css">
+	<!-- Add OG tags  -->
+</head>
+<body class="details-page til">
+	<!-- Navbar -->
+	<header class="header">
+	<div class="author">
+		<a href="/">
+			<div class="logo"></div>
+			<p>megacolorboy</p>
+		</a>
+	</div>
+	<nav>
+		<ul class="menu">
+			
+				<li><a href="/about">About</a></li>
+			
+				<li><a href="/writings">Writings</a></li>
+			
+				<li><a href="/til">Today I Learned</a></li>
+			
+		</ul>
+	</nav>
+</header>
+
+<div class="article-top">
+	<a class="back" href="/til"><span>&larr;</span> Back</a>
+	<p class="date">Published on May 25th, 2020</p>	
+</div>
+
+<main>
+	<section class="article-head">
+		<p class="cat">Laravel</p>
+		<h1>Set up reCaptcha in Laravel</h1>
+		
+			<p>I mean, come on, you need to have a reCaptcha in your forms, no matter what.Here are the steps:1. Install using Composer2. Add provider and alias to configurationOpen your  file and add this to your providers array:And this to your aliases array:3. Publish configuration4. Add sitekey and secret key to .env fileOpen your  file and add this:How to use it?Now, you can use it in your validator using like this:</p>
+		
+		<p class="date">1 minute read</p>
+	</section>
+	<article>
+		<p>I mean, come on, you need to have a reCaptcha in your forms, no matter what.</p>
+
+<p>Here are the steps:</p>
+
+<h2>1. Install using Composer</h2>
+
+<pre>
+<code class="bash">
+composer require anhskohbo/no-captcha
+</code>
+</pre>
+
+<h2>2. Add provider and alias to configuration</h2>
+
+<p>Open your <code>config/app.php</code> file and add this to your providers array:</p>
+
+<pre>
+<code class="php">
+Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
+</code>
+</pre>
+
+<p>And this to your aliases array:</p>
+
+<pre>
+<code class="php">
+'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
+</code>
+</pre>
+
+<h2>3. Publish configuration</h2>
+
+<pre>
+<code class="bash">
+php artisan vendor:publish --provider="Anhskohbo\NoCaptcha\NoCaptchaServiceProvider"
+</code>
+</pre>
+
+<h2>4. Add sitekey and secret key to .env file</h2>
+
+<p>Open your <code>.env</code> file and add this:</p>
+
+<pre>
+<code class="php">
+NOCAPTCHA_SITEKEY=yoursitekey
+NOCAPTCHA_SECRET=yoursecret
+</code>
+</pre>
+
+<h2>How to use it?</h2>
+
+<p>Now, you can use it in your validator using like this:</p>
+
+<pre>
+<code class="php">
+$validate = Validator::make(Input::all(),[
+    'g-recaptcha-response' => 'required|captcha'
+]);
+</code>
+</pre>
+
+	</article>
+</main>
+
+<script src="/static/vendor/jquery/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="/static/vendor/hljs/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

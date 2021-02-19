@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>The Circle Packing Algorithm | megacolorboy</title>
+	<link rel="stylesheet" href="/static/css/main.css" type="text/css">
+	<link rel="stylesheet" href="/static/vendor/hljs/css/default.min.css">
+	<!-- Add OG tags  -->
+</head>
+<body class="details-page writings">
+	<!-- Navbar -->
+	<header class="header">
+	<div class="author">
+		<a href="/">
+			<div class="logo"></div>
+			<p>megacolorboy</p>
+		</a>
+	</div>
+	<nav>
+		<ul class="menu">
+			
+				<li><a href="/about">About</a></li>
+			
+				<li><a href="/writings">Writings</a></li>
+			
+				<li><a href="/til">Today I Learned</a></li>
+			
+		</ul>
+	</nav>
+</header>
+
+<div class="article-top">
+	<a class="back" href="/writings"><span>&larr;</span> Back</a>
+	<p class="date">Published on December 8th, 2019</p>	
+</div>
+
+<main>
+	<section class="article-head">
+		<p class="cat">Algorithms + Art</p>
+		<h1>The Circle Packing Algorithm</h1>
+		
+			<p>Implemented a mathematically beautiful generative pattern that looks deceivingly complex to the human.</p>
+		
+		<p class="date">2 minutes read</p>
+	</section>
+	<article>
+		<iframe width="100%" height="485" src="/static/projects/circle-packing"></iframe>
+
+<p>Beautiful, isn't it? It might look complex but it's mathematically quite impressive. Making this pattern wasn't hard but it definitely took a lot of trial and error to get it right and honestly, I don't really know if it's this is the most efficient way to generate this pattern.</p>
+
+<p>This article isn't a tutorial but rather, I'll be talking about the algorithm itself. However, you can check out the source code in my <a href="https://github.com/megacolorboy/BlogProjects">GitHub repository</a>.</p>
+
+<h2>How it works?</h2>
+
+<p>In order to achieve that "stacked" effect, there are two things to keep in mind:</p>
+
+<ol>
+<li>Generate circles with a random radius</li>
+<li>Look for collisions with other circles</li>
+</ol>
+
+<p>The logic is quite similar to the <a href="https://stackoverflow.com/questions/306316/determine-if-two-rectangles-overlap-each-other">Overlapping Rectangles</a> problem except this is done with circles.</p>
+
+<h2>Generate circles with dynamic radius</h2>
+
+<p>This method will help generate valid circles with a random radius. Circles that don't overlap or collide with other circles are considered to be valid.</p>
+
+<pre>
+    <code class="js">
+    // Generate a valid circle
+    const generateCircle = () => {
+        let newCircle;
+        let isValidCircle = false;
+
+        for(let i=0; i&lt;attempts; i++) {
+            newCircle = {
+                x: Math.floor(Math.random() * width),
+                y: Math.floor(Math.random() * width),
+                radius: minRadius
+            };
+
+            if(checkForCollision(newCircle)) {
+                continue;
+            }
+            else {
+                isValidCircle = true;
+                break;
+            }
+        }
+
+        if(!isValidCircle) { return; }
+
+        for(let i=minRadius; i&lt;=maxRadius; i++) {
+            newCircle.radius = i;
+            if(checkForCollision(newCircle)) {
+                newCircle.radius--;
+                break;
+            }
+        }
+
+        circles.push(newCircle);
+        drawCircleOnCanvas(context, newCircle, colors[Math.floor(Math.random() * colors.length)]);
+    }
+    </code>
+</pre>
+
+<h2>Look for collision with other circles</h2>
+
+<p>Thanks to some online research, I was able implement the <a href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidean Distance</a> equation that helped with calculating the distances between each circle and detect for collisions. Along with that, I also found another article on <a href="http://www.mathsmutt.co.uk/files/tcirc.htm">Touching Circles</a> that was quite useful.</p>
+
+<p>These are the formulas used to detect the collision:</p>
+
+<ol>
+<li><p>Find the distance between two centres
+\[ AB = \sqrt{ (x2 - x1)^2 - (y2 - y1)^2} \]</p></li>
+<li><p>Calculate the radii of both circles.
+\[R = r1 + r2\]</p></li>
+</ol>
+
+<p>If the radii is greater than or equal to the euclidean distance of both circles, then it's a valid circle with no collisions.</p>
+
+<pre>
+    <code class="js">
+    // Check for collision in a canvas
+    const checkForCollision = (newCircle) => {
+
+        let x2 = newCircle.x;
+        let y2 = newCircle.y;
+        let r2 = newCircle.radius;
+
+        /*
+            Determine the euclidean distance between two circle
+            using Pythagorean Theorem.
+
+            Refer to: 
+            https://en.wikipedia.org/wiki/Euclidean_distance
+        */
+        for(let i=0; i<circles.length; i++) {
+
+            let otherCircle = circles[i];
+            let r1 = otherCircle.radius;
+            let x1 = otherCircle.x;
+            let y1 = otherCircle.y;
+            let xx = ((x2 - x1) * (x2 - x1));
+            let yy = ((y2 - y1) * (y2 - y1));
+            let radii = r2 + r1;
+            let euclidDistance = Math.sqrt(xx + yy);
+
+            if(radii >= euclidDistance) {
+                return true;
+            }
+        }
+
+        // Check collision on top
+        if(x2 + r2 >= width || 
+            x2 - r2 <= 0) {
+            return true;
+        }
+
+        // Check collision on bottom
+        if(y2 + r2 >= width || 
+            y2 - r2 <= 0) {
+            return true;
+        }
+
+        //else return false
+        return false;
+    }
+    </code>
+</pre>
+
+<h2>Conclusion</h2>
+
+<p>I'm thinking of implementing more generative patterns like <a href="https://en.wikipedia.org/wiki/Triangle_mesh">Triangular Mesh</a> and Piet Mondrian's <a href="https://en.wikipedia.org/wiki/Composition_with_Red_Blue_and_Yellow">Red, Blue and Yellow composition</a>.</p>
+
+<p>Hope you liked reading this article.</p>
+
+<p>Stay tuned for more!</p>
+
+	</article>
+</main>
+
+<script src="/static/vendor/jquery/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="/static/vendor/hljs/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

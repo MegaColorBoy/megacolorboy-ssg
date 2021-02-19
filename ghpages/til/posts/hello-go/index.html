@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hello, Go! | megacolorboy</title>
+	<link rel="stylesheet" href="/static/css/main.css" type="text/css">
+	<link rel="stylesheet" href="/static/vendor/hljs/css/default.min.css">
+	<!-- Add OG tags  -->
+</head>
+<body class="details-page til">
+	<!-- Navbar -->
+	<header class="header">
+	<div class="author">
+		<a href="/">
+			<div class="logo"></div>
+			<p>megacolorboy</p>
+		</a>
+	</div>
+	<nav>
+		<ul class="menu">
+			
+				<li><a href="/about">About</a></li>
+			
+				<li><a href="/writings">Writings</a></li>
+			
+				<li><a href="/til">Today I Learned</a></li>
+			
+		</ul>
+	</nav>
+</header>
+
+<div class="article-top">
+	<a class="back" href="/til"><span>&larr;</span> Back</a>
+	<p class="date">Published on August 1st, 2020</p>	
+</div>
+
+<main>
+	<section class="article-head">
+		<p class="cat">Go</p>
+		<h1>Hello, Go!</h1>
+		
+			<p>After reading a lot of articles about using Go as a programming language to write high-performing concurrent web applications and services yet maintain a clean codebase, I thought of starting to learn it to see what's it about and so far, it's been great!This mini-tutorial will show you how to install Go on your system and write a simple "Hello, World" program.Note: This tutorial will go through installing Go on Linux.Install GoMake sure you have the latest updates and upgrades on your Linux system before installing Go.You need to download the binary file from their official package. Find the version that suits your OS and architecture.Extract the downloaded archive and install it in the  directory (as per the standards):Set up environmentNow, we need to set up three variables:: Location of where your Go package is installed.: Location of your work directory.': Tells bash on where to look for programs that are being executed.Open up your  file and add these lines at the end of the file:Save your  file and update the current shell session:Verify your installationType the following command to ensure that your Go installation is successful:Hello, world!As per traditions, whenever you learn a programming language, you start off with a "Hello, world!" program, so here it is:ConclusionI just started learning it today and at first, you might have the tendency to write code in Go the same way you write in any other language but beware, it doesn't work that way. It forces you to write good code including the way it formats the code using the  tool.Lots of cool things are coming!Stay tuned for more.</p>
+		
+		<p class="date">2 minutes read</p>
+	</section>
+	<article>
+		<p>After reading a lot of articles about using Go as a programming language to write high-performing concurrent web applications and services yet maintain a clean codebase, I thought of starting to learn it to see what's it about and so far, it's been great!</p>
+
+<p>This mini-tutorial will show you how to install Go on your system and write a simple "Hello, World" program.</p>
+
+<p><strong>Note: This tutorial will go through installing Go on Linux.</strong></p>
+
+<h2>Install Go</h2>
+
+<p>Make sure you have the latest updates and upgrades on your Linux system before installing Go.</p>
+
+<p>You need to download the binary file from their <a href="https://golang.org/dl/">official package</a>. Find the version that suits your OS and architecture.</p>
+
+<pre>
+<code class="bash">
+cd /tmp
+wget https://golang.org/dl/go1.14.6.linux-amd64.tar.gz
+</code>
+</pre>
+
+<p>Extract the downloaded archive and install it in the <code>/usr/local</code> directory (as per the standards):</p>
+
+<pre>
+<code class="bash">
+sudo tar -xvf go1.14.6.linux-amd64.tar.gz
+sudo mv go /usr/local
+</code>
+</pre>
+
+<h2>Set up environment</h2>
+
+<p>Now, we need to set up three variables:</p>
+
+<ul>
+<li><code>GOROOT</code>: Location of where your Go package is installed.</li>
+<li><code>GOPATH</code>: Location of your work directory.'</li>
+<li><code>PATH</code>: Tells bash on where to look for programs that are being executed.</li>
+</ul>
+
+<p>Open up your <code>.bashrc</code> file and add these lines at the end of the file:</p>
+
+<pre>
+<code class="bash">
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+</code>
+</pre>
+
+<p>Save your <code>.bashrc</code> file and update the current shell session:</p>
+
+<pre>
+<code class="bash">
+source ~/.bashrc
+</code>
+</pre>
+
+<h2>Verify your installation</h2>
+
+<p>Type the following command to ensure that your Go installation is successful:</p>
+
+<pre>
+<code class="bash">
+go version go1.14.6 linux/amd64
+</code>
+</pre>
+
+<h2>Hello, world!</h2>
+
+<p>As per traditions, whenever you learn a programming language, you start off with a "Hello, world!" program, so here it is:</p>
+
+<pre>
+<code class="go">
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Printf("Hello, world!\n")
+} 
+</code>
+</pre>
+
+<h2>Conclusion</h2>
+
+<p>I just started learning it today and at first, you might have the tendency to write code in Go the same way you write in any other language but beware, it doesn't work that way. It forces you to write good code including the way it formats the code using the <code>gofmt</code> tool.</p>
+
+<p>Lots of cool things are coming!</p>
+
+<p>Stay tuned for more.</p>
+
+	</article>
+</main>
+
+<script src="/static/vendor/jquery/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="/static/vendor/hljs/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

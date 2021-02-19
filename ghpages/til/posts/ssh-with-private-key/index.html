@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Using SSH with a private key | megacolorboy</title>
+	<link rel="stylesheet" href="/static/css/main.css" type="text/css">
+	<link rel="stylesheet" href="/static/vendor/hljs/css/default.min.css">
+	<!-- Add OG tags  -->
+</head>
+<body class="details-page til">
+	<!-- Navbar -->
+	<header class="header">
+	<div class="author">
+		<a href="/">
+			<div class="logo"></div>
+			<p>megacolorboy</p>
+		</a>
+	</div>
+	<nav>
+		<ul class="menu">
+			
+				<li><a href="/about">About</a></li>
+			
+				<li><a href="/writings">Writings</a></li>
+			
+				<li><a href="/til">Today I Learned</a></li>
+			
+		</ul>
+	</nav>
+</header>
+
+<div class="article-top">
+	<a class="back" href="/til"><span>&larr;</span> Back</a>
+	<p class="date">Published on May 25th, 2020</p>	
+</div>
+
+<main>
+	<section class="article-head">
+		<p class="cat">Terminal</p>
+		<h1>Using SSH with a private key</h1>
+		
+			<p>Got a .pem key but don't know how to SSH to your server, just do this:BONUS: Convert .ppk to .pem keyRecently, I started working from home and as a programmer, it's pretty common to access the company server for development purposes. Back in the office, I used to access it using PuTTY but now that I'm using a linux machine, I thought of accessing it via Terminal but there's a catch, I can't use .ppk key to access it.So, I did a little research and figured that I can easily convert it using Open up your terminal and type:Now, convert your private key to PEM format:That's it and you're good to go!</p>
+		
+		<p class="date">1 minute read</p>
+	</section>
+	<article>
+		<p>Got a <em>.pem</em> key but don't know how to SSH to your server, just do this:</p>
+
+<pre>
+<code class="bash">
+ssh -i name_of_key user@domain -p 22
+</code>
+</pre>
+
+<h2>BONUS: Convert .ppk to .pem key</h2>
+
+<p>Recently, I started working from home and as a programmer, it's pretty common to access the company server for development purposes. </p>
+
+<p>Back in the office, I used to access it using <a href="https://www.putty.org">PuTTY</a> but now that I'm using a linux machine, I thought of accessing it via Terminal but there's a catch, I can't use <em>.ppk</em> key to access it.</p>
+
+<p>So, I did a little research and figured that I can easily convert it using <code>puttygen</code></p>
+
+<p>Open up your terminal and type:</p>
+
+<pre>
+<code class="bash">
+sudo apt install putty-tools
+</code>
+</pre>
+
+<p>Now, convert your private key to PEM format:</p>
+
+<pre>
+<code class="bash">
+puttygen yourprivate.ppk -O private-openssh -o your_new_key.pem
+</code>
+</pre>
+
+<p>That's it and you're good to go!</p>
+
+	</article>
+</main>
+
+<script src="/static/vendor/jquery/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="/static/vendor/hljs/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Accessing WAMP Server from other computers on LAN | megacolorboy</title>
+	<link rel="stylesheet" href="/static/css/main.css" type="text/css">
+	<link rel="stylesheet" href="/static/vendor/hljs/css/default.min.css">
+	<!-- Add OG tags  -->
+</head>
+<body class="details-page til">
+	<!-- Navbar -->
+	<header class="header">
+	<div class="author">
+		<a href="/">
+			<div class="logo"></div>
+			<p>megacolorboy</p>
+		</a>
+	</div>
+	<nav>
+		<ul class="menu">
+			
+				<li><a href="/about">About</a></li>
+			
+				<li><a href="/writings">Writings</a></li>
+			
+				<li><a href="/til">Today I Learned</a></li>
+			
+		</ul>
+	</nav>
+</header>
+
+<div class="article-top">
+	<a class="back" href="/til"><span>&larr;</span> Back</a>
+	<p class="date">Published on September 13th, 2020</p>	
+</div>
+
+<main>
+	<section class="article-head">
+		<p class="cat">Apache + WAMP</p>
+		<h1>Accessing WAMP Server from other computers on LAN</h1>
+		
+			<p>Whenever you develop a website using the LAMP or WAMP stack, you'll want to access the website, locally, via different systems and devices solely for testing purposes.Modify your VirtualHosts configurationSetting up your WAMP Server for LAN access only requires you to tweak your VirtualHosts configuration file found in Oh, if you're using Linux, you'll find the file  in  directory.Update your hosts fileIf you type the URL of the website that you want to visit, the computer will first refer to the  file and then it'll go out to fetch DNS information. So, if you want  url to point to your local system, you just have add it in your  file:Open the hosts file() using a text editor and add this line to your  file:Once done, save the file and restart your WAMP Server and you're all set to go!Hope you found this tip useful!</p>
+		
+		<p class="date">1 minute read</p>
+	</section>
+	<article>
+		<p>Whenever you develop a website using the <strong>LAMP</strong> or <strong>WAMP</strong> stack, you'll want to access the website, locally, via different systems and devices solely for testing purposes.</p>
+
+<h2>Modify your VirtualHosts configuration</h2>
+
+<p>Setting up your WAMP Server for LAN access only requires you to tweak your <strong>VirtualHosts</strong> configuration file found in <code>C:\wamp64\bin\apache\apache2.4.41\conf\extra\httpd-vhost.conf</code></p>
+
+<pre>
+<code class="apache">
+&lt;VirtualHost *:80&gt;
+  ServerName example.test
+  ServerAlias example.test
+  DocumentRoot "c:/wamp64/www/yourprojectname"
+  &lt;Directory "c:/wamp64/www/yourprojectname/"&gt;
+    Options +Indexes +Includes +FollowSymLinks +MultiViews
+    AllowOverride All
+    Require all granted
+  &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</code>
+</pre>
+
+<p>Oh, if you're using Linux, you'll find the file <code>000-default.conf</code> in <code>/etc/apache2/sites-available</code> directory.</p>
+
+<h2>Update your hosts file</h2>
+
+<p>If you type the URL of the website that you want to visit, the computer will first refer to the <code>hosts</code> file and then it'll go out to fetch DNS information. So, if you want <code>http:\\example.test</code> url to point to your local system, you just have add it in your <code>hosts</code> file:</p>
+
+<p>Open the hosts file(<code>C:\Windows\System32\drivers\etc\hosts</code>) using a text editor and add this line to your <code>hosts</code> file:</p>
+
+<pre>
+<code class="txt">
+127.0.0.1   example.test
+</code>
+</pre>
+
+<p>Once done, save the file and restart your WAMP Server and you're all set to go!</p>
+
+<p>Hope you found this tip useful!</p>
+
+	</article>
+</main>
+
+<script src="/static/vendor/jquery/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="/static/vendor/hljs/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

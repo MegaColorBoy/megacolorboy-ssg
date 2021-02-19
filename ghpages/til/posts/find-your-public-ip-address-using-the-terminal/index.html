@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Find your Public IP address using the Terminal | megacolorboy</title>
+	<link rel="stylesheet" href="/static/css/main.css" type="text/css">
+	<link rel="stylesheet" href="/static/vendor/hljs/css/default.min.css">
+	<!-- Add OG tags  -->
+</head>
+<body class="details-page til">
+	<!-- Navbar -->
+	<header class="header">
+	<div class="author">
+		<a href="/">
+			<div class="logo"></div>
+			<p>megacolorboy</p>
+		</a>
+	</div>
+	<nav>
+		<ul class="menu">
+			
+				<li><a href="/about">About</a></li>
+			
+				<li><a href="/writings">Writings</a></li>
+			
+				<li><a href="/til">Today I Learned</a></li>
+			
+		</ul>
+	</nav>
+</header>
+
+<div class="article-top">
+	<a class="back" href="/til"><span>&larr;</span> Back</a>
+	<p class="date">Published on November 3rd, 2020</p>	
+</div>
+
+<main>
+	<section class="article-head">
+		<p class="cat">Linux</p>
+		<h1>Find your Public IP address using the Terminal</h1>
+		
+			<p>Previously, I used to determine my Public IP address on Google Search by typing "What is my IP?" and I was good with it.Until, I thought of actually viewing it via the terminal itself. So, I wrote two lines of code in my  file:Alternatively, you could try this too:Save the file and apply your new configuration by typing the following command:That's it, now all you have to do is type  in your terminal and it will display your Public IP address.Hope you found this useful! 😀</p>
+		
+		<p class="date">1 minute read</p>
+	</section>
+	<article>
+		<p>Previously, I used to determine my Public IP address on Google Search by typing <strong><em>"What is my IP?"</em></strong> and I was good with it.</p>
+
+<p>Until, I thought of actually viewing it via the terminal itself. So, I wrote two lines of code in my <code>~/.bashrc</code> file:</p>
+
+<pre>
+<code class="bash">    
+export myip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
+alias myip="echo $myip"
+</code>
+</pre>
+
+<p>Alternatively, you could try this too:</p>
+
+<pre>
+<code class='bash'>
+export myip="$(dig TXT +short o-o.myaddr.l.google.com @ns1.google.com)"
+</code>
+</pre>
+
+<p>Save the file and apply your new configuration by typing the following command:</p>
+
+<pre>
+<code class="bash">    
+source ~/.bashrc
+</code>
+</pre>
+
+<p>That's it, now all you have to do is type <code>myip</code> in your terminal and it will display your Public IP address.</p>
+
+<p>Hope you found this useful! &#x1F600;</p>
+
+	</article>
+</main>
+
+<script src="/static/vendor/jquery/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="/static/vendor/hljs/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

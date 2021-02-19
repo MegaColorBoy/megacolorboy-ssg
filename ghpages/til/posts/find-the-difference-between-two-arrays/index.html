@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Find the difference between two arrays | megacolorboy</title>
+	<link rel="stylesheet" href="/static/css/main.css" type="text/css">
+	<link rel="stylesheet" href="/static/vendor/hljs/css/default.min.css">
+	<!-- Add OG tags  -->
+</head>
+<body class="details-page til">
+	<!-- Navbar -->
+	<header class="header">
+	<div class="author">
+		<a href="/">
+			<div class="logo"></div>
+			<p>megacolorboy</p>
+		</a>
+	</div>
+	<nav>
+		<ul class="menu">
+			
+				<li><a href="/about">About</a></li>
+			
+				<li><a href="/writings">Writings</a></li>
+			
+				<li><a href="/til">Today I Learned</a></li>
+			
+		</ul>
+	</nav>
+</header>
+
+<div class="article-top">
+	<a class="back" href="/til"><span>&larr;</span> Back</a>
+	<p class="date">Published on July 18th, 2020</p>	
+</div>
+
+<main>
+	<section class="article-head">
+		<p class="cat">JavaScript</p>
+		<h1>Find the difference between two arrays</h1>
+		
+			<p>Finding the difference between two sets i.e. Set A and Set B is basically returning a new set that contains values of Set A that don't exist in Set B or vice-versa.Here's an example:I wrote a shorter implementation using JavaScript's  method:Once you execute this method, you'll get the following as a result:BONUS: What does the .filter() method do?This method returns a new array with elements that pass the conditions provided by a callback function.If the conditions aren't passed, you'll receive an empty array.In this article,  is considered as the callback function in which the  refers to the index of the current element of array A and is then used as a parameter to check if the element doesn't exist in array B.The neat thing about this method is that it doesn't mutate on the array that it's being called from.Read more about Array.prototype.filter() on Mozilla's developer documentation.</p>
+		
+		<p class="date">1 minute read</p>
+	</section>
+	<article>
+		<p>Finding the difference between two sets i.e. Set A and Set B is basically returning a new set that contains values of Set A that don't exist in Set B or vice-versa.</p>
+
+<p>Here's an example:</p>
+
+<pre>
+<code class="js">
+var a = [1,2,3,4,5];
+var b = [1,1,2,3,4];
+</code>
+</pre>
+
+<p>I wrote a shorter implementation using JavaScript's <code>.filter()</code> method:</p>
+
+<pre>
+<code class="js">
+function array_diff(a,b){
+    return a.filter(i => b.indexOf(i) === -1);
+}    
+</code>
+</pre>
+
+<p>Once you execute this method, you'll get the following as a result:</p>
+
+<pre>
+<code class="js">
+var c = array_diff(a,b);
+console.log(c) // returns [5]
+</code>
+</pre>
+
+<h2>BONUS: What does the .filter() method do?</h2>
+
+<p>This method returns a new array with elements that pass the conditions provided by a callback function.</p>
+
+<p>If the conditions aren't passed, you'll receive an empty array.</p>
+
+<p>In this article, <code>(i =&gt; b.indexOf(i) === -1)</code> is considered as the callback function in which the <code>i</code> refers to the index of the current element of array A and is then used as a parameter to check if the element doesn't exist in array B.</p>
+
+<p>The neat thing about this method is that it doesn't mutate on the array that it's being called from.</p>
+
+<p>Read more about <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">Array.prototype.filter()</a> on Mozilla's developer documentation.</p>
+
+	</article>
+</main>
+
+<script src="/static/vendor/jquery/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="/static/vendor/hljs/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

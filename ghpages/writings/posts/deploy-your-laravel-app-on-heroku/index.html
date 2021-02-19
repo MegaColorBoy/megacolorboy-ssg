@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Deploy your Laravel app on Heroku | megacolorboy</title>
+	<link rel="stylesheet" href="/static/css/main.css" type="text/css">
+	<link rel="stylesheet" href="/static/vendor/hljs/css/default.min.css">
+	<!-- Add OG tags  -->
+</head>
+<body class="details-page writings">
+	<!-- Navbar -->
+	<header class="header">
+	<div class="author">
+		<a href="/">
+			<div class="logo"></div>
+			<p>megacolorboy</p>
+		</a>
+	</div>
+	<nav>
+		<ul class="menu">
+			
+				<li><a href="/about">About</a></li>
+			
+				<li><a href="/writings">Writings</a></li>
+			
+				<li><a href="/til">Today I Learned</a></li>
+			
+		</ul>
+	</nav>
+</header>
+
+<div class="article-top">
+	<a class="back" href="/writings"><span>&larr;</span> Back</a>
+	<p class="date">Published on November 29th, 2019</p>	
+</div>
+
+<main>
+	<section class="article-head">
+		<p class="cat">Tutorial</p>
+		<h1>Deploy your Laravel app on Heroku</h1>
+		
+			<p>Learn how to deploy your Laravel application along with a database on Heroku.</p>
+		
+		<p class="date">4 minutes read</p>
+	</section>
+	<article>
+		<p>In my <a href="/posts/getting-started-with-laravel-homestead">previous article</a>, I talked about how to setup your environment for developing your Laravel applications. Today, I'll be talking about deploying your application along with a database on Heroku.</p>
+
+<p>I wrote a simple CRUD application using Laravel but didn't understand on how to host it. I tried to host it on free shared hosting service but apparently, most of them don't support PHP system calls like <mark>proc_open()</mark>. However, if it was a VPS hosting service, it's supported but ain't nobody got time for shelling out cash for a test drive.</p>
+
+<p>As an alternative, I went on google and discovered that Heroku does support my requirements and it worked flawlessly, which is why I thought of sharing this information to others as well.</p>
+
+<p>If you're a developer who's at the early stages of learning Laravel (like me &#x1f606;), then this article is for you.</p>
+
+<h2>Prerequisites</h2>
+
+<p>You'll be doing some minor configurations, so you should be fine as long as you have a stable internet connection, familiar with using the CLI (Command Line Interface) and have some PHP knowledge.</p>
+
+<p>If you're a Windows user, please <a href="https://gitforwindows.org">Git for Windows</a>. Else, if you're a Linux or macOS user, you should be fine.</p>
+
+<h2>How to deploy?</h2>
+
+<p>You can ignore the first two steps if you already know about Heroku and how to work with it but please follow the rest of the steps:</p>
+
+<ol>
+<li><a href="#step-1">Install Heroku</a></li>
+<li><a href="#step-2">Create a Heroku repository</a></li>
+<li><a href="#step-3">Define Procfile</a></li>
+<li><a href="#step-4">Push Laravel app to repository</a></li>
+<li><a href="#step-5">Add configuration variables</a></li>
+<li><a href="#step-6">Setup your database</a></li>
+</ol>
+
+<h3><a id="step-1"></a> Install Heroku CLI</h3>
+
+<p>You can install this directly from the command line by typing the following:</p>
+
+<pre>
+    <code class="bash">
+    sudo snap install heroku --classic
+    </code>
+</pre>
+
+<h3><a id="step-2"></a> Create a Heroku repository</h3>
+
+<p>If you don't have a Heroku account yet, <a href="https://heroku.com">create an account</a> now and once you're done with that, type the following:</p>
+
+<pre>
+    <code class="bash">
+    heroku login
+    </code>
+</pre>
+
+<p>Follow the login instructions from the command line prompt, fill in your login credentials and you'll be in!</p>
+
+<p>Once, you're done with that, create a repository by doing the following:</p>
+
+<pre>
+    <code class="bash">
+    heroku create
+    </code>
+</pre>
+
+<p>In a few seconds, you'll get a randomly generated domain address, which is the link to your Heroku repository. If you can't remember the link, it's fine, you can make changes to it in your Heroku account.</p>
+
+<h3><a id="step-3"></a> Define Procfile</h3>
+
+<p>In case, you don't know what's a Procfile, it's a file that specifies the commands that needs to be executed by the application on startup. You can declare a variety of process types, <a href="https://devcenter.heroku.com/articles/procfile">click here</a> to learn more.</p>
+
+<p>Since our application is PHP based, we need to add some specific command that selects the server on boot, I chose Apache server for this project:</p>
+
+<pre>
+    <code class="bash">
+    cd your_laravel_project
+    touch Procfile
+    echo "web: vendor/bin/heroku-php-apache2 web/" &gt; Procfile
+    </code>
+</pre>
+
+<h3><a id="step-4"></a> Push Laravel app to repository</h3>
+
+<p>It's similar to pushing your code into your GitHub, except this time, it's your Heroku repository. Type the following in your command line:</p>
+
+<pre>
+    <code class="bash">
+    git add .
+    git commit -m "pushing application to repo"
+    git push heroku master
+    </code>
+</pre>
+
+<p>To check if your application is launched, type the following:</p>
+
+<pre>
+    <code class="bash">
+    heroku open
+    </code>
+</pre>
+
+<p>At this stage, you might face <mark>Error 500</mark>, that's normal because we'll take care of that in the next step.</p>
+
+<h3><a id="step-5"></a> Configure your Heroku environment</h3>
+
+<p>We need to add some config variables that changes the way your app behaves. So, let's start adding it:</p>
+
+<pre>
+    <code class="bash">
+    heroku config:set APP_DEBUG=true
+    heroku config:set APP_KEY=yourlaravelapplicationkey
+    heroku config:set APP_URL=https://yourwebsite.herokuapp.com
+    heroku config:set REDIRECT_HTTPS=true
+    </code>
+</pre>
+
+<p>In this configuration, you have done the following:
+- Enabled debug mode
+- Set your Laravel application's base64 encrypted key
+- The website's URL
+- Force HTTPS redirect (Useful, when you're calling external assets that uses HTTPS protocol)</p>
+
+<p><strong>Note:</strong> You can find your <mark>APP_KEY</mark> in your <mark>.env</mark> file that's found in your project directory.</p>
+
+<h3><a id="step-6"></a> Setup your database</h3>
+
+<p>Initially, I built the database on MySQL but I later learnt that Heroku gives a free PostgreSQL starter database. I've never tried PostgreSQL before but it's quite similar to MySQL, so you shouldn't worry about your schema as Laravel supports PostgreSQL and MySQL databases by default.</p>
+
+<p>Type the following in the command line:</p>
+
+<pre>
+    <code class="bash">
+    heroku addons:create heroku-postgresql:hobby-dev
+    </code>
+</pre>
+
+<p>This will create a PostgreSQL database and sets a <mark>DATABASE_URL</mark>, which contains the username and password to the database. To check it, type the following:</p>
+
+<pre>
+    <code class="bash">
+    heroku config
+    </code>
+</pre>
+
+<p>Now, go to your project directory and open the <mark>config/database.php</mark>  file and add the following:</p>
+
+<pre>
+    <code class="php">
+    // Place these variables above
+    $url = parse_url(getenv("DATABASE_URL"));
+    $host = $url["host"]??null;
+    $username = $url["user"]??null;
+    $password = $url["pass"]??null;
+    $database = substr($url["path"], 1)??null;
+
+    // Replace the default connection
+    'default' => env('DB_CONNECTION', 'pgsql_prod'),
+
+    // Under the connections attribute, create a new connection called 'pgsql_prod'
+    'pgsql_production' => [
+        'driver' => 'pgsql',
+        'host' => $host,
+        'database' => $database,
+        'username' => $username,
+        'password' => $password,
+        'charset' => 'utf-8',
+        'prefix' => '',
+        'schema' => 'public',
+    ],
+    </code>
+</pre>
+
+<p>Push the new changes to your repository:</p>
+
+<pre>
+    <code class="bash">
+    git add .
+    git commit -m "configured database"
+    git push heroku master
+    </code>
+</pre>
+
+<p>One last step, we need to create the tables from your schema, so type the following:</p>
+
+<pre>
+    <code class="bash">
+    heroku run php /app/artisan migrate --seed
+    </code>
+</pre>
+
+<p>Follow the command line prompt and voila, you have successfully deployed your Laravel application with a database on Heroku.</p>
+
+<h2>Conclusion</h2>
+
+<p>Well, I hope you found this article really useful especially if you're a beginner. If you do find this useful, please share it with others too!</p>
+
+<p>Stay tuned for more!</p>
+
+	</article>
+</main>
+
+<script src="/static/vendor/jquery/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="/static/vendor/hljs/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

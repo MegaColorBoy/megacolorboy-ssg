@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Build your own toy spellchecker | megacolorboy</title>
+	<link rel="stylesheet" href="/static/css/main.css" type="text/css">
+	<link rel="stylesheet" href="/static/vendor/hljs/css/default.min.css">
+	<!-- Add OG tags  -->
+</head>
+<body class="details-page writings">
+	<!-- Navbar -->
+	<header class="header">
+	<div class="author">
+		<a href="/">
+			<div class="logo"></div>
+			<p>megacolorboy</p>
+		</a>
+	</div>
+	<nav>
+		<ul class="menu">
+			
+				<li><a href="/about">About</a></li>
+			
+				<li><a href="/writings">Writings</a></li>
+			
+				<li><a href="/til">Today I Learned</a></li>
+			
+		</ul>
+	</nav>
+</header>
+
+<div class="article-top">
+	<a class="back" href="/writings"><span>&larr;</span> Back</a>
+	<p class="date">Published on July 19th, 2019</p>	
+</div>
+
+<main>
+	<section class="article-head">
+		<p class="cat">Algorithms</p>
+		<h1>Build your own toy spellchecker</h1>
+		
+			<p>Wrote a simple toy spellchecker using C++ by taking inspiration from Peter Norvig's article.</p>
+		
+		<p class="date">4 minutes read</p>
+	</section>
+	<article>
+		<p>Spellcheckers and autocorrect, aren't they magical? They do feel like magic to me. I mean, how is it able to predict what word do you want to type?</p>
+
+<p>According to <a href="https://norvig.com">Norvig</a>, some of the most talented engineers at Google don't have a complete understanding of how a spellchecker works.</p>
+
+<p>Peter Norvig's <a href="https://norvig.com/spell-correct.html">solution in Python</a> is so elegant and simple, I don't think anyone can write better than that. However, I wanted to know how it works, so I thought of building it to understand it's functionality. Also, an excuse to exercise my C++ skills.</p>
+
+<p>So, are you as curious as I am? If you are, I think you're in the right spot.</p>
+
+<h2>How it works?</h2>
+
+<p>Okay, so think about it? What does a spellchecker do? You type in a misspelled word and it returns a word with the highest probability, right? </p>
+
+<p>Well, there's a little bit more to it.</p>
+
+<h3>Create a word dictionary</h3>
+
+<p>First, we must create a dictionary, in order to do that, you need to extract words from a large piece of text and store it in a Hashmap in which each word will have a word count. In this example, I've used a Sherlock Holmes novel (which is around 6MB). The words are extracted from a novel instead of an actual dictionary because it can be used to create a simple Language Model.</p>
+
+<p><strong>Source code to create a dictionary:</strong></p>
+
+<pre>
+    <code class="cpp">
+    void SpellChecker::extractWords(string &filename)
+    {
+        ifstream infile;
+        infile.open(filename);
+        string x;
+        while(infile &gt;&gt; x)
+        {
+            x = filterAlpha(x);
+            dictionary[x]++;
+        }
+    }
+
+    string SpellChecker::filterAlpha(string &word)
+    {
+        for(int i=0; i&lt;word.size(); i++)
+        {
+            char ch = word[i];
+
+            if(ch &lt; 0)
+            {
+                word[i] = '-';
+            }
+
+            if(isalpha(ch))
+            {
+                word[i] = tolower(ch);
+            }
+        }
+
+        return word;
+    }
+    </code>
+</pre>
+
+<h3>Create a list of candidates</h3>
+
+<p>Second, we must able to predict/hypothesize the ways of editing text when the user types. It could be one of the following types of editing:</p>
+
+<ul>
+<li><a href="#inserts">Adding a letter</a></li>
+<li><a href="#replaces">Replacing a letter</a></li>
+<li><a href="#transposes">Switching two adjacent letters</a></li>
+<li><a href="#deletes">Removing a letter</a></li>
+</ul>
+
+<p>Based on the types of edits a user could make, we can generate a list of possible candidates by creating permutations using these edit methods mentioned above.</p>
+
+<h4><a id="inserts"></a> Adding a letter</h4>
+
+<p>In this method, you generate a list of candidates by inserting a letter in every iteration.</p>
+
+<pre>
+    <code class="cpp">
+    void SpellChecker::inserts(string &word, Vector &result)
+    {
+        for(int i=0; i&lt;word.size()+1; i++)
+        {
+            for(int j=0; j&lt;alphabets.size(); j++)
+            {
+                char ch = alphabets[j];
+                result.push_back(word.substr(0,i) + ch + word.substr(i));
+            }
+        }
+    }
+    </code>
+</pre>
+
+<h4><a id="replaces"></a> Replacing a letter</h4>
+
+<p>In this method, you generate a list of candidates by replacing each character with a letter from a list of alphabets in every iteration.</p>
+
+<pre>
+    <code class="cpp">
+    void SpellChecker::replaces(string &word, Vector &result)
+    {
+        for(int i=0; i&lt;word.size(); i++)
+        {
+            for(int j=0; j&lt;alphabets.size(); j++)
+            {
+                char ch = alphabets[j];
+                result.push_back(word.substr(0,i) + ch + word.substr(i+1));
+            }
+        }
+    }
+    </code>
+</pre>
+
+<h4><a id="transposes"></a> Switching two adjacent letters</h4>
+
+<p>In this method, you generate a list of candidates by switcing two adjacent letters in every iteration. For example: the word "ornage" would look like this: "orange", when the letters "n" and "a" are swapped.</p>
+
+<pre>
+    <code class="cpp">
+    void SpellChecker::transposes(string &word, Vector &result)
+    {
+        for(int i=0; i&lt;word.size()-1; i++)
+        {
+            result.push_back(word.substr(0,i) + word[i+1] + word[i] + word.substr(i+2));
+        }
+    }
+    </code>
+</pre>
+
+<h4><a id="deletes"></a> Removing a letter</h4>
+
+<p>In this method, you generate a list of candidates by removing a letter in every iteration.</p>
+
+<pre>
+    <code class="cpp">
+    void SpellChecker::deletes(string &word, Vector &result)
+    {
+        for(int i=0; i&lt;word.size(); i++)
+        {
+            result.push_back(word.substr(0,i) + word.substr(i+1));
+        }
+    }
+    </code>
+</pre>
+
+<p>All of these methods are called in one wrapper method:</p>
+
+<pre>
+    <code class="cpp">
+    void SpellChecker::edits(string &word, Vector &result)
+    {
+        //Deletion
+        deletes(word, result);
+
+        //Transposition
+        transposes(word, result);
+
+        //Replacement
+        replaces(word, result);
+
+        //Insertion
+        inserts(word, result);
+    }
+    </code>
+</pre>
+
+<h3>Extract the known words</h3>
+
+<p>Third, at this stage, the above step would've generated a huge list of words but 90% of them would be gibberish, so we need to "clean" the list and extract the known words using the dictionary we've created.</p>
+
+<pre>
+    <code class="cpp">
+    void SpellChecker::known_words(Vector& results, Dictionary &candidates)
+    {
+        Dictionary::iterator end = dictionary.end();
+
+        for(int i=0; i&lt;results.size(); i++)
+        {
+            Dictionary::iterator val = dictionary.find(results[i]);
+
+            if(val != end)
+            {
+                candidates[val->first] = val->second;
+            }
+        }
+    }
+    </code>
+</pre>
+
+<p>The <mark>edits()</mark> method apply to words that have a edit distance of 1, what if it was 2 or more? Like if the user typed "the", it could've been "then" or "they". So, all you have to do is create a method that generates a new set of permutations based on the already generated list of edited words and extract the known words.</p>
+
+<pre>
+    <code class="cpp">
+    void SpellChecker::edits2(Vector &result, Dictionary &candidates)
+    {
+        for(int i=0; i&lt;result.size(); i++)
+        {
+            Vector edit2;
+
+            edits(result[i], edit2);
+            known_words(edit2, candidates);
+        }   
+    }
+    </code>
+</pre>
+
+<h3>Display the correct word</h3>
+
+<p>In order to determine the correct word, the following possibilities are considered:</p>
+
+<ol>
+<li>Check if this word is in the dictionary, if it does, display it.</li>
+<li>Generate known words that have an edit distance of 1 and check in the dictionary, if it does, display it.</li>
+<li>Generate known words that have an edit distance of 2 and check in the dictionary, if it does, display it.</li>
+<li>If all else fails, this word is unique or not a known word.</li>
+</ol>
+
+<pre>
+    <code class="cpp">
+    string SpellChecker::correct(string &word)
+    {
+        Vector result;
+        Dictionary candidates;
+
+        string file = "big.txt";
+
+        //1. if it's in the dictionary, display it
+        if(dictionary.find(word) != dictionary.end())
+        {
+            return word;
+        }
+
+        extractWords(file);
+
+        edits(word, result);
+        known_words(result, candidates);
+
+        //2. if it's a known word but one edit away
+        if(candidates.size() &gt; 0)
+        {
+            return max_element(candidates.begin(), candidates.end())-&gt;first;
+        }
+
+        //3. if it's a known word but two edits away
+        edits2(result, candidates);
+
+        if(candidates.size() &gt; 0)
+        {
+            return max_element(candidates.begin(), candidates.end())-&gt;first;
+        }
+
+        //4. Display nothing if it doesn't exist
+        return "This word doesn't exist!";
+    }
+    </code>
+</pre>
+
+<p>However, for conditions 2 and 3, the word displayed would most likely have the highest word frequency in the dictionary.</p>
+
+<h2>Conclusion</h2>
+
+<p>Phew! I hope that wasn't a long read. Although, I've written this on C++, I plan to rewrite this on Javascript for some of my future projects.</p>
+
+<p>To be honest, I don't think it's completely accurate, although, I got most of the words correct when tested.</p>
+
+<p>The source code can be found on my <a href="https://www.github.com/megacolorboy/ToySpellChecker">GitHub</a> repository.</p>
+
+<p>Hope you liked reading this article!</p>
+
+<p>Stay tuned for more!</p>
+
+	</article>
+</main>
+
+<script src="/static/vendor/jquery/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="/static/vendor/hljs/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
