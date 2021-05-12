@@ -582,4 +582,3 @@ Execute app
 """
 if __name__ == "__main__":
     app()
-    # print(generateFileNumber("content/til/"))
