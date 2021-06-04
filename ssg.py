@@ -103,6 +103,10 @@ def generateRSS(section):
 def convertToRawDate(dateTimeStr: str):
     return "{0.year}-{0:%m}-{0:%d}".format(parse(dateTimeStr))
 
+# Get the index of the blog article
+def getFileIndex(path):
+    return int(re.search("content\/\w+\/(\d+).*", path, re.IGNORECASE).group(1))
+
 # Get posts required to render
 # archiveMode is a flag to check if posts can be created in archive mode
 def getPosts(section=""):
@@ -134,8 +138,9 @@ def getPosts(section=""):
                     if post.endswith('.md'):
                         with open(filepath, 'r') as file:
                             postContent = markdown(file.read(), extras=extras)
-                            
+
                             # Fetch metadata of each article
+                            index = getFileIndex(filepath)
                             title = postContent.metadata['title']
                             postDate = postContent.metadata['date']
                             dateRaw = convertToRawDate(postContent.metadata['date'])
@@ -169,12 +174,13 @@ def getPosts(section=""):
                                         'filename': filepath,
                                         'status': status,
                                         'content': postContent,
+                                        'index': index
                                     }
                                 ])
                             bar.next()
 
-    # sort posts by filename and date
-    posts = sorted(posts, key=lambda x: (x['filename'], x['dateRaw']), reverse=True)
+    # sort posts by index and date
+    posts = sorted(posts, key=lambda x: (x['index'], x['dateRaw']), reverse=True)
     return posts
 
 # Archive mode
@@ -469,6 +475,7 @@ def generateFileNumber(path):
     
     # Get existing files
     existingFiles = glob(path + "*.md");
+    maxPrefix = 0
 
     """
     If there are no posts under this section,
@@ -478,12 +485,11 @@ def generateFileNumber(path):
         return 1
     
     """
-    Find the largest number in the directory
-    and increment it for the new post!
+    Find the largest index in the directory
+    and auto-increment it for the new post!
     """
-    prefixes = [filename.replace(path, '')[:2] for filename in existingFiles]
-    biggest_prefix = max(prefixes, key=lambda n: int(n))
-    return int(biggest_prefix) + 1
+    indexes = [getFileIndex(filename) for filename in existingFiles]
+    return max(indexes, key=lambda n: int(n)) + 1
     
 # Generate slug based on the title
 def generateSlug(title: str):
@@ -576,3 +582,4 @@ Execute app
 """
 if __name__ == "__main__":
     app()
+    # print(generateFileNumber("content/til/"))
