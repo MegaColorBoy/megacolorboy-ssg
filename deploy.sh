@@ -5,7 +5,7 @@ echo "Begin deployment..."
 sleep 2
 
 echo "Generating all pages..."
-python3.7 ssg.py build --mode all
+python ssg.py build --mode all
 
 sleep 2
 
