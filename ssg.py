@@ -23,6 +23,7 @@ import bs4
 from bs4 import BeautifulSoup
 import subprocess
 import ssgconfig as cfg
+import htmlentities
 
 # Using Typer as the CLI tool
 app = typer.Typer()
@@ -76,7 +77,7 @@ def generateRSS(section):
                 <pubDate>{date}</pubDate>
                 <description>{summary}</description>
             </item>
-        """.format(title=title, link=link, date=date, summary=summary)
+        """.format(title=htmlentities.encode(title), link=link, date=date, summary=htmlentities.encode(summary))
         )
     
     rssTitle = ' | '.join([section['seoTitle'], cfg.site['name']])
@@ -94,7 +95,7 @@ def generateRSS(section):
             {items}
         </channel>
        </rss>
-    """.format(title=rssTitle, link=rssLink, description=rssDescription, items=''.join(xmlItems).strip())
+    """.format(title=htmlentities.encode(rssTitle), link=rssLink, description=htmlentities.encode(rssDescription), items=''.join(xmlItems).strip())
 
     filepath = xmlDirectory + section['directory'] + '.xml'
     writeToFile(filepath, xml.strip().encode('utf-8'))
@@ -371,7 +372,7 @@ def generatePages(section):
         if 'details' in section['template']:
             generateContent(section)
             # generateJSON(section)
-            # generateRSS(section)
+            generateRSS(section)
 
 # Build all sections
 def buildAllSections():
