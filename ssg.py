@@ -66,7 +66,10 @@ def generateRSS(section):
     for post in posts:
         title = post['title']
         link = '/'.join([cfg.site['url'], postUrl, post['slug']])
-        date = post['dateRaw']
+
+        dateRaw = convertToRawDate(post['date'])
+        date = datetime.fromisoformat(dateRaw).strftime("%a, %d %b %Y %X")
+                
         summary = post['summary']
 
         xmlItems.append("""
@@ -74,7 +77,7 @@ def generateRSS(section):
                 <title>{title}</title>
                 <link>{link}</link>
                 <guid isPermaLink="true">{link}</guid>
-                <pubDate>{date}</pubDate>
+                <pubDate>{date} GMT</pubDate>
                 <description>{summary}</description>
             </item>
         """.format(title=htmlentities.encode(title), link=link, date=date, summary=htmlentities.encode(summary))
@@ -91,7 +94,7 @@ def generateRSS(section):
             <title>{title}</title>
             <link>{link}</link>
             <description>{description}</description>
-            <atom:link href="{link}" rel="self" type="application/rss+xml" />'
+            <atom:link href="{link}" rel="self" type="application/rss+xml" />
             {items}
         </channel>
        </rss>
