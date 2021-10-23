@@ -22,14 +22,14 @@ menu = [
 		'title': 'Today I Learned',
 		'link': '/til',
 	},
+	{
+		'title': 'Resume',
+		'link': '/resume',
+	}
     #{
 	# 	'title': 'Projects',
 	# 	'link': '/projects',
 	#},
-	#{
-	#	'title': 'Resume',
-	#	'link': '/resume',
-	#}
 ]
 
 # Sections of the blog
@@ -84,6 +84,21 @@ sections = [
         'template': {
             'index': 'details.html',
         },
+        'archive': False,
+        'root': False,
+        'homepage': False,
+        'pagination': False
+    },
+    {
+        'title': 'Resume',
+        'directory': 'resume',
+        'seoTitle': "Resume",
+        'seoDescription': "A simple looking resume for the recruiters.",
+        'template': {
+            'index': 'resume.html',
+        },
+        'dataType': "json",
+        'jsonData': "data/resume.json",
         'archive': False,
         'root': False,
         'homepage': False,

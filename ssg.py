@@ -9,6 +9,7 @@ Updated on: 19-02-2021
 import os, random, sys
 from glob import glob
 import json
+from collections import namedtuple
 from datetime import datetime, date
 from dateutil.parser import parse
 from jinja2 import Environment, PackageLoader
@@ -110,6 +111,13 @@ def convertToRawDate(dateTimeStr: str):
 # Get the index of the blog article
 def getFileIndex(path):
     return int(re.search("content\/\w+\/(\d+).*", path, re.IGNORECASE).group(1))
+
+def jsonDecoder(jsonDict):
+    return namedtuple('X', jsonDict.keys())(*jsonDict.values())
+
+# Convert JSON Data to an Object
+def convertJsonToPythonObject(jsonDict):
+    return json.loads(json.dumps(jsonDict), object_hook=jsonDecoder)
 
 # Get posts required to render
 # archiveMode is a flag to check if posts can be created in archive mode
@@ -256,17 +264,29 @@ def generateIndexWithPaginator(section, postsPerPage):
 # Generate index page without pagination links
 def generateIndexWithoutPaginator(section):
     template = env.get_template(section['template']['index'])
-    renderedHtml = template.render(
-        bodyClass= "details-page" if len(section['posts']) == 1 else "",
-        posts = section['posts'] if not isArchiveModeEnabled(section) else section['archivePosts'], 
-        post = section['posts'][0],
-        page = {
-            'title': section['seoTitle'], 
-            'description': section['seoDescription']
-        }, 
-        site = cfg.site, 
-        menu = cfg.menu
-    )
+
+    # Markdown Data
+    if 'dataType' not in section or 'markdown' in section['dataType']:
+        renderedHtml = template.render(
+            bodyClass= "details-page" if len(section['posts']) == 1 else "",
+            posts = section['posts'] if not isArchiveModeEnabled(section) else section['archivePosts'], 
+            post = section['posts'][0],
+            page = {
+                'title': section['seoTitle'], 
+                'description': section['seoDescription']
+            }, 
+            site = cfg.site, 
+            menu = cfg.menu
+        )
+    # JSON Data
+    elif 'dataType' in section and 'json' in section['dataType']:
+        renderedHtml = template.render(
+            data = convertJsonToPythonObject(section['jsonData']),
+            page = {
+                'title': section['seoTitle'], 
+                'description': section['seoDescription']
+            },
+        )
     
     # if the current section is the root of the blog
     if section['root']:
@@ -377,6 +397,27 @@ def generatePages(section):
             # generateJSON(section)
             generateRSS(section)
 
+# Generate JSON based pages -- mainly created for the Resume section
+def generateJsonSection(section):
+    message = "Error: Make sure that the JSON data for the {section} section exists".format(section=section['title'])
+
+    # Check if this JSON data exists for this section
+    if 'jsonData' in section:
+        if os.path.exists(section['jsonData']):
+            # Fetch data
+            with open(section['jsonData']) as jsonFile:
+                section['jsonData'] = json.load(jsonFile)
+
+            # Delete section
+            directoryToDelete = "output/{directory}/".format(directory=section['directory'])
+
+            # Generate Page
+            generateIndexPage(section)
+
+            message = "{section} Created".format(section=section['title'])
+        
+    typer.echo(message)
+
 # Build all sections
 def buildAllSections():
     for section in cfg.sections:
@@ -384,13 +425,20 @@ def buildAllSections():
 
 # Build a specific section
 def buildSection(section):
-    section['posts'] = getPosts(section['directory'])
 
-    # Create archive listing if archive mode is enabled
-    if isArchiveModeEnabled(section):
-        section['archivePosts'] = archivePosts(section['posts'])
+    # If the content is JSON data based
+    if 'dataType' in section and section['dataType'] == "json":
+        generateJsonSection(section)
 
-    generatePages(section)
+    # If the content is Markdown based
+    else:
+        section['posts'] = getPosts(section['directory'])
+
+        # Create archive listing if archive mode is enabled
+        if isArchiveModeEnabled(section):
+            section['archivePosts'] = archivePosts(section['posts'])
+
+        generatePages(section)
 
 def isArchiveModeEnabled(section):
     return True if 'archive' in section and section['archive'] else False
