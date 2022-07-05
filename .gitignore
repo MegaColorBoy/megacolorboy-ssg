@@ -1,8 +1,5 @@
 /venv
-/content
-test.py
 /__pycache__
 /output
 /templates-old
-/templates
 /ghpages

@@ -5,106 +5,84 @@ site = {
     "name": "megacolorboy",
     "url": "https://www.megacolorboy.com",
     "author": "Abdush Shakoor",
-    "theme": "minimal-theme/",
-    #"color": "dark", 
+    "theme": "minimalist-v2",
+    "logo": "logo.gif",
+    "enable_archive": True,
+    "enable_tags": False,
+    "export_rss_feed": False,
+    "export_json": False
 }
 
-menu = [
+# Sections configuration
+sections = [
 	{
+        'title': 'Home',
+        'url': '/',
+        'seo': {
+            'title': "Abdush Shakoor's Weblog",
+            'description': "Writings, experiments & ideas"
+        },
+        'page_type': 'main',
+        'display_in_menu': True,
+        'enable_listing': True,
+        'enable_pagination': True
+    },
+    {
 		'title': 'About',
-		'link': '/about',
+		'url': '/about',
+        'content_directory': "about",
+        'seo': {
+            'title': "A little bit about myself",
+            'description': "Here's a not-so-formal kind of introduction about myself."
+        },
+        'page_type': 'single',
+        'display_in_menu': True
 	},
 	{
 		'title': 'Writings',
-		'link': '/writings',
+		'url': '/writings',
+        'content_directory': "writings",
+        'seo': {
+            'title': "Writings",
+            'description': "Sometimes, I write stuff about computers, math, technology & design."
+        },
+        'page_type': 'multiple',
+        'display_in_menu': True,
+        'enable_listing': True,
+        'enable_pagination': True,
+        'show_in_recent_articles': True
 	},
 	{
 		'title': 'Today I Learned',
-		'link': '/til',
-	},
-	{
-		'title': 'Resume',
-		'link': '/resume',
+		'url': '/til',
+        'content_directory': "til",
+        'seo': {
+            'title': "Today I Learned",
+            'description': "A collection of short write-ups on the things that I learn on a day-to-day basis."
+        },
+        'page_type': 'multiple',
+        'display_in_menu': True,
+        'enable_listing': True,
+        'enable_pagination': True,
+        'show_in_recent_articles': True
 	}
-    #{
-	# 	'title': 'Projects',
-	# 	'link': '/projects',
-	#},
+	# {
+	# 	'title': 'Resume',
+	# 	'url': '/resume',
+ #        'content_directory': "resume",
+ #        'data_type': 'json',
+ #        'seo': {
+ #            'title': "Resume",
+ #            'description': "My resume"
+ #        },
+ #        'page_type': 'custom',
+ #        'display_in_menu': False,
+ #        'template': {
+ #            'custom': "resume.html"
+ #        }
+	# }
 ]
 
-# Sections of the blog
-sections = [
-    {
-        'title': 'Home',
-        'directory': 'home',
-        'seoTitle': "Abdush Shakoor's Blog",
-        'seoDescription': "A not-so-typical software developer & designer with a passion for computer science, mathematics, software engineering, digital design & technology.",
-        'template': {
-            'index': 'index.html',
-        },
-        'sectionsToShow': ['writings', 'til'],
-        'root': False,
-        'homepage': True,
-        'pagination': False   
-    },
-    {
-        'title': 'Writings',
-        'directory': 'writings',
-        'seoTitle': "Writings",
-        'seoDescription': "Sometimes, I write stuff about computers, math, technology & design.",
-        'template': {
-            'index': 'listing.html',
-            'details': 'details.html',
-        },
-        # 'multiple': ['writings', 'til'],
-        "archive": True,
-        'root': False,
-        'homepage': False,
-        'pagination': False
-    },
-    {
-        'title': 'TIL Posts',
-        'directory': 'til',
-        'seoTitle': "Today I Learned",
-        'seoDescription': "A collection of short write-ups on the things that I learn on a day-to-day basis.",
-        'template': {
-            'index': 'listing.html',
-            'details': 'details.html',
-        },
-        "archive": True,
-        'root': False,
-        'homepage': False,
-        'pagination': False
-    },
-    {
-        'title': 'About page',
-        'directory': 'about',
-        'seoTitle': "A little bit about myself",
-        'seoDescription': "Here's a not-so-formal kind of introduction about myself.",
-        'template': {
-            'index': 'details.html',
-        },
-        'archive': False,
-        'root': False,
-        'homepage': False,
-        'pagination': False
-    },
-    {
-        'title': 'Resume',
-        'directory': 'resume',
-        'seoTitle': "Resume",
-        'seoDescription': "A simple looking resume for the recruiters.",
-        'template': {
-            'index': 'resume.html',
-        },
-        'dataType': "json",
-        'jsonData': "data/resume.json",
-        'archive': False,
-        'root': False,
-        'homepage': False,
-        'pagination': False
-    }
-]
 
 # The template for storing meta information of the blog post
 METATEMPLATE = """
@@ -112,6 +90,7 @@ title: {title}
 date: {date}
 slug: {slug}
 category: {category}
+tags: your, tags, here
 summary: Write your summary here.
 status: inactive
 
