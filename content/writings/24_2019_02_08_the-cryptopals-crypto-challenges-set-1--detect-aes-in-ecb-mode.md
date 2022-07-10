@@ -47,8 +47,7 @@ Well, the solution is pretty much trivial, so here's the solution:
 
 **Implementation of the method(s):**
 
-<pre>
-    <code class="cpp">
+```cpp
     //Detect ECB Mode in AES Cipher
     bool CryptoLib::detect_ecb_mode(string str, int keyLength)
     {
@@ -86,13 +85,11 @@ Well, the solution is pretty much trivial, so here's the solution:
         }
         return false;
     }
-    </code>
-</pre>
+```
 
 **Final code:**
 
-<pre>
-    <code class="cpp">
+```cpp
     //The Cryptopals Crypto Challenges - Set 1 Challenge 8
     #include "crypto.h"
 
@@ -119,8 +116,7 @@ Well, the solution is pretty much trivial, so here's the solution:
             count++;
         }
     }
-    </code>
-</pre>
+```
 
 ***Note: This solution and the library named <mark>crypto.h</mark> was
 built using the C++ programming language. The source code for this

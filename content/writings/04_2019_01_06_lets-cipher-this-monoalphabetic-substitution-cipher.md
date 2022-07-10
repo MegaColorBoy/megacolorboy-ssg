@@ -27,44 +27,36 @@ Atbash Cipher is a monoalphabetic substitution cipher which is used, originally,
 ### Algorithm
 The algorithm is pretty straight-forward, if you have a plaintext of ***"ABCDEFGHIJKLMNOPQRSTUVWXYZ"***, then the ciphertext would be the exact reverse of the plaintext: ***"ZYXWVUTSRQPONMLKJIHGFEDCBA"***.
 
-<pre>
-    <code class="plaintext">
+```plaintext
     original: ABCDEFGHIJKLMNOPQRSTUVWXYZ
     reversed: ZYXWVUTSRQPONMLKJIHGFEDCBA
-    </code>
-</pre>
+```
 
 ### Encryption
 Encrypting the message is very simple, you just have to replace every letter of the plaintext with the ciphertext, for example, ***'A'*** would become ***'Z'*** and ***'T'*** would become ***'G'*** and the whole message would be encrypted in this manner.
 
-<pre>
-    <code class="plaintext">
+```plaintext
     plaintext:  ATTACKONTITAN
     ciphertext: ZGGZXPLMGRGZM
-    </code>
-</pre>
+```
 
 ### Decryption
 Decrypting the Atbash Cipher is the opposite of it's encryption process, for example, ***'Z'*** would become ***'A'*** and ***'G'*** would become ***'T'*** and the whole message would be decrypted in this manner.
 
-<pre>
-    <code class="plaintext">
+```plaintext
     ciphertext: ZGGZXPLMGRGZM
     plaintext:  ATTACKONTITAN
-    </code>
-</pre>
+```
 
 ### Cryptanalysis
 As you might have understood, this is not a secure cipher and in fact, can be broken very easily, assuming, that the ciphertext has been enciphered using Substitution Cipher or by determining the key by trying out each and every letter i.e. using hill-climbing technique.
 
 However, it can be a bit secure if you add some numbers and punctuation to the plaintext alphabets:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     original:  .,?!ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
     reversed: 9876543210ZYXWVUTSRQPONMLKJIHGFEDCBA!?,.
-    </code>
-</pre>
+```
 
 ---
 
@@ -75,56 +67,46 @@ Caesar Cipher is one of the most widely known and simplest substitution ciphers 
 ### Algorithm
 The ciphertext is made by aligning two alphabets, so in this case, I will be using a shift of 15 i.e. letter ***'A'*** would be letter ***'P'*** and letter ***'B'*** would be letter ***'Q'*** and so on.
 
-<pre>
-    <code class="plaintext">
+```plaintext
     plaintext:  ABCDEFGHIJKLMNOPQRSTUVWXYZ
     ciphertext: PQRSTUVWXYZABCDEFGHIJKLMNO
-    </code>
-</pre>
+```
 
 ### Encryption
 The encryption process is represented using [Modular Artihmetic](https://en.wikipedia.org/wiki/Modular_arithmetic) by transforming the letters into it's positions and the mathematical formula is:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     E(x) = (x + n) mod 26
-    </code>
-</pre>
+```
 
 By using this formula, we can encrypt our plaintext with a shift of 15:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     shifts(n): 15
 
     plaintext:               H  E  L  L  O  W  O  R  L  D
     integers(x):             7  4  11 11 14 22 14 17 11 3
     E(x) = (x + 15) % 26:    22 19 0  0  3  11 3  6  0  18
     ciphertext:              W  T  A  A  D  L  D  G  A  S
-    </code>
-</pre>
+```
 
 ### Decryption
 The decryption, again, is done is reverse with a shift of 15 using Modular Arithmetic i.e. letter ***'P'*** would be letter ***'A'*** and letter ***'Q'*** would be letter ***'B'*** and so on. The mathematical formula for deciphering the text is:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     D(x) = (x - n) mod 26
-    </code>
-</pre>
+```
 
 We can use this formula to decrypt the ciphertext:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     shifts(n): 15
 
     ciphertext:              W  T  A  A  D  L  D  G  A  S    
     integers(x):             22 19 0  0  3  11 3  6  0  18
     D(x) = (x - 15) % 26:    7  4  11 11 14 22 14 17 11 3
     plaintext:               H  E  L  L  O  W  O  R  L  D
-    </code>
-</pre>
+```
 
 ### Cryptanalysis
 Caesar Cipher is insecure and can be easily broken in two scenarios:
@@ -143,55 +125,44 @@ Affine Cipher is a type of monoalphabetic substitution cipher but it's different
 ### Algorithm
 The letters are first mapped to the integers in the range of ***0, 1, ..., m-1(m = the length of the alphabets used)***, which then uses a [Modular Arithmetic](https://en.wikipedia.org/wiki/Modular_arithmetic) method to convert the integers to it's corresponding letter.
 
-<pre>
-    <code class="plaintext">
+```plaintext
     alphabets: A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z
     integers:  0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
-    </code>
-</pre>
+```
 
 ### Encryption
 The mathematical formula for encrytion is:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     E(x) = (ax + b) mod m    
-    </code>
-</pre>
+```
 
 In this formula, ***a*** and ***b*** are the keys of the cipher and ***m*** is the size of the alphabet. The key ***a*** must be chosen in such a way that ***a*** and ***m*** are [coprime](https://en.wikipedia.org/wiki/Coprime_integers) i.e. "***a*** should not have any common factors with ***m***."
 
 ### Decryption
 Unlike the encryption formula, the decryption process of the ciphertext is performed inversely to retrieve the plaintext:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     D(x) = c(y - b) mod m
-    </code>
-</pre>
+```
 
 In this formula, ***c*** is the [Modular Multiplicative Inverse](https://en.wikipedia.org/wiki/Modular_multiplicative_inverse) of ***a***. In order to find the multiplicative inverse of ***a***, you need to find a number ***x*** in such a way that it satisfies the following equation:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     ax = 1 (mod m)    
-    </code>
-</pre>
+```
 
 ### Explanation
 Let's say you want to encrypt a plaintext that says "HELLOWORLD" with ***a = 5*** and ***b = 8***. The reason I chose "5" for ***a*** is because it has to be relatively prime with 26.
 
-<pre>
-    <code class="plaintext">
+```plaintext
     plaintext:    H  E  L  L  O  W  O  R  L  D
     integers(x):  7  4  11 11 14 22 14 17 11 3
-    </code>
-</pre>
+```
 
 Now, you have to take each value of x and convert it to a different letter using the encryption formula mentioned above:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     key a = 5
     key b = 8
 
@@ -199,24 +170,20 @@ Now, you have to take each value of x and convert it to a different letter using
     integers(x):             7  4  11 11 14 22 14 17 11 3
     E(x) = 5(x) + 8 % 26:    17 2  11 11 0  14 0  15 11 23
     ciphertext:              R  C  L  L  A  O  A  P  L  X        
-    </code>
-</pre>
+```
 
 Okay, let's decrypt the ciphertext that says "RCLLAOAPLX" to "HELLOWORLD" using the same keys ***(a = 5, b = 8)***:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     ciphertext:   R  C  L  L  A  O  A  P  L  X    
     integers(y):  17 2  11 11 0  14 0  15 11 23       
-    </code>
-</pre>
+```
 
 Before we proceed, we need to find the modular inverse of ***a***, in this case, it would be 21. You can find the modular inverse using the [Extended Euclidean](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm) algorithm, which uses [Greatest Common Divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) ***(GCD)*** of both ***a*** and ***m***. If ***a*** has a modular inverse modulo ***m***, then the GCD must be 1.
 
 Once you find ***a***, we can start decrypting the ciphertext:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     key a = 5
     key b = 8
 
@@ -224,8 +191,7 @@ Once you find ***a***, we can start decrypting the ciphertext:
     integers(y):             17 2  11 11 0  14 0  15 11 23
     D(y) = a(y - 8) % 26:    7  4  11 11 14 22 14 17 11 3
     plaintext:               H  E  L  L  O  W  O  R  L  D
-    </code>
-</pre>
+```
 
 ### Cryptanalysis
 Affine Cipher is known to be a very insecure cipher as it's just another version of Caesar Cipher, which is due to it being a monoalphabetic substitution cipher. If a cryptanalyst is able to discover 2 or more common characters using techniques like [Brute Force](https://en.wikipedia.org/wiki/Brute-force_attack), [Frequency Analysis](https://en.wikipedia.org/wiki/Frequency_analysis) or maybe even guessing, the key can then be obtained via solving a [Simultaneous Equation](https://en.wikipedia.org/wiki/Simultaneous_equations), since ***a*** and ***m*** are coprime, it can discard any wrong keys easily in an automated program.

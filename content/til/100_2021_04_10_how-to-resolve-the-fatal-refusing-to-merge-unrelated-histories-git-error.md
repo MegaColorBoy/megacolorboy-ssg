@@ -14,10 +14,8 @@ If you are facing this, chances are that:
 
 Well, you can easily resolve by passing the `--allow-unrelated-histories` flag when pulling the latest updates from the remote repository:
 
-<pre>
-<code class="bash">
+```bash
 git pull origin master --allow-unrelated-histories
-</code>
-</pre>
+```
 
 Hope you found this useful!

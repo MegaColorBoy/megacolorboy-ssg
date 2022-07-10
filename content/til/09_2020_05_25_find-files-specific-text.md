@@ -6,11 +6,9 @@ category: Terminal
 This helped me a lot whenever I'm in a remote server trying to find a keyword or specific text amongst a bunch of files.
 
 This command will save you a lot of time:
-<pre>
-<code class="bash">
+```bash
 grep -rwn [path] -e 'pattern'
-</code>
-</pre>
+```
 
 - `r` stands for recursion
 - `n` displays the line number

@@ -23,7 +23,7 @@ sections = [
             'description': "Writings, experiments & ideas"
         },
         'page_type': 'main',
-        'display_in_menu': True,
+        'display_in_menu': False,
         'enable_listing': True,
         'enable_pagination': True
     },
@@ -38,6 +38,17 @@ sections = [
         'page_type': 'single',
         'display_in_menu': True
 	},
+    {
+        'title': 'Archive',
+        'url': '/archive',
+        'content_directory': "archive",
+        'seo': {
+            'title': "Archive",
+            'description': "Here's a collection of articles that I've written over the years."
+        },
+        'page_type': 'archive',
+        'display_in_menu': True
+    },
 	{
 		'title': 'Writings',
 		'url': '/writings',
@@ -47,7 +58,7 @@ sections = [
             'description': "Sometimes, I write stuff about computers, math, technology & design."
         },
         'page_type': 'multiple',
-        'display_in_menu': True,
+        'display_in_menu': False,
         'enable_listing': True,
         'enable_pagination': True,
         'show_in_recent_articles': True
@@ -61,7 +72,7 @@ sections = [
             'description': "A collection of short write-ups on the things that I learn on a day-to-day basis."
         },
         'page_type': 'multiple',
-        'display_in_menu': True,
+        'display_in_menu': False,
         'enable_listing': True,
         'enable_pagination': True,
         'show_in_recent_articles': True

@@ -23,45 +23,35 @@ If you're using Linux, just do the following:
 
 ### 1. Set up your timezone
 You can look up for your timezones by executing the following:
-<pre>
-<code class="bash">
+```bash
 timedatectl list-timezones | less
-</code>
-</pre>
+```
 
 Once, you've found your timezone, execute the following by replacing `Continent/Country` with your timezone:
-<pre>
-<code class="bash">
+```bash
 timedatectl set-timezone Continent/Country
-</code>
-</pre>
+```
 
 ### 2. Manually set your local time
 Execute the following to set up your time, locally on your system:
-<pre>
-<code class="bash">
+```bash
 timedatectl set-time "yyyy-MM-dd hh:mm:ss"
-</code>
-</pre>
+```
 
 ### 3. Set the hardware clock from the system clock
 The following command sets the hardware clock from the system clock:
-<pre>
-<code class="bash">
+```bash
 hwclock --systohc
-</code>
-</pre>
+```
 
 Now, that you've executed them, you should be able to view the correct time on your system by executing `timedatectl status` and you should see something like this:
-<pre>
-<code class="bash">
+```bash
                Local time: Sun 2020-06-14 21:04:04 +04
            Universal time: Sun 2020-06-14 17:04:04 UTC
                  RTC time: Sun 2020-06-14 17:04:05    
                 Time zone: Asia/Dubai (+04, +0400)    
 System clock synchronized: no                         
               NTP service: inactive 
-</code>
-</pre>
+```
 
 Although, this issue was time-related, you may face the same kind of error for various other reasons. Try reading more on how to [troubleshoot](https://support.mozilla.org/en-US/kb/troubleshoot-time-errors-secure-websites) errors like these from Mozilla's official documentation.

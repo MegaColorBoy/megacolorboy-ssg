@@ -12,42 +12,32 @@ Luckily, I found these two packages, which turned out to be quite productive:
 2. [orangehill/iseed](https://github.com/orangehill/iseed)
 
 Execute the following commands to install the packages mentioned above:
-<pre>
-<code class="bash">
+```bash
 composer require --dev "kitloong/laravel-migrations-generator"
 composer require orangehill/iseed
-</code>
-</pre>
+```
 
 ## Generate migrations using existing database
 You can generate your migrations for all tables like this:
-<pre>
-<code class="bash">
+```bash
 php artisan migrate:generate
-</code>
-</pre>
+```
 
 Or, you can specify the tables you wish to generate:
-<pre>
-<code class="bash">
+```bash
 php artisan migrate:generate table1,table2,table3
-</code>
-</pre>
+```
 
 ## Generate new seeds using existing database
 You can generate seeds for a single table like this:
-<pre>
-<code class="bash">
+```bash
 php artisan iseed table_name
-</code>
-</pre>
+```
 
 And for multiple tables, you can do this:
 
-<pre>
-<code class="bash">
+```bash
 php artisan iseed table1,table2,table3
-</code>
-</pre>
+```
 
 Hope you find this tip useful!.

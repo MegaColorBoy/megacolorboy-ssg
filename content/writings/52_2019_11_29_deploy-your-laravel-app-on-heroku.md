@@ -30,31 +30,25 @@ You can ignore the first two steps if you already know about Heroku and how to w
 ### <a id="step-1"></a> Install Heroku CLI
 You can install this directly from the command line by typing the following:
 
-<pre>
-    <code class="bash">
+```bash
     sudo snap install heroku --classic
-    </code>
-</pre>
+```
 
 ### <a id="step-2"></a> Create a Heroku repository
 
 If you don't have a Heroku account yet, [create an account](https://heroku.com) now and once you're done with that, type the following:
 
-<pre>
-    <code class="bash">
+```bash
     heroku login
-    </code>
-</pre>
+```
 
 Follow the login instructions from the command line prompt, fill in your login credentials and you'll be in!
 
 Once, you're done with that, create a repository by doing the following:
 
-<pre>
-    <code class="bash">
+```bash
     heroku create
-    </code>
-</pre>
+```
 
 In a few seconds, you'll get a randomly generated domain address, which is the link to your Heroku repository. If you can't remember the link, it's fine, you can make changes to it in your Heroku account.
 
@@ -63,46 +57,38 @@ In case, you don't know what's a Procfile, it's a file that specifies the comman
 
 Since our application is PHP based, we need to add some specific command that selects the server on boot, I chose Apache server for this project:
 
-<pre>
-    <code class="bash">
+```bash
     cd your_laravel_project
     touch Procfile
     echo "web: vendor/bin/heroku-php-apache2 web/" &gt; Procfile
-    </code>
-</pre>
+```
 
 ### <a id="step-4"></a> Push Laravel app to repository
 It's similar to pushing your code into your GitHub, except this time, it's your Heroku repository. Type the following in your command line:
 
-<pre>
-    <code class="bash">
+```bash
     git add .
     git commit -m "pushing application to repo"
     git push heroku master
-    </code>
-</pre>
+```
 
 To check if your application is launched, type the following:
 
-<pre>
-    <code class="bash">
+```bash
     heroku open
-    </code>
-</pre>
+```
 
 At this stage, you might face <mark>Error 500</mark>, that's normal because we'll take care of that in the next step.
 
 ### <a id="step-5"></a> Configure your Heroku environment
 We need to add some config variables that changes the way your app behaves. So, let's start adding it:
 
-<pre>
-    <code class="bash">
+```bash
     heroku config:set APP_DEBUG=true
     heroku config:set APP_KEY=yourlaravelapplicationkey
     heroku config:set APP_URL=https://yourwebsite.herokuapp.com
     heroku config:set REDIRECT_HTTPS=true
-    </code>
-</pre>
+```
 
 In this configuration, you have done the following:
 - Enabled debug mode
@@ -117,23 +103,18 @@ Initially, I built the database on MySQL but I later learnt that Heroku gives a 
 
 Type the following in the command line:
 
-<pre>
-    <code class="bash">
+```bash
     heroku addons:create heroku-postgresql:hobby-dev
-    </code>
-</pre>
+```
 
 This will create a PostgreSQL database and sets a <mark>DATABASE_URL</mark>, which contains the username and password to the database. To check it, type the following:
 
-<pre>
-    <code class="bash">
+```bash
     heroku config
-    </code>
-</pre>
+```
 
 Now, go to your project directory and open the <mark>config/database.php</mark>  file and add the following:
-<pre>
-    <code class="php">
+```php
     // Place these variables above
     $url = parse_url(getenv("DATABASE_URL"));
     $host = $url["host"]??null;
@@ -155,24 +136,19 @@ Now, go to your project directory and open the <mark>config/database.php</mark> 
         'prefix' => '',
         'schema' => 'public',
     ],
-    </code>
-</pre>
+```
 
 Push the new changes to your repository:
-<pre>
-    <code class="bash">
+```bash
     git add .
     git commit -m "configured database"
     git push heroku master
-    </code>
-</pre>
+```
 
 One last step, we need to create the tables from your schema, so type the following:
-<pre>
-    <code class="bash">
+```bash
     heroku run php /app/artisan migrate --seed
-    </code>
-</pre>
+```
 
 Follow the command line prompt and voila, you have successfully deployed your Laravel application with a database on Heroku.
 

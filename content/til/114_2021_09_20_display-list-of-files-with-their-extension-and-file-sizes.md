@@ -8,18 +8,14 @@ Last month, I was trying to free up some space in my company servers and I reali
 
 So, I wrote the following command to list files by their extension:
 
-<pre>
-<code class="bash">
+```bash
 find . -iname \*.extension -exec du -sh {} \; &gt; file-list.txt
-</code>
-</pre>
+```
 
 And later to determine which files are the largest, I executed this command to sort the list by file size:
 
-<pre>
-<code class="bash">
+```bash
 sort -rh file-list.txt > newfile.txt
-</code>
-</pre>
+```
 
 Hope this tip helps you too! &#x1F604;

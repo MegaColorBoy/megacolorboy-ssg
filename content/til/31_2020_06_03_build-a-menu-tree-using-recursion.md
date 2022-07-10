@@ -14,8 +14,7 @@ I always loved the idea and simplicity of using recursion. So, I thought of exer
 
 The following example is written in PHP:
 
-<pre>
-<code class="php">
+```php
 
 class FooController extends Controller {
     protected $menuHTML = "";
@@ -80,12 +79,10 @@ class FooController extends Controller {
     }
 }
 
-</code>
-</pre>
+```
 
 Once you run it, you'll see something like this:
-<pre>
-<code class="html">
+```html
 &lt;ul class="mainmenu"&gt;
     &lt;li class="item"&gt;&lt;a href="/item-1"&gt;Item 1&lt;/a&gt;&lt;/li&gt;
     &lt;li class="item"&gt;&lt;a href="/item-2"&gt;Item 2&lt;/a&gt;
@@ -97,7 +94,6 @@ Once you run it, you'll see something like this:
     &lt;li class="item"&gt;&lt;a href="/item-3"&gt;Item 3&lt;/a&gt;&lt;/li&gt;
     &lt;li class="item"&gt;&lt;a href="/item-4"&gt;Item 4&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-</code>
-</pre>
+```
 
 There a lot of ways to achieve this same result using recursion but it sure is easier to read, scalable and extensible, ain't it?

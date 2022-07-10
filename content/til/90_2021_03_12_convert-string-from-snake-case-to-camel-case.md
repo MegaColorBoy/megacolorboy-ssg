@@ -8,10 +8,8 @@ Thought of sharing a simple regular expression that I use on VIM to convert **sn
 
 Here's the pattern for you to use:
 
-<pre>
-<code class="vim">
+```vim
 :s/ \([a-zA-Z]\)/\u\1/g
-</code>
-</pre>
+```
 
 Hope you found this tip useful!

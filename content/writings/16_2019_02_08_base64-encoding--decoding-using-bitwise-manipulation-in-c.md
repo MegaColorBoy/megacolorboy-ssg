@@ -104,8 +104,7 @@ Hexadecimal characters is equal to 2 Base64 characters, since the least
 common multiple between 4 and 6 is 12. In order to do this, we are going
 to make use of our Bitwise Operators, let's have a look at the method:
 
-<pre>
-    <code class="cpp">
+```cpp
     //Base64 Encoder
     string CryptoLib::b64_encode(string str)
     {
@@ -176,8 +175,7 @@ increasing speed and efficiency and of course, keeping it simple.
 
 Let's take a look at the method:
 
-<pre>
-    <code class="cpp">
+```cpp
     //Base64 Decoder
     string CryptoLib::b64_decode(string str)
     {
@@ -244,8 +242,7 @@ Let's take a look at the method:
 
         return newStr;
     }
-    </code>
-</pre>
+```
 
 In the final code, I just converted an ASCII string to Base64 string,
 let's have a look at it:
@@ -253,8 +250,7 @@ let's have a look at it:
 **Methods to convert ASCII string to Hexadecimal string and
 vice-versa:**
 
-<pre>
-    <code class="cpp">
+```cpp
     //Convert ASCII to HEX
     string CryptoLib::con_ascii_2_hex(string str)
     {
@@ -279,13 +275,11 @@ vice-versa:**
         }
         return newStr;
     }
-    </code>
-</pre>
+```
 
 **Final Code:**
 
-<pre>
-    <code class="cpp">
+```cpp
     //CryptoPals Set 1 Challenge 1
     #include "crypto.h"
 
@@ -301,8 +295,7 @@ vice-versa:**
         cout << "DECODED: " << dec << endl;
         return 0;
     }
-    </code>
-</pre>
+```
 
 ***Note: This solution and the library named <mark>crypto.h</mark> was
 built using the C++ programming language. The source code for this

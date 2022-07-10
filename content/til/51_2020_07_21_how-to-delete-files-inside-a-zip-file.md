@@ -9,17 +9,13 @@ Ever compressed your project directory but forgot to delete that useless file or
 Here's a quick solution you can try:
 
 If you want to delete a file inside a `.zip` file, try this:
-<pre>
-<code class="bash">
+```bash
 zip --delete file.zip "file.ext"
-</code>
-</pre>
+```
 
 And if you want to delete a folder, try this:
-<pre>
-<code class="bash">
+```bash
 zip --delete file.zip "folder/*"
-</code>
-</pre>
+```
 
 Hope this helps you out!

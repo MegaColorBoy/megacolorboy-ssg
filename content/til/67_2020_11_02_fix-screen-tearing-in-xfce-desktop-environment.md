@@ -13,41 +13,33 @@ After a few minutes of research, I was able to fix it. Here are the steps:
 **Note: This is done on Ubuntu 18.04 Bionic Beaver**
 
 If you dont have the package `inxi` installed in your system, do it right now:
-<pre>
-<code class="bash">
+```bash
 sudo apt install inxi
-</code>
-</pre>
+```
 
 After you're done installing, type the following command to find out which graphics you're using:
-<pre>
-<code class="bash">
+```bash
 inxi -G
-</code>
-</pre>
+```
 
 If you're using an Intel Graphics Driver, you'll probably get something like this:
-<pre>
-<code class="bash">
+```bash
 Graphics:  Card: Intel Device 5926
            Display Server: x11 (X.Org 1.19.6 ) driver: i915 Resolution: 1920x1080@60.00hz
            OpenGL: renderer: Mesa DRI Intel Iris Plus Graphics 640 (Kaby Lake GT3e) (KBL GT3)
            version: 4.6 Mesa 20.0.8
-</code>
-</pre>
+```
 You can try go to **Settings Manager->Window Manager Tweaks->Compositor" and enable **Synchronize drawing to the vertical blank**. From [what I've read](https://techstop.github.io/fix-screen-tearing-xfce/), if you do that, it should stop but it didn't do anything for me.
 
 If the above technique didn't work, go to `/usr/shar/X11/xorg.conf.d/` and create a file for your graphics card named `10-intel.conf`.
 
 Copy-paste the following configuration into the file:
-<pre>
-<code class="bash">
+```bash
 Section "Device"
   Identifier  "Intel Graphics"
   Driver      "intel"
   Option "TearFree" "true"
 EndSection
-</code>
-</pre>
+```
 
 Save the file, reboot your system and look for any screen tearing issues. If you didn't face any, that means it worked! &#x1F601;

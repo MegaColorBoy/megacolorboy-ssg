@@ -20,50 +20,39 @@ The only requirement for this tutorial is that you should be familiar with using
 [Vagrant](https://vagrantup.com) is a software that's used to manage a development environment. Through the command-line, you can perform any operation such as installing an OS, configuration, deployment and so on.
 
 You can install VirtualBox and Vagrant via the command-line:
-<pre>
-    <code class="bash">
+```bash
     sudo apt install virtualbox vagrant
-    </code>
-</pre>
+```
 
 Once you're done installing them, you should add the <mark>laravel/homestead</mark> box to your Vagrant installation using the following command:
-<pre>
-    <code class="bash">
+```bash
     vagrant box add laravel/homestead
-    </code>
-</pre>
+```
 
 To check if it has been installed, use the following command:
-<pre>
-    <code class="bash">
+```bash
     vagrant box list | grep "homestead"
-    </code>
-</pre>
+```
 
 Using VirtualBox and Vagrant allows you to simulate your Laravel development environment without messing up any configurations on your hosting system. Even if you did, no worries, Vagrant boxes are disposable, so you can destroy and create a new box again in minutes.
 
 ## Download Laravel Homestead
 You can install Homestead by cloning it's repository onto your local machine by typing the following command:
 
-<pre>
-    <code class="bash">
+```bash
     git clone https://github.com/laravel/homestead.git ~/projects/Homestead
-    </code>
-</pre>
+```
 
 ### Generate configuration file
 Once you're done cloning the repository, go inside the <mark>projects/Homestead</mark> directory and run the <mark>init.sh</mark> or <mark>init.bat</mark> (for Windows) to create the <mark>Homestead.yaml</mark> configuration file:
 
-<pre>
-    <code class="bash">
+```bash
     cd projects/Homestead
     bash init.sh
-    </code>
-</pre>
+```
 
 Open the default <mark>Homestead.yaml</mark> file and make the following changes:
-<pre>
-    <code class="yaml">
+```yaml
     ---
     ip: "192.168.10.10"
     memory: 2048
@@ -85,17 +74,14 @@ Open the default <mark>Homestead.yaml</mark> file and make the following changes
 
     databases:
         - homestead
-    </code>
-</pre>
+```
 
 ### Generate SSH key
 The documentation for Laravel Homestead doesn't really talk about generating SSH keys used to access the Vagrant box. Use the following command to generate it using <mark>ssh-keygen</mark> on the command-line:
 
-<pre>
-    <code class="bash">
+```bash
     ssh-keygen -t rsa -C "root@homestead"
-    </code>
-</pre>
+```
 
 ### Map the project's shared folder
 Make sure that you have created a folder named <mark>code</mark> in your <mark>projects</mark> directory. This folder will keep all of your Laravel project files in sync between your local machine and Homestead environment.
@@ -103,35 +89,27 @@ Make sure that you have created a folder named <mark>code</mark> in your <mark>p
 ## Installing Laravel
 Time to install Laravel into your virtual machine. So, get switch on your virtual machine by doing the following in the command-line:
 
-<pre>
-    <code class="bash">
+```bash
     vagrant up
-    </code>
-</pre>
+```
 
 As you're switching it on for the first time, depending on your internet connection, it might take somewhere around 10-20 minutes to getting it running but it'll be fine afterwards.
 
 Alright, login to your Vagrant machine by doing the following the command-line:
-<pre>
-    <code class="bash">
+```bash
     vagrant ssh
-    </code>
-</pre>
+```
 
 Once you're in, go to your <mark>code</mark> directory and type the following in the command-line:
-<pre>
-    <code class="bash">
+```bash
     composer global require laravel/installer
-    </code>
-</pre>
+```
 
 ## Create a new project
 Now, it's time to create a new Laravel project by simply typing the following command:
-<pre>
-    <code class="bash">
+```bash
     laravel new projectname
-    </code>
-</pre>
+```
 It'll take some time to generate the necessary files and boilerplate code and after that, you're good to go!
 
 Oh, you should be able to see the Laravel project files in your local machine as it's synced with the virtual machine and local machine. That means, any changes made on either machines will be synced and reflected on both ends.
@@ -140,15 +118,13 @@ Oh, you should be able to see the Laravel project files in your local machine as
 One last step, make sure you map your project's test domain onto your local machine's <mark>hosts</mark> file.
 
 Open a text-editor of your choice and do the following in the <mark>etc/hosts</mark> file:
-<pre>
-    <code class="plaintext">
+```plaintext
     127.0.0.1   localhost
     ::1         localhost
 
     # Add this line (Note: It can be any URL)
     127.0.0.1   homestead.test
-    </code>
-</pre>
+```
 Now, go to your browser and type <mark>homestead.test</mark> and you should be able to see your Laravel project's sample layout.
 
 ## Conclusion

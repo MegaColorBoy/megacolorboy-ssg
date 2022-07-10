@@ -8,8 +8,8 @@ If you're facing this error while trying to download a file from your server, it
 
 As per the [documentation](http://php.net/manual/en/migration56.openssl.php), there are some changes that can be made to resolve it, like the following method:
 
-<pre>
-<code class="php">
+```php
+<?php
 public function foo(Request $request) {
     $arrContextOptions = array(
         "ssl" =&gt; array(
@@ -22,8 +22,8 @@ public function foo(Request $request) {
         'Content-Disposition' =&gt; 'inline; filename="file.pdf"',
     ]);
 }
-</code>
-</pre>
+?>
+```
 
 Although, I won't recommend this unless you are testing it on a `localhost` environment as it's not secure and could have significant security implications because disabling verification can permit a [Man in the Middle attack](https://en.wikipedia.org/wiki/Man-in-the-middle_attack) to take place.
 

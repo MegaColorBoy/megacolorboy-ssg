@@ -80,8 +80,7 @@ Let's dive in to the code (I hope the comments, help you out!):
 
 **Implementation of the method(s):**
 
-<pre>
-    <code class="cpp">
+```cpp
     //Single Byte XOR V2 - a better version
     string CryptoLib::singleByteXOR_V2(string str, char key)
     {
@@ -178,13 +177,11 @@ Let's dive in to the code (I hope the comments, help you out!):
         //Return the key size
         return KEYSIZE;
     }
-    </code>
-</pre>
+```
 
 **Final code:**
 
-<pre>
-    <code class="cpp">
+```cpp
     //The Cryptopals Crypto Challenges - Set 1 Challenge 6
     #include "crypto.h"
 
@@ -239,8 +236,7 @@ Let's dive in to the code (I hope the comments, help you out!):
 
         return 0;   
     }
-    </code>
-</pre>
+```
 
 ***Note: This solution and the library named <mark>crypto.h</mark> was
 built using the C++ programming language. The source code for this
@@ -250,17 +246,14 @@ When the following code is executed, the most probable ***KEYSIZE*** is
 ***29*** and after transposing the message and decrypting the blocks, you
 get a key of that length:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     Terminator X: Bring the noise
-    </code>
-</pre>
+```
 
 Lastly, use the ***Repeating-Key XOR*** method to decrypt the message with
 the cracked key (which looks like lyrics to some music track!):
 
-<pre>
-    <code class="plaintext">
+```plaintext
     A rockin' on the mike while the fly girls yell
     Well that's my DJ Deshay cuttin' all them Z's
     Vanilla's on the mike, man I'm not lazy. ?I'm lettin' my drug kick in
@@ -292,8 +285,7 @@ the cracked key (which looks like lyrics to some music track!):
     play that funky music Go white boy, go white boy, go
     Play that funky music white boy you say it, say it 
     Play that funky music, white boy Come on, Come on, Come on
-    </code>
-</pre>
+```
 
 As mentioned above, this was really challenging and fun, at the same
 time. Although, Most people (academically) know ***"how-to"*** break a

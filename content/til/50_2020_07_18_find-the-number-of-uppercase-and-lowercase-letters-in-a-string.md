@@ -5,8 +5,7 @@ category: Regular Expressions
 status: active
 
 The usual approach of counting the number of uppercase and lower letters in a string is done by using a counter and a loop:
-<pre>
-<code class="js">
+```js
 var upperCount = 0;
 var lowerCount = 0;
 var str = "AbCdEfGhiJkL";
@@ -18,17 +17,14 @@ for(var i=0; i&lt;str.length; i++){
         lowerCount++;
     }
 }
-</code>
-</pre>
+```
 
 That's nice but here's shorter and faster implementation:
-<pre>
-<code class="js">
+```js
 var str = "AbCdEfGhiJkL";
 var lowerCount = str.length - str.replace(/[A-Z]/g, '').length;
 var upperCount = str.length - str.replace(/[a-z]/g, '').length;
-</code>
-</pre>
+```
 
 The `lowerCount` variable is taking the difference of the lengths between the original string and the string with lowercase letters only because the `.replace()` method replaced the pattern of uppercase letters `[A-Z]` with empty spaces. The `upperCount` variable does the opposite of what the `lowerCount` variable does.
 

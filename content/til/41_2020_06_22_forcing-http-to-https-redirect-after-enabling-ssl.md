@@ -5,10 +5,10 @@ category: Apache
 status: active
 
 You can manually force HTTP to HTTPS after enabling your SSL certificate by adding the following condition at the beginning of your `.htaccess` file in your `public` directory:
-<pre>
-<code>
+
+```bash
 RewriteCond %{HTTP:X-Forward-Proto} !=https
 RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-</code>
-</pre>
+```
+
 Save your file and restart your Apache server and now, your web application will redirect all your users to `https://` instead of `http://` URLs in the future.

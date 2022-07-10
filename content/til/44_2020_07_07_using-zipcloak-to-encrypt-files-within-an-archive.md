@@ -9,26 +9,20 @@ Whenever you're sending a bunch of files or an archive that contains sensitive o
 Using `zipcloak`, you'll be able to encrypt files within your existing archive.
 
 Do the following after you've [created a zip archive](til/posts/zip-a-file):
-<pre>
-<code class="bash">
+```bash
 zipcloak files.zip    
-</code>
-</pre>
+```
 Now, you'll be prompted twice to enter a new password and verify your entered password. If they match, your archive will get encrypted. So whenever, you try to unzip or open using an Archive Manager, you'll be prompted to enter the password or else, you won't be able to access it.
 
 You also have the choice of not encrypting the original archive and creating a new one instead, just like this:
-<pre>
-<code class="bash">
+```bash
 zipcloak files.zip -O encrypted.zip    
-</code>
-</pre>
+```
 
 On the other hand, if you do wish to remove the encryption from your archive, just type the following:
-<pre>
-<code class="bash">
+```bash
 zipcloak -d files.zip
-</code>
-</pre>
+```
 And you'll be prompted again to enter your password before it removes it's encryption.
 
 Hope this helps you out! &#x1F601;

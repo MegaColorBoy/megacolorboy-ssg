@@ -4,8 +4,6 @@ slug: check-status
 category: Git
 
 Ever wondered if you've edited or committed anything in your project before pushing it to your repository, do this:
-<pre>
-<code class="bash">
+```bash
 git status
-</code>
-</pre>
+```

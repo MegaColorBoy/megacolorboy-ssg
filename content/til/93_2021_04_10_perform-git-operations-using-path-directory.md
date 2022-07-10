@@ -6,10 +6,8 @@ status: active
 
 The `-C` flag means the path of the directory and using this flag, you can perform any Git operations outside the project's directory without having to enter the directory all the time:
 
-<pre>
-<code class="bash">
+```bash
 git -C /path/to/directory <command>
-</code>
-</pre>
+```
 
 Hope this tip helps you out!

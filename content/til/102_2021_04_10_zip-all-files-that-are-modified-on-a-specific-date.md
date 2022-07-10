@@ -8,11 +8,9 @@ I wrote a nifty command to make an archive of the files that I have modified on 
 
 Here's the command at your disposal:
 
-<pre>
-<code class="bash">
+```bash
 find . -maxdepth 10 -type f -newermt "2021-04-10" | zip -qur archive.zip -@
-</code>
-</pre>
+```
 
 ## How this works?
 Let's see what this command does in pieces:
@@ -30,20 +28,16 @@ The `-q` flag would perform the operation in silent mode, `-u` flag would update
 
 If you want to ignore certain directories or file extensions, in that case, you can exclude them like so:
 
-<pre>
-<code class="bash">
+```bash
 find . -maxdepth 30 -type f ! -path "./path/to/directory/*" !  -path "*.ext" -newermt "2021-04-10" | zip -qur archive.zip -@
-</code>
-</pre>
+```
 
 Or, you can even archive the modified files by specifying a date range:
 
-<pre>
-<code class="bash">
+```bash
 touch --date "2021-04-10" startdate
 touch --date "2021-04-15" enddate
 find . -maxdepth 30 -type f -newer startdate -not -newer enddate | zip -ur archive.zip -@
-</code>
-</pre>
+```
 
 Hope you found this tip useful! &#x1F601;

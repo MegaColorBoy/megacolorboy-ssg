@@ -8,18 +8,14 @@ If you are using a GUI based application like Microsoft Word of Google Docs, it 
 
 Let's say you have the following text:
 
-<pre>
-<code class="text">
+```text
 The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary.
-</code>
-</pre>
+```
 
 Now, you can use the `grep` and `wc` tool to count the number of times `"the"` appears in the file:
 
-<pre>
-<code class="bash">
+```bash
 grep -o -i "the" file.txt | wc -l
-</code>
-</pre>
+```
 
 Hope this helps you out!

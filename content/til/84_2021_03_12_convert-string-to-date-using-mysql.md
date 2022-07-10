@@ -8,20 +8,16 @@ Today, I was debugging a piece of code that is supposed to return a list of data
 
 Weird, so I opened up **MySQL Workbench** and wrote a simple query to see if the dates were being returned because who knows maybe they weren't stored at all.
 
-<pre>
-<code class="mysql">
+```mysql
 SELECT YEAR(date_posted) FROM posts;
-</code>
-</pre>
+```
 
 The values returned were `null`. Now, that's strange because the dates were present in the column. So, I took a deep look and figured out that the dates were stored in `VARCHAR` instead of `DATETIME` data type! &#x1F614;
 
 Luckily, I figured that there's a way to resolve this by `STR_TO_DATE()` function:
-<pre>
-<code class="mysql">
+```mysql
 SELECT YEAR(STR_TO_DATE(date_posted, '%Y-%m-%d')) FROM posts;
-</code>
-</pre>
+```
 
 Bam! The results were coming now! &#x1F60C;
 

@@ -46,8 +46,7 @@ comments will help you out!
 
 **Code snippet:**
 
-<pre>
-    <code class="js">
+```js
     $(function(){
      //Change the class name, if it has to be applied for more SVG elements
      jQuery('img.custom-svg-icon').each(function(){
@@ -90,13 +89,11 @@ comments will help you out!
      }, 'xml'); //Returns as XML
      });
     });
-    </code>
-</pre>
+```
 
 Give it some custom CSS to change the color and width of the SVG image:
 
-<pre>
-    <code class="css">
+```css
     svg path, svg rect
     {
         fill: #ff5a5f;
@@ -107,8 +104,7 @@ Give it some custom CSS to change the color and width of the SVG image:
         width: 170px;
         height: 170px;
     }
-    </code>
-</pre>
+```
 
 Right-click on the image, hit ***"Inspect Element"*** and view the
 converted image below but this time, you'll see it as an SVG element:

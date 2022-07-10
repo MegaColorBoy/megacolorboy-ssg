@@ -25,8 +25,7 @@ I guess, as users, we really need some sort of user interface to receive feedbac
 
 Here's a sample error that I would face sometimes while deploying a Laravel web application on CentOS 7:
 
-<pre>
-<code class="bash">
+```bash
 [Mon May 16 11:39:32.996441 2016] [:error] [pid 2434] [client XXX.XXX.XXX.XXX:8080] PHP Fatal error:  Uncaught UnexpectedValueException: The stream or file "/var/www/html/MYSITE/storage/logs/laravel.log" could not be opened: failed to open stream: Permission denied in /var/www/html/MYSITE/bootstrap/cache/compiled.php:13701
 Stack trace:
 #0 /var/www/html/MYSITE/bootstrap/cache/compiled.php(13635): Monolog\\Handler\\StreamHandler->write(Array)
@@ -35,18 +34,15 @@ Stack trace:
 #3 /var/www/html/MYSITE/bootstrap/cache/compiled.php(13189): Monolog\\Logger->error(Object(Symfony\\Component\\Debug\\Exception\\FatalErrorException), Array)
 #4 /var/www/html/MYSITE/bootstrap/cache/compiled.php(13160): Illuminate\\Log\\Writer->writeLog('error', Object(Symfony\\Component\\Debug\\Exception\\FatalErrorException), Array)
 # in /var/www/html/MYSITE/bootstrap/cache/compiled.php on line 13701
-</code>
-</pre>
+```
 
 By looking at this error, you do understand it's permission-related but it doesn't really indicate that it's an SELinux problem because there could be thousands of reasons why there could be such an error. And of course, when I look it up on Google, I do find many people facing the same issue due to SELinux being enabled.
 
 Instead of disabling it completely, I would try doing this:
 
-<pre>
-	<code class="bash">
-	chcon -R -t httpd_sys_rw_content_t storage
-	</code>
-</pre>
+```bash
+chcon -R -t httpd_sys_rw_content_t storage
+```
 
 And off goes the error and the application didn't give any permission-related issues again.
 

@@ -8,8 +8,7 @@ Hosted your website on a Shared Hosting Server and got limited access to clear t
 
 Open up `routes/web.php` and create this route:
 
-<pre>
-<code class="php">
+```php
 &lt;?php
 Route::get('/clearcache', function(){
     \Artisan::run('config:clear');
@@ -19,8 +18,7 @@ Route::get('/clearcache', function(){
     \Artisan::run('config:cache');
 });
 ?&gt;
-</code>
-</pre>
+```
 
 Just type the URL and it will clear all existing cache from the project.
 

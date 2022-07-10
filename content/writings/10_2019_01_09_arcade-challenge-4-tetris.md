@@ -52,8 +52,7 @@ These shapes are called ***"tetrominoes"*** i.e. a unique arrangement of 4 cells
 
 I'm sure a lot of you know that Javascript doesn't have a special way of creating multi-dimensional arrays. So in order to draw a random shape, I had to convert a two-dimensional array index to a one-dimensional array index to fill each cell i.e. if it was a '1', it would be filled with color and if it's a '0', it would be empty.
 
-<pre>
-    <code class="js">
+```js
     //Generate new random shape
     function newShape()
     {
@@ -83,14 +82,12 @@ I'm sure a lot of you know that Javascript doesn't have a special way of creatin
         currentX = 5;
         currentY = 0;
     }
-    </code>
-</pre>
+```
 
 ### <a id="collision"></a> Collision
 As I had mentioned in my [previous post](/posts/arcade-challenge-3-pong/), I was inspired to use the [AABB collision](https://en.wikipedia.org/wiki/Minimum_bounding_box#Axis-aligned_minimum_bounding_box) algorithm to prevent the tetrominoes from going away from the canvas. Well, we all know that simple physics says that if an object is dropped from above, it should break the ones below but in this case, that doesn't happen. Instead, the tetrominoes are stacked on top of each other, which unlike real gravity, that contributes to the actual gameplay.
 
-<pre>
-    <code class="js">
+```js
     //Check if this shape's position is valid in the board
     function isValid(offsetX, offsetY, newCurrent)
     {
@@ -125,14 +122,12 @@ As I had mentioned in my [previous post](/posts/arcade-challenge-3-pong/), I was
         }
         return true;
     } 
-    </code>
-</pre>
+```
 
 ### <a id="freeze-the-line"></a> Freeze the Line
 Honestly, I could have come up with a better name but the method freeze() stops the shape at it's current position (i.e. after a collision has occurred) and saves it to the 2D canvas.
 
-<pre>
-    <code class="js">
+```js
     function freeze()
     {
         for(var y=0; y<4; y++)
@@ -146,14 +141,12 @@ Honestly, I could have come up with a better name but the method freeze() stops 
             }
         }
     }
-    </code>
-</pre>
+```
 
 ### <a id="rotating-shapes"></a> Rotating Shapes
 In order to rotate a shape perpendicularly anticlockwise, you have to perform an operation that flips the indices from bottom to top of the matrix, this operation is called [Matrix Transpose](https://en.wikipedia.org/wiki/Transpose). Although I learnt this in my math classes, I implemented this operation in a Computer Graphics course that I took, as an elective, in my university on Spring 2016 for the first time.
 
-<pre>
-    <code class="js">
+```js
     //Rotate the current moving shape
     function rotate(current)
     {
@@ -168,14 +161,12 @@ In order to rotate a shape perpendicularly anticlockwise, you have to perform an
         }
         return newCurrent;
     }
-    </code>
-</pre>
+```
 
 ### <a id="clearing-the-line"></a> Clearing the Line
 At every update, the method named ***clearLines()*** has to scan for any complete row(s), if it's complete, the cells in those rows must be replaced with the ones above it. This gives a sort of ***"falling gravity"*** effect, when the remaining cells are replaced with the row that has been cleared.
 
-<pre>
-    <code class="js">
+```js
     function clearLines()
     {
         //Bottom up approach
@@ -208,8 +199,7 @@ At every update, the method named ***clearLines()*** has to scan for any complet
             }
         }
     }
-    </code>
-</pre>
+```
 
 The game was built using HTML5 Canvas and Javascript, so please feel free to read the source code to understand the logic of the game. 
 

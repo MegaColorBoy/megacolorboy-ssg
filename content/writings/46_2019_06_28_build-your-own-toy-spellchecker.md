@@ -22,8 +22,7 @@ Well, there's a little bit more to it.
 First, we must create a dictionary, in order to do that, you need to extract words from a large piece of text and store it in a Hashmap in which each word will have a word count. In this example, I've used a Sherlock Holmes novel (which is around 6MB). The words are extracted from a novel instead of an actual dictionary because it can be used to create a simple Language Model.
 
 **Source code to create a dictionary:**
-<pre>
-    <code class="cpp">
+```cpp
     void SpellChecker::extractWords(string &filename)
     {
         ifstream infile;
@@ -55,8 +54,7 @@ First, we must create a dictionary, in order to do that, you need to extract wor
 
         return word;
     }
-    </code>
-</pre>
+```
 
 ### Create a list of candidates
 
@@ -73,8 +71,7 @@ Based on the types of edits a user could make, we can generate a list of possibl
 
 In this method, you generate a list of candidates by inserting a letter in every iteration.
 
-<pre>
-    <code class="cpp">
+```cpp
     void SpellChecker::inserts(string &word, Vector &result)
     {
         for(int i=0; i&lt;word.size()+1; i++)
@@ -86,15 +83,13 @@ In this method, you generate a list of candidates by inserting a letter in every
             }
         }
     }
-    </code>
-</pre>
+```
 
 #### <a id="replaces"></a> Replacing a letter
 
 In this method, you generate a list of candidates by replacing each character with a letter from a list of alphabets in every iteration.
 
-<pre>
-    <code class="cpp">
+```cpp
     void SpellChecker::replaces(string &word, Vector &result)
     {
         for(int i=0; i&lt;word.size(); i++)
@@ -106,15 +101,13 @@ In this method, you generate a list of candidates by replacing each character wi
             }
         }
     }
-    </code>
-</pre>
+```
 
 #### <a id="transposes"></a> Switching two adjacent letters
 
 In this method, you generate a list of candidates by switcing two adjacent letters in every iteration. For example: the word "ornage" would look like this: "orange", when the letters "n" and "a" are swapped.
 
-<pre>
-    <code class="cpp">
+```cpp
     void SpellChecker::transposes(string &word, Vector &result)
     {
         for(int i=0; i&lt;word.size()-1; i++)
@@ -122,15 +115,13 @@ In this method, you generate a list of candidates by switcing two adjacent lette
             result.push_back(word.substr(0,i) + word[i+1] + word[i] + word.substr(i+2));
         }
     }
-    </code>
-</pre>
+```
 
 #### <a id="deletes"></a> Removing a letter
 
 In this method, you generate a list of candidates by removing a letter in every iteration.
 
-<pre>
-    <code class="cpp">
+```cpp
     void SpellChecker::deletes(string &word, Vector &result)
     {
         for(int i=0; i&lt;word.size(); i++)
@@ -138,12 +129,10 @@ In this method, you generate a list of candidates by removing a letter in every 
             result.push_back(word.substr(0,i) + word.substr(i+1));
         }
     }
-    </code>
-</pre>
+```
 
 All of these methods are called in one wrapper method:
-<pre>
-    <code class="cpp">
+```cpp
     void SpellChecker::edits(string &word, Vector &result)
     {
         //Deletion
@@ -158,15 +147,13 @@ All of these methods are called in one wrapper method:
         //Insertion
         inserts(word, result);
     }
-    </code>
-</pre>
+```
 
 ### Extract the known words
 
 Third, at this stage, the above step would've generated a huge list of words but 90% of them would be gibberish, so we need to "clean" the list and extract the known words using the dictionary we've created.
 
-<pre>
-    <code class="cpp">
+```cpp
     void SpellChecker::known_words(Vector& results, Dictionary &candidates)
     {
         Dictionary::iterator end = dictionary.end();
@@ -181,13 +168,11 @@ Third, at this stage, the above step would've generated a huge list of words but
             }
         }
     }
-    </code>
-</pre>
+```
 
 The <mark>edits()</mark> method apply to words that have a edit distance of 1, what if it was 2 or more? Like if the user typed "the", it could've been "then" or "they". So, all you have to do is create a method that generates a new set of permutations based on the already generated list of edited words and extract the known words.
 
-<pre>
-    <code class="cpp">
+```cpp
     void SpellChecker::edits2(Vector &result, Dictionary &candidates)
     {
         for(int i=0; i&lt;result.size(); i++)
@@ -198,8 +183,7 @@ The <mark>edits()</mark> method apply to words that have a edit distance of 1, w
             known_words(edit2, candidates);
         }   
     }
-    </code>
-</pre>
+```
 
 ### Display the correct word
 
@@ -210,8 +194,7 @@ In order to determine the correct word, the following possibilities are consider
 3. Generate known words that have an edit distance of 2 and check in the dictionary, if it does, display it.
 4. If all else fails, this word is unique or not a known word.
 
-<pre>
-    <code class="cpp">
+```cpp
     string SpellChecker::correct(string &word)
     {
         Vector result;
@@ -247,8 +230,7 @@ In order to determine the correct word, the following possibilities are consider
         //4. Display nothing if it doesn't exist
         return "This word doesn't exist!";
     }
-    </code>
-</pre>
+```
 
 However, for conditions 2 and 3, the word displayed would most likely have the highest word frequency in the dictionary.
 

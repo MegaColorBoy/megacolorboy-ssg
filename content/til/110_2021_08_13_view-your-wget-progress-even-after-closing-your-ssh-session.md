@@ -9,11 +9,9 @@ Few days back, I ran a `wget` command to download a file and accidentally closed
 I logged in again and checked the list of active processes and thankfully, the `wget` process was still running except that I wasn't able to know the current progress of it.
 
 So, I did a little research and found a way to view the progress, so I tried the following command:
-<pre>
-<code class="bash">
+```bash
 tail -f wget_log
-</code>
-</pre>
+```
 
 And, I was able to view it's current download progress again.
 

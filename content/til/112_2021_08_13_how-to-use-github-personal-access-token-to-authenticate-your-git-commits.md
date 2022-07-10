@@ -22,18 +22,14 @@ Instead, they recommend you to authenticate your git commits using a Personal Ac
 Once you've generated a token, you just have to update your remote repository by following the below steps:
 
 ### 1. Update remote repository URL
-<pre>
-<code class="bash">
+```bash
 git remote set-url origin https://&lt;your_access_token&gt;@github.com/&lt;your_git_repo_url&gt;
-</code>
-</pre>
+```
 
 ### 2. Just git pull once
 Now, just perform `git pull` operation once and you should be good:
-<pre>
-<code class="bash">
+```bash
 git pull https://&lt;your_access_token&gt;@github.com/&lt;your_git_repo_url&gt;
-</code>
-</pre>
+```
 
 Hope this helps you out!

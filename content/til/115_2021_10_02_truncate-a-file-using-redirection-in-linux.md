@@ -10,11 +10,9 @@ This could be for many reasons like to avoid permission related issues, or maybe
 
 So, the easiest solution is to clear it away from a terminal is by shell redirection like so:
 
-<pre>
-<code>
+```bash
 :> filename
-</code>
-</pre>
+```
 
 Let me break down the command here:
 
@@ -24,10 +22,8 @@ Let me break down the command here:
 
 Alternatively, you can do the same by using the `cat` command to output the contents of the `/dev/null` device (which only contains a EOL character) to empty a file:
 
-<pre>
-<code>
+```bash
 cat /dev/null > filename
-</code>
-</pre>
+```
 
 Hope this comes in handy!

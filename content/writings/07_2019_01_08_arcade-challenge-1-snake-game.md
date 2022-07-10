@@ -30,20 +30,17 @@ The game makes use of [Linked Lists](https://en.wikipedia.org/wiki/Linked_list),
 
 **Movement of the Snake:**
 
-<pre>
-    <code class="plaintext">
+```plaintext
     for node in the list (always starts from the end of the list):
         if node is not equal to head node:
             shift the snake's position to node+1 (by making it closer to the snake)
         set head node to new position
     endfor
-    </code>
-</pre>
+```
 
 **Length of the Snake:**
 
-<pre>
-    <code class="plaintext">
+```plaintext
     nx: current x coordinate of the snake head
     ny: current y coordinate of the snake head
 
@@ -62,13 +59,11 @@ The game makes use of [Linked Lists](https://en.wikipedia.org/wiki/Linked_list),
         pop the cell from the tail node
         shift cell from tail node to head node
         decrement life - 1
-    </code>
-</pre>
+```
 
 **Collision of the Snake:**
 
-<pre>
-    <code class="plaintext">
+```plaintext
     nx: current x coordinate of the snake head
     ny: current y coordinate of the snake head
 
@@ -85,8 +80,7 @@ The game makes use of [Linked Lists](https://en.wikipedia.org/wiki/Linked_list),
     for cell in the snake list:
         if [nx] matches with [sx] and if [ny] matches with [sy]:
             display "game over" message
-    </code>
-</pre>
+```
 
 Oh yeah, please feel free to study the source code of this game in order to understand how this game was implemented on Javascript.
 

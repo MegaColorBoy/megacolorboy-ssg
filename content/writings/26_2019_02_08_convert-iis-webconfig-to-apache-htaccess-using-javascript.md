@@ -40,8 +40,7 @@ works, I decided to build a tool that converts ***web.config*** to
 
 **Code snippet:**
 
-<pre>
-    <code class="js">
+```js
     //web.config to .htaccess converter
     function webConfigToHtaccess()
     {
@@ -73,8 +72,7 @@ works, I decided to build a tool that converts ***web.config*** to
             );
         });
     }
-    </code>
-</pre>
+```
 
 Although, I can't really say that it's perfect because I had to make
 some changes but hey, it's just minor changes and yes, it did save me a

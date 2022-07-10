@@ -8,16 +8,13 @@ There are many ways to define constants in Laravel but I learnt a neat technique
 
 First off, create the following directory:
 
-<pre>
-<code class="bash">
+```bash
 mkdir app/Constants
-</code>
-</pre>
+```
 
 Next, create a file named `MyConstants.php` in the `app/Constants` directory and copy-paste the following code:
 
-<pre>
-<code class="php">
+```php
 &lt;?php
 namespace App\Constants;
 
@@ -25,39 +22,32 @@ class MyConstants {
     const HELLO = 'hello';
 }
 ?&gt;
-</code>
-</pre>
+```
 
 Then, go to the `config/app.php` file and define your new alias:
 
-<pre>
-<code class="php">
+```php
 'aliases' => [
     // previously defined aliases...
     'MyConstants' => App\Constants\MyConstants::class,
 ]
-</code>
-</pre>
+```
 
 Lastly, execute the following commands to update your app's configuration:
 
-<pre>
-<code class="bash">
+```bash
 php artisan config:clear
 composer dump-autoload
 php artisan config:cache
-</code>
-</pre>
+```
 
 After that, you can use your new constants anywhere (Controllers, Models or Blades) like this:
 
-<pre>
-<code class="php">
+```php
 &lt;?php
 echo MyConstants::HELLO;
 ?&gt;
-</code>
-</pre>
+```
 
 Learning this new technique helps me keep the code clean and makes it easier to trace the constants.
 

@@ -8,20 +8,16 @@ If you've read my [earlier post](/til/posts/check-ubuntu-version/), I was using 
 
 Try the following command to identify the distribution you are running in your system:
 
-<pre>
-<code>
+```bash
 cat /etc/os-release
-</code>
-</pre>
+```
 
 And you'll get the following output:
-<pre>
-<code>
+```bash
 NAME="XXXX"
 ID="XXXX"
 DISTRIB_ID="XXXX"
 PRETTY_NAME="XXXX"
-</code>
-</pre>
+```
 
 Hope this helps you out!

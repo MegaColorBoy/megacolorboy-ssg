@@ -9,20 +9,16 @@ Sometimes, phpMyAdmin can be painful to use especially when you want to import/e
 If you're not afraid of using the Terminal, try these commands to save your time:
 
 ## Import MySQL database
-<pre>
-<code class="bash">
+```bash
 mysql -u username -p database_name < your_sql_file.sql
-</code>
-</pre>
+```
 
 Before you run this command, please make sure that you've created the `database_name` schema in your database or else, you might get an error especially if the `.sql` file doesn't have a `CREATE DATABASE` statement.
 
 ## Export MySQL database
-<pre>
-<code class="bash">
+```bash
 mysqldump -u username -p database_name > your_sql_file.sql
-</code>
-</pre>
+```
 
 This command will export your database with the file name `your_sql_file.sql` to your current path.
 

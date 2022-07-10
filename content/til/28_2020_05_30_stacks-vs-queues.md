@@ -22,8 +22,7 @@ Adds the element to the tail of a queue. The tail position gets incremented.
 Removes the first element of a queue i.e. the head element. Once, it's removed, the subsequent element becomes the new head element of the queue. The position of the new head element gets incremented and the previous one is assigned a negative integer like -1 or some garbage value. 
 
 **Implementation of a standard queue using C++:**
-<pre>
-<code class="cpp">
+```cpp
 class Queue {
     private:
         int pos;
@@ -55,8 +54,7 @@ class Queue {
             return pos >= data.size();
         }
 }
-</code>
-</pre>
+```
 In terms of memory management, a standard Queue is quite inefficient and incapable of handling dynamic memory.
 
 ## Stacks
@@ -72,8 +70,7 @@ Each element is pushed towards the end of the stack. Think of it as a card deck 
 It removes the most recent element i.e. the newly added element from the stack.
 
 **Implementation of a stack using C++:**
-<pre>
-<code class="cpp">
+```cpp
 class Stack {
     private:
         vector&ltint&gt; data;
@@ -100,8 +97,7 @@ class Stack {
             }
         }
 }
-</code>
-</pre>
+```
 Unlike queues, stacks are easier to implement and pretty efficient at managing dynamic memory.
 
 Oh, if you ever get to use these, don't worry about implementing them, nearly all programming languages have their own implementations of `stack` and `queue` that comes with it's own standard library.

@@ -14,19 +14,15 @@ to encoded Base64 strings:
 
 The string:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d
-    </code>
-</pre>
+```
 
 Should produce:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t
-    </code>
-</pre>
+```
 
 Not only is this challenge just a warmup but it is also designed to make
 you feel comfortable in dealing with raw bytes as Base64 is used to
@@ -48,8 +44,7 @@ following steps:
 Before converting to binary, you should compare each character against a
 hashmap table of hardcoded hexadecimal keys and binary values.
 
-<pre>
-    <code class="cpp">
+```cpp
     //Hashmap that contain hex key and binary values
     map&lt;char, string&gt; CryptoLib::gen_hex_table()
     {
@@ -95,8 +90,7 @@ hashmap table of hardcoded hexadecimal keys and binary values.
         }
         return newStr;
     }
-    </code>
-</pre>
+```
 
 ### <a id="step-2"></a> Split the binary string into 4 pieces of 6 bits each
 
@@ -105,8 +99,7 @@ Radix-64 representation. Each character is picked from a set of 64
 characters, which means that I'll only need 6 bits represent each
 character because **2<sup>6</sup> = 64 characters**.
 
-<pre>
-    <code class="cpp">
+```cpp
     //Add spaces between strings
     string CryptoLib::add_spaces(string str, int spaces)
     {
@@ -132,8 +125,7 @@ character because **2<sup>6</sup> = 64 characters**.
 
         return newStr;
     }
-    </code>
-</pre>
+```
 
 ### <a id="step-3"></a> Convert the binary string to decimal
 
@@ -144,8 +136,7 @@ Let's say you have a binary string of <mark>111001</mark>, it's decimal
 would be <mark>1x2<sup>5</sup> + 1x2<sup>4</sup> + 1x2<sup>3</sup> + 0x2<sup>2</sup> + 0x2<sup>1</sup> + 1x2<sup>0</sup> =
 57</mark>
 
-<pre>
-    <code class="cpp">
+```cpp
     //Convert binary to decimal
     vector&lt;int&gt; CryptoLib::con_bin_2_dec(string str, double power)
     {
@@ -171,8 +162,7 @@ would be <mark>1x2<sup>5</sup> + 1x2<sup>4</sup> + 1x2<sup>3</sup> + 0x2<sup>2</
         }
         return v;
     }
-    </code>
-</pre>
+```
 
 ### <a id="step-4"></a> Compare each decimal against each character in a reference string of 64 characters
 
@@ -180,8 +170,7 @@ At this stage, all you have to do is find and concatenate each character
 (using the reference string) based on each decimal and return your
 encoded Base64 string as the final output.
 
-<pre>
-    <code class="cpp">
+```cpp
     //Convert HEX to Base 64
     string CryptoLib::con_hex_2_b64(string str)
     {
@@ -198,13 +187,11 @@ encoded Base64 string as the final output.
 
         return b64;
     }
-    </code>
-</pre>
+```
 
 Here's the final section of the code:
 
-<pre>
-    <code class="cpp">
+```cpp
     //CryptoPals Set 1 Challenge 1
     #include "crypto.h"
 
@@ -217,8 +204,7 @@ Here's the final section of the code:
         cout << crypt.con_hex_2_b64(str) << endl;
         return 0;
     }
-    </code>
-</pre>
+```
 
 ***Note: This solution and the library named <mark>crypto.h</mark> was
 built using the C++ programming language. The source code for this

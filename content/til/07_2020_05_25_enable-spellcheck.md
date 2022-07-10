@@ -4,9 +4,7 @@ slug: enable-spellcheck
 category: VIM
 
 This can be useful when you're writing stuff, just do the following:
-<pre>
-<code class="bash">
+```bash
 :set spellcheck=[lang]
-</code>
-</pre>
+```
 

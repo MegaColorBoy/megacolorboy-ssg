@@ -30,8 +30,7 @@ Nothing complicated, the concept is pretty simple. All you have to do is write d
 
 For example, let's say you have a markdown file named <mark>hello-world.md</mark> and you wrote your content:
 
-<pre>
-    <code class="markdown">
+```markdown
     title: Hello World
     date: 2019-03-01 20:00
 
@@ -44,12 +43,10 @@ For example, let's say you have a markdown file named <mark>hello-world.md</mark
     sodales. Sed sit amet elit placerat, pellentesque est in, bibendum enim. Nam dolor lorem, venenatis sit 
     amet sem at, sagittis feugiat risus. Fusce turpis felis, sodales a tortor vitae, volutpat semper 
     justo. Donec porta id mi non porttitor. Fusce id est sit amet leo consectetur consequat.
-    </code>
-</pre>
+```
 
 Also, this is your template:
-<pre>
-    <code class="html">
+```html
     &lt;html&gt;
     &lt;head&gt;
         &lt;title&gt;{{ title }}&lt;/title&gt;
@@ -59,12 +56,10 @@ Also, this is your template:
     {{ content }}
     &lt;/body&gt;
     &lt;/html&gt;
-    </code>
-</pre>
+```
 
 And when you execute the application, this is what happens:
-<pre>
-    <code class="html">
+```html
     &lt;html&gt;
     &lt;head&gt;
         &lt;title&gt;Hello World&lt;/title&gt;
@@ -82,8 +77,7 @@ And when you execute the application, this is what happens:
     justo. Donec porta id mi non porttitor. Fusce id est sit amet leo consectetur consequat.
     &lt;/body&gt;
     &lt;/html&gt;
-    </code>
-</pre>
+```
 
 The generator just parsed your article on Markdown and put the details on the template and tada, the article is generated. Easy peasy!
 

@@ -7,8 +7,7 @@ status: inactive
 Last week, I was deployed some changes on a client's server and one of those updates had a function that simply fetches the contents of a `.pdf` file, which then opens up in a new tab via a custom route.
 
 Here's a sample code:
-<pre>
-<code class="php">
+```php
 &lt;?php
 public function foo() {
     $filename = 'file.pdf';
@@ -17,8 +16,7 @@ public function foo() {
     return Response::make(file_get_contents($path), 200, [])
 }
 ?&gt;
-</code>
-</pre>
+```
 
 It worked on development environment but it didn't work on the production server. I digged up the `laravel.log` file and found this error:
 

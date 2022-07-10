@@ -6,10 +6,8 @@ status: active
 
 Looking for a specific text pattern in a directory but wanted to avoid some paths? Here's a quick command that you can try:
 
-<pre>
-<code class="bash">
+```bash
 grep -R --exclude-dir=path/to/directory 'some pattern' /path/to/search
-</code>
-</pre>
+```
 
 Hope this helps you out!

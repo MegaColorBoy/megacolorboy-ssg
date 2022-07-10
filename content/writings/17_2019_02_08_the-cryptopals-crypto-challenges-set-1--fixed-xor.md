@@ -22,27 +22,21 @@ fixed equal length and produce their XOR combination:
 
 When you feed the following Hexadecimal string:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     1c0111001f010100061a024b53535009181c
-    </code>
-</pre>
+```
 
 And perform an XOR operation against another Hexadecimal string:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     686974207468652062756c6c277320657965
-    </code>
-</pre>
+```
 
 The method should return the following result:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     746865206b696420646f6e277420706c6179
-    </code>
-</pre>
+```
 
 Like the [first
 challenge](/posts/the-cryptopals-crypto-challenges-set-1-convert-hex-to-base64),
@@ -63,8 +57,7 @@ challenge**. So let's dive in to the code:
 
 **Methods that are being reused:**
 
-<pre>
-    <code class="cpp">
+```cpp
     //Hashmap that contain hex key and binary values
     map&lt;char, string&gt; CryptoLib::gen_hex_table()
     {
@@ -173,13 +166,11 @@ challenge**. So let's dive in to the code:
         }
         return ss.str();
     }
-    </code>
-</pre>
+```
 
 **Implementation of the method:**
 
-<pre>
-    <code class="cpp">
+```cpp
     //Fixed XOR implementation
     string CryptoLib::fixedXOR(string str1, string str2)
     {
@@ -222,13 +213,11 @@ challenge**. So let's dive in to the code:
             return con_ascii_2_hex(newStr); 
         }
     }
-    </code>
-</pre>
+```
 
 **Final code:**
 
-<pre>
-    <code class="cpp">
+```cpp
     //CryptoPals Set 1 Challenge 2
     #include "crypto.h"
 
@@ -243,8 +232,7 @@ challenge**. So let's dive in to the code:
         cout << crypt.fixedXOR(str1, str2) << endl;
         return 0;
     }
-    </code>
-</pre>
+```
 
 ***Note: This solution and the library named <mark>crypto.h</mark> was
 built using the C++ programming language. The source code for this

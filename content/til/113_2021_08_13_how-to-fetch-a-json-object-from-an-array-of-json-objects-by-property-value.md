@@ -5,8 +5,7 @@ category: JavaScript
 status: active
 
 Say, for example, you have an array of JSON objects that contains the following data:
-<pre>
-<code class="js">
+```js
 var arrOfObjects = [
 	{
 		name: "John Doe",
@@ -19,14 +18,12 @@ var arrOfObjects = [
 		email: "bob.smith@email.com"
 	},
 ];
-</code>
-</pre>
+```
 
 Hmm, that's pretty basic but how will get the information of "Bob Smith" using his email? Well, that's where the `Array.find()` method comes into the picture.
 
 Try reading the [Mozilla Documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find) on `Array.prototype.find()` and implement the following:
-<pre>
-<code class="js">
+```js
 var key = "email";
 var valueToFind = "bob.smith@email.com";
 var result = arrOfObjects.find(obj =&gt; {
@@ -35,8 +32,7 @@ var result = arrOfObjects.find(obj =&gt; {
 
 //This should give you the record of Bob Smith.
 console.log(result) 
-</code>
-</pre>
+```
 
 This works fine on all browsers except **Internet Explorer** (I mean, it sucks anyways!), which is okay!
 

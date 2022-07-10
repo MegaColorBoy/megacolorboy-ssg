@@ -9,16 +9,14 @@ started practicing my python coding-chops on [Codewars](https://www.codewars.com
 
 Here's a neat trick on how to extract unique characters from a string:
 
-<pre>
-<code class="python">
+```python
 from collections import OrderedDict
 
 word = "HelloWorld"
 uniq = ''.join(OrderedDict.fromkeys(word).keys())
 
 print(uniq) # prints HeloWrd
-</code>
-</pre>
+```
 
 Using `OrderedDict` allows you to preserve the order in which the keys are inserted as a normal `dict` doesn't track the order.
 

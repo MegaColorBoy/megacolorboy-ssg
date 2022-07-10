@@ -11,25 +11,21 @@ But Laravel does offer the option of caching your queries in the server and will
 Quite handy when you're having a content-heavy website and huge amount of user traffic.
 
 Using the `Cache` class, you can cache your queries like this:
-<pre>
-<code class="php">
+```php
 $apples = \Cache::rememberForever('apples_cache', function(){
     return FruitsModel::where('item_name', 'LIKE', '%apples')
         ->get();
 });
-</code>
-</pre>
+```
 In the above example, `apples_cache` is the key that stores your queries of apples forever and which will be used to obtain your cached results from the server. 
 
 Oh, be sure to create distinctive names for different types of queries or else, you'll end up being confused! &#128540;
 
 You can also give it a time limit in milliseconds:
-<pre>
-<code class="php">
+```php
 $apples = \Cache::remember('apples_cache', 300000, function(){
     return FruitsModel::where('item_name', 'LIKE', '%apples')
         ->get();
 });
-</code>
-</pre>
+```
 Hope this tip helps you out! &#x1F600;

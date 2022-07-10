@@ -89,8 +89,7 @@ inefficient, instead I did a bottom-up approach:
 
 **Implementation of the method(s):**
 
-<pre>
-    <code class="python">
+```python
     # Sum of numbers
     def sumOfNumbers(n):
         return (n*(n+1))/2
@@ -130,13 +129,11 @@ inefficient, instead I did a bottom-up approach:
 
         # return the max sum
         return list[0]
-    </code>
-</pre>
+```
 
 **Final code:**
 
-<pre>
-    <code class="python">
+```python
     # Project Euler: Problem 18 and 67 - Maximum Path Sum I and II
 
     #!usr/bin/python
@@ -156,8 +153,7 @@ inefficient, instead I did a bottom-up approach:
     start = time.time()
     print pe_lib.maxPathSum(list)
     print "Finished: %f seconds" % (time.time() - start)
-    </code>
-</pre>
+```
 
 The maximum path sum for ***Problem 67*** is ***7273*** and it compiled in
 ***0.003990*** seconds.

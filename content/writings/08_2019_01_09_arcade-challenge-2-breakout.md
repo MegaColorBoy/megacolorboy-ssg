@@ -47,8 +47,7 @@ If the distance between the ball radius and the wall's edge is the same, it will
 </figure>
 
 **Code for Ball Movement and Collision Detection:**
-<pre>
-    <code class="js">
+```js
     $(document).ready(function(){
         //Canvas stuff
         var canvas = document.getElementById("ball_collision_canvas");
@@ -100,8 +99,7 @@ If the distance between the ball radius and the wall's edge is the same, it will
 
         setInterval(draw, 10);
     });
-    </code>
-</pre>
+```
 
 The game was built using HTML5 Canvas and Javascript, so please feel free to read the source code to understand the logic of the game.
 

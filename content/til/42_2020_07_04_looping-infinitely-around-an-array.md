@@ -7,11 +7,9 @@ status: active
 Sometimes, I find myself in a situation where I might have a fixed array of colors, text, numbers or something like that but I want to loop around infinitely like a carousel.
 
 Let's say we have an array like this:
-<pre>
-<code class="js">
+```js
 var colors = ["#111", "#222", "#333"];
-</code>
-</pre>
+```
 The code is an array of three colors that we want to apply to, hmmm, say a list of HTML DOM elements like `<div>` containers or any element that you prefer. In this example, we'll add some colors to a bunch of `<div>` elements that has the classname `.card` or we'll just call them "cards".
 
 ## Behold, the Modulus operator!
@@ -23,30 +21,24 @@ Hmm, confused? Okay, here's a simple example of how a Modulus operator would be 
 
 Did that make sense? If not, then try the following code in your browser:
 
-<pre>
-<code class="js">
+```js
 var x = 10 % 4;
 console.log(x); // output will be 2
-</code>
-</pre>
+```
 
 Let's say we have 10 "cards" and we want every 3 three cards to have 3 different colors, we must just define a way to determine the index of each color while iterating through a loop of cards. So, we can easily get the index by doing so:
-<pre>
-<code class="js">
+```js
 var currentColor = colors[i % colors.length-1];
-</code>
-</pre>
+```
 
 Here's the full code:
-<pre>
-<code>
+```js
 var elements = document.querySelectorAll('.card');
 for(var i=0; i&lt;elements.length; i++){
     var currentColor = colors[i % colors.length-1];
     elements[i].style.backgroundColor = currentColor;
 }
-</code>
-</pre>
+```
 
 The following code will apply the colors to each "card" with respect to it's order and will reset back to the first color once it's reached it's last color based on the remainder of the next iteration in the loop.
 

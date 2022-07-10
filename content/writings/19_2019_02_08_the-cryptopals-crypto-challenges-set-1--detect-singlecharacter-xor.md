@@ -53,8 +53,7 @@ Let's have a look at the code:
 
 **Implementation of the method(s):**
 
-<pre>
-    <code class="cpp">
+```cpp
     //Return Character frequency of a string
     map&lt;char, int&gt; CryptoLib::frequency_table(string str)
     {
@@ -128,13 +127,11 @@ Let's have a look at the code:
         //4. Display the most "english" text as the final result
         return final;
     }
-    </code>
-</pre>
+```
 
 **Final code:**
 
-<pre>
-    <code class="cpp">
+```cpp
     //Cryptopals Set 1 Challenge 4
     #include "crypto.h"
 
@@ -181,16 +178,13 @@ Let's have a look at the code:
         cout << crypt.detectSingleByteXOR(maxV) << endl;
         return 0;
     }
-    </code>
-</pre>
+```
 
 **Decrypted message:**
 
-<pre>
-    <code class="plaintext">
+```plaintext
     Message: Now that the party is jumping.
-    </code>
-</pre>
+```
 
 ***Note: This solution and the library named <mark>crypto.h</mark> was
 built using the C++ programming language. The source code for this

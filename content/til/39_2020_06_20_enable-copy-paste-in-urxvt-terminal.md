@@ -12,16 +12,13 @@ However, thanks to the internet, I did some research and figured a way out.
 First, you need to ensure that you have installed the `xclip` package, which will be used to copy-paste text in the emulator.
 
 Type the following command to install the package:
-<pre>
-<code class="bash">
+```bash
 pacman -S xclip
-</code>
-</pre>
+```
 
 ## 2. Activate Clipboard using Perl
 Now, you have to paste these custom commands into your `clipboard` file, which is found in `/usr/lib/urxvt/perl` directory:
-<pre>
-<code class="perl">
+```perl
 # paste selection from clipboard
 sub paste {
      my ($self) = @_;
@@ -36,25 +33,20 @@ sub on_sel_grab {
      print $pipe $query;
      close $pipe;
  }
-</code>
-</pre>
+```
 
 ## 3. Modify your .Xresources
 Add these keybindings to your `.Xresources` file:
-<pre>
-<code class="bash">
+```bash
 URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 URxvt.iso14755: False
 URxvt.perl-ext-common: default,clipboard
-</code>
-</pre>
+```
 
 After adding it, refresh your `.Xresources` settings:
-<pre>
-<code class="bash">
+```bash
 xrdb -merge .Xresources
-</code>
-</pre>
+```
 
 Reboot your terminal and try selecting some text from your terminal using your mouse and paste it using `Ctrl`+`Shift`+`V` and it should work! 
 

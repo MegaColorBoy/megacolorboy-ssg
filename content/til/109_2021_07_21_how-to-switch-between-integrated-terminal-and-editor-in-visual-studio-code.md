@@ -8,14 +8,12 @@ While, I'm trying to adjust myself to using Visual Studio Code, I found it quite
 
 I did some research and found a way on how to do it. Just type `Ctrl+Shift+P` and type `Open Keyboard Shortcuts` and add these lines:
 
-<pre>
-<code class="json">
+```json
 [
     {"key": "ctrl+`", "command":"workbench.action.terminal.focus"},
     {"key": "ctrl+`", "command":"workbench.action.focusActiveEditorGroup", "when": "terminalFocus"},
 ]
-</code>
-</pre>
+```
 
 Save the file and now, you'll be able to switch between the two by pressing <code>Ctrl+`</code> keys.
 

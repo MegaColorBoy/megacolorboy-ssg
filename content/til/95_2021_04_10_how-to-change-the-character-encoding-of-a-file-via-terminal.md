@@ -8,10 +8,8 @@ Sometimes, I face character encoding issues while making minor edits via a SFTP 
 
 In this example, I'm changing the encoding of the file to `unix`:
 
-<pre>
-<code class="bash">
+```bash
 vim $filename +"set ff=unix" +wq
-</code>
-</pre>
+```
 
 Hope you found this helpful!

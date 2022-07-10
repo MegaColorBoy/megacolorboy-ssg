@@ -10,8 +10,7 @@ You can make use of the built-in `json` package in Python to read and write JSON
 You can store the information in a dictionary or `dict` object, which can contain any type of data like integers, booleans, arrays or nested objects.
 
 By using a `dict` object, the `json` package will transform your dictionary into a serialized JSON string.
-<pre>
-<code class="python">
+```python
 import json
 
 dataObj = {}
@@ -24,13 +23,11 @@ dataObj['posts'].append({
 
 with open('data.json', 'w') as file:
     json.dump(dataObj, file)
-</code>
-</pre>
+```
 
 ## Reading JSON from a file
 Reading is as easy as writing to a file. Using the same package again, we can parse the JSON string directly from the file.
-<pre>
-<code class="python">
+```python
 import json
 
 with open('data.json', 'r') as file:
@@ -39,6 +36,5 @@ with open('data.json', 'r') as file:
         print 'Title: ' + item['title']
         print 'Category: ' + item['category']
         print 'Slug: ' + item['slug']
-</code>
-</pre>
+```
 I read about different package alternatives like `simplejson` but I guess for now, this is a great way to get started especially, if you're working with web applications and are interacting with a serialized JSON data on a daily basis.

@@ -12,19 +12,15 @@ In [Challenge 6](http://cryptopals.com/sets/1/challenges/6), the first
 step states that you have to write a function to compute the ***edit
 distance/Hamming distance*** between two strings:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     this is a test
-    </code>
-</pre>
+```
 
 And
 
-<pre>
-    <code class="plaintext">
+```plaintext
     wokka wokka!!!
-    </code>
-</pre>
+```
 
 When this function is executed, the expected result must be ***37***. If
 you we're able to make this function work, you can proceed with the next
@@ -42,15 +38,13 @@ Operators](/posts/base64-encoding-decoding-using-bitwise-manipulation-in-c)).
 
 Using the example above, let's see how this works, in theory:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     ASCII Format: this is a test
     Binary Format: 011101[0][0] 01101[0][0][0] 011010[0]1 011[1][0]011 0[0]10000[0] 0[1]10[1]00[1] 01110[0]11 0[0]10[0][0][0][0] 0110[0]0[0]1 0[0]10[0]0[0][0] 011[1]0[1]0[0] 0[1]100[1]01 0[1]1[1]00[1]1 0[1]1[1]0[1]0[0]
 
     ASCII Format: wokka wokka!!!
     Binary Format: 011101[1][1] 01101[1][1][1] 011010[1]1 011[0][1]011 0[1]10000[1] 0[0]10[0]00[0] 01110[1]11 0[1]10[1][1][1][1] 0110[1]0[1]1 0[1]10[1]0[1][1] 011[0]0[0]0[1] 0[0]100[0]01 0[0]1[0]00[0]1 0[0]1[0]0[0]0[1]
-    </code>
-</pre>
+```
 
 As per the given example, when you count the number of differing bits
 (the bits marked in brackets) between the two strings, the result is
@@ -59,8 +53,7 @@ As per the given example, when you count the number of differing bits
 With help of ***Google*** and ***Wikipedia***, I was able to build an
 implementation of this algorithm using the C++ programming language:
 
-<pre>
-    <code class="cpp">
+```cpp
     //Hamming Distance
     int CryptoLib::hamming_distance(string str1, string str2)
     {
@@ -76,8 +69,7 @@ implementation of this algorithm using the C++ programming language:
         }
         return count;
     }
-    </code>
-</pre>
+```
 
 ***Note: This solution and the library named <mark>crypto.h</mark> was
 built using the C++ programming language. The source code for this

@@ -51,8 +51,7 @@ thus is the name of the game.
 
 ## Source code
 
-<pre>
-    <code class="js">
+```js
     var canvas = document.getElementById("game-grid");
     var ctx = canvas.getContext("2d");
     var size = 4;
@@ -505,8 +504,7 @@ thus is the name of the game.
         //Generate another random number after movement is complete
         newCell();
     }
-    </code>
-</pre>
+```
 
 Well then, that's all for the game. Just like the previous ones, I had
 fun building this sliding-puzzle game. I'm looking forward to building

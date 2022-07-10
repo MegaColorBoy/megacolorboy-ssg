@@ -4,8 +4,6 @@ slug: check-ubuntu-version
 category: Linux
 
 Want to know the current version of your Ubuntu distro? Type this:
-<pre>
-<code class="bash">
+```bash
 lsb_release -r
-</code>
-</pre>
+```

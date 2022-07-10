@@ -10,12 +10,10 @@ It worked for a smaller archives but as the records grew larger, I got a fatal e
 
 So, I found an easy way to increase the memory limit to 1024MB (1GB) like this:
 
-<pre>
-<code class="php">
+```php
 &lt;?php
 ini_set('memory_limit', '1024M');
 ?&gt;
-</code>
-</pre>
+```
 
 Before you write this stub in your script, make sure you have enough resources in your system or else, it'll go splat!

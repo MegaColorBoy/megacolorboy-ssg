@@ -5,11 +5,11 @@ category: Regular Expressions
 status: active
 
 Open up your text editor and use the following RegEx pattern to find and remove the duplicate lines:
-<pre>
-<code>
+
+```regex
 ^(.*)(\r?\n\1)+$
-</code>
-</pre>
+```
+
 I found this technique on [Regular-Expressions.info](http://www.regular-expressions.info/duplicatelines.html) and I'm going to quote their explanation over here:
 
 >The caret will match only at the start of a line. So the regex engine will only attempt to match the remainder of the regex there. The dot and star combination simply matches an entire line, whatever its contents, if any. The parentheses store the matched line into the first backreference.

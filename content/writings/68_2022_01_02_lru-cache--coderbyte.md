@@ -14,8 +14,7 @@ It's quite essential to storing data locally in order to avoid unnecessary calls
 # What's LRU Cache?
 Honestly, I didn't know what is it until I saw this interview question.
 
-<pre>
-	<code class="javascript">
+```javascript
 	function LRUCache(arr) {
 		let cache = [];
 
@@ -31,5 +30,4 @@ Honestly, I didn't know what is it until I saw this interview question.
 
 		return cache.join('-');
 	}
-	</code>
-</pre>
+	```

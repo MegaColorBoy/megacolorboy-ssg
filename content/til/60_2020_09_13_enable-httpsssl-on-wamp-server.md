@@ -15,47 +15,38 @@ Based on your system's architecture, you can download either a 32 or 64-bit inst
 
 ## Generate SSL Key and Certificate
 Open your terminal or command-line prompt and navigate to the following folder:
-<pre>
-<code class="bash">
+```bash
 cd "C:\Program Files\OpenSSL-Win64\bin"
-</code>
-</pre>
+```
 
 Next, you need to create a private key. While generating a private key, you'll have to enter a passphrase, it can be anything but make sure that you can remember it for the next step &#x1F602;.
 
 Execute the following command:
-<pre>
-<code class="bash">
+```bash
 openssl genrsa -aes256 -out private.key 2048
-</code>
-</pre>
+```
 
 Good, now let's generate our certificate and in this step, you'll be prompted with several questions. You can fill as per your wish or just hit "Enter" to leave it as default. The only thing that matters is **Common Name** and this should named as `localhost`
 
 Execute the following command:
-<pre>
-<code class="bash">
+```bash
 openssl req -new -x509 -nodes -sha1 -key private.key -out certificate.crt -days 36500
-</code>
-</pre>
+```
 
 ## Move the certificate and key to Apache's directory
 Create a folder named `keys` and move both `private.key` and `certificate.crt` to this directory: `C:\wamp64\bin\apache\apache2.4.41\conf`.
 
 ## Modify your httpd.conf file
 You have to uncomment 3 lines from `C:/wamp64/bin/apache/apache2.4.41/conf/httpd.conf`:
-<pre>
-<code class="apache">
+```apache
 LoadModule ssl_module modules/mod_ssl.so
 Include conf/extra/httpd-ssl.conf
 LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
-</code>
-</pre>
+```
 
 ## Modify your httpd-ssl.conf file
 Go to `C:/wamp64/bin/apache/apache2.4.41/conf/extra/httpd-ssl.conf` and modify the following parameters:
-<pre>
-<code class="apache">
+```apache
 DocumentRoot "c:/wamp64/www"
 ServerName localhost:443
 ServerAdmin admin@youremail.com
@@ -65,8 +56,7 @@ SSLSessionCache "shmcb:${SRVROOT}/logs/ssl_scache(512000)"
 SSLCertificateFile "${SRVROOT}/conf/keys/certificate.crt"
 SSLCertificateKeyFile "${SRVROOT}/conf/keys/private.key"
 CustomLog "${SRVROOT}/logs/ssl_request.log"
-</code>
-</pre>
+```
 
 `DocumentRoot` is the location of where your website files are located. `ServerName` can be anything but preferable to use `localhost`.
 

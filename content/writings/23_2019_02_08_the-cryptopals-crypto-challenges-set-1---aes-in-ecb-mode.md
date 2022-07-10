@@ -37,11 +37,9 @@ Decrypt it.
 
 In order to decrypt it, you are given a key:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     YELLOW SUBMARINE
-    </code>
-</pre>
+```
 
 ## What is AES?
 
@@ -78,16 +76,13 @@ a file) on my UNIX terminal.
 
 Here's the solution:
 
-<pre>
-    <code class="bash">
+```bash
     openssl enc -aes-128-ecb -d -a -in secret.txt -K $(echo "YELLOW SUBMARINE" | xxd -p) -iv 1 | head
-    </code>
-</pre>
+```
 
 This is the decrypted message:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     I'm back and I'm ringin' the bell
     A rockin' on the mike while the fly girls yell
     In ecstasy in the back of me
@@ -98,8 +93,7 @@ This is the decrypted message:
     I'm lettin' my drug kick in
     It controls my mouth and I begin
     To just let it flow, let my concepts go
-    </code>
-</pre>
+```
 
 Initially, I was planning to write an implementation of ***AES*** for fun,
 but then I decided to make it a side project that I can work on as there

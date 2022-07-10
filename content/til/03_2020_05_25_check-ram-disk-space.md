@@ -5,16 +5,12 @@ category: Terminal
 
 ## RAM space
 Type the following command to view available memory in your system:
-<pre>
-<code class="bash">
+```bash
 free -h
-</code>
-</pre>
+```
 
 ## Disk space
 Type the following command to view available disk space in your system:
-<pre>
-<code class="bash">
+```bash
 df -h
-</code>
-</pre>
+```

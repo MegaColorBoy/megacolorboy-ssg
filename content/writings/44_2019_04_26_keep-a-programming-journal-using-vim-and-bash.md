@@ -27,18 +27,15 @@ I looked on some options like Google Docs, Dropbox Paper and Evernote but I just
 ## Setup
 
 First, you need to create a directory to store your journal notes and create a file to create them:
-<pre>
-    <code class="bash">
+```bash
     mkdir journal
     cd journal
     touch writer.sh
     chmod u+rwx writer.sh
-    </code>
-</pre>
+```
 
 Next, you need to write a few lines of code in Bash:
-<pre>
-    <code class="bash">
+```bash
     #!/bin/bash
 
     folder=`date +%Y_%m_%d`
@@ -46,22 +43,17 @@ Next, you need to write a few lines of code in Bash:
     cd $folder
     
     vi +star `date +%Y%m%d`".jrnl"
-    </code>
-</pre>
+```
 
 One more step, create an alias on your ***bash_profile*** in order to access it from anywhere:
-<pre>
-    <code class="bash">
+```bash
     alias jrnl="cd /journal;./writer.sh"
-    </code>
-</pre>
+```
 
 Alright, that's the basic setup! To test it, just do the following in your Terminal:
-<pre>
-    <code class="bash">
+```bash
     journal
-    </code>
-</pre>
+```
 
 ## VIM Customization
 Are you one of those people who gets confused on how to get out of VIM? Don't worry, you'll figure it out [over here](https://google.com/search?q=how-to-get-out-of-vim)!
@@ -69,8 +61,7 @@ Are you one of those people who gets confused on how to get out of VIM? Don't wo
 The following setup can be done in your <mark>~/.vimrc</mark> file to enhance your journaling experience like adding a spellchecker, word counter, highlight colors and so on.
 
 Below are the configurations:
-<pre>
-    <code class="bash">
+```bash
     set spell spelllang=en_gb
     cmap <F6> setlocal spell!
 
@@ -94,8 +85,7 @@ Below are the configurations:
     set statusline=
     set statusline+=%1*
     set statusline+=%<\
-    </code>
-</pre>
+```
 
 Now, you can start writing your own journal whenever and wherever you want using VIM.
 

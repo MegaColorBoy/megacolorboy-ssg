@@ -21,11 +21,9 @@ challenges, if you haven't read them, here are the links:
 For this challenge, you have to write a method that decodes a
 Hexadecimal string:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736
-    </code>
-</pre>
+```
 
 That has been ***XOR'd*** against a ***single character***. You must find
 the key and decrypt the message.
@@ -45,8 +43,7 @@ the encrypted message.
 
 Let's have a look at the code:
 
-<pre>
-    <code class="cpp">
+```cpp
     //Return Character frequency of a string
     map&lt;char, int&gt; CryptoLib::frequency_table(string str)
     {
@@ -123,13 +120,11 @@ Let's have a look at the code:
         //8. Decoded message
         return newStr;
     }
-    </code>
-</pre>
+```
 
 **Final code:**
 
-<pre>
-    <code class="cpp">
+```cpp
     //CryptoPals Set 1 Challenge 3
     #include "crypto.h"
 
@@ -142,17 +137,14 @@ Let's have a look at the code:
         cout << "DECODED: " << crypt.singleByteXOR(str) << endl;
         return 0;
     }   
-    </code>
-</pre>
+```
 
 **Decrypted message:**
 
-<pre>
-    <code class="plaintext">
+```plaintext
     Key with the highest frequency: 'X'
     Message: Cooking MC's like a pound of bacon
-    </code>
-</pre>
+```
 
 ***Note: This solution and the library named <mark>crypto.h</mark> was
 built using the C++ programming language. The source code for this

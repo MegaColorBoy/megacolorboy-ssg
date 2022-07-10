@@ -19,8 +19,7 @@ I always wanted to implement one for this website too and I thought of making us
 
 Try adding the below CSS to your stylesheet:
 
-<pre>
-	<code class="css">
+```css
 	:root {
 		--background-color: white;
 		--font-color: black;
@@ -47,8 +46,7 @@ Try adding the below CSS to your stylesheet:
 	html[data-theme="dark"] a {
 		color: var(--alt-accent-color);
 	}
-	</code>
-</pre>
+	```
 
 The `:root` selector contains a set of default values and in this case, these are just different colors, kind of like how we initialize variables in other programming languages.
 
@@ -59,32 +57,27 @@ Really, it's that simple!
 ## Add some markup
 That depends on what you really want to have in your website but for this tutorial, you can just place a simple button somewhere in your navigation bar or anywhere you like:
 
-<pre>
-	<code>
-	&lt;button class="themeSwitcher"&gt;Dark/Light&lt;/button&gt;
-	</code>
-</pre>
-
+```html
+<button class="themeSwitcher">Dark/Light</button>
+```
 
 ## Toggle between light and dark themes 
 Yes, we are getting there and you just have to write a simple logic that checks if whether the current theme is dark or light based on the class used on the `<body>` element.
 
-<pre>
-	<code>
-	$('.themeSwitcher').on('click', function(){
-		switch($('body').attr('data-theme')){
-			case "dark":
-				$('body').attr('data-theme', 'dark');
-				break;
+```js
+$('.themeSwitcher').on('click', function(){
+	switch($('body').attr('data-theme')){
+		case "dark":
+			$('body').attr('data-theme', 'dark');
+			break;
 
-			case "light":
-			default:
-				$('body').attr('data-theme', '');
-				break;
-		}
-	});
-	</code>
-</pre>
+		case "light":
+		default:
+			$('body').attr('data-theme', '');
+			break;
+	}
+});
+```
 
 ### Save user's preference in their browser
 If your button works as expected, good! Now, once you refresh the page, the background would return to it's default mode but that's not what we wanted, right?
@@ -93,38 +86,34 @@ But why does it return instead of staying dark? Because your "preference" is not
 
 Modify your code to store your preferences in your browser:
 
-<pre>
-	<code>
-	&lt;script&gt;
-	$('.themeSwitcher').on('click', function(){
-		switch($('body').attr('data-theme')){
-			case "dark":
-				$('body').attr('data-theme', 'dark');
-				localStorage.setItem("theme", "dark");
-				break;
+```html
+<script>
+$('.themeSwitcher').on('click', function(){
+	switch($('body').attr('data-theme')){
+		case "dark":
+			$('body').attr('data-theme', 'dark');
+			localStorage.setItem("theme", "dark");
+			break;
 
-			case "light":
-			default:
-				$('body').attr('data-theme', '');
-				localStorage.setItem("theme", "");
-				break;
-		}
-	});
-	&lt;/script&gt;
-	</code>
-</pre>
+		case "light":
+		default:
+			$('body').attr('data-theme', '');
+			localStorage.setItem("theme", "");
+			break;
+	}
+});
+</script>
+```
 
 This should work fine but you'll want to avoid the "flickering" issue while changing themes or refreshing the page, in order to do that, make sure that you check the user preference before the page is completely loaded:
 
-<pre>
-	<code>
-	&lt;script&gt;
-		if(localStorage.theme){
-			document.documentElement.setAttribute('data-theme', localStorage.getItem("theme"));
-		}
-	&lt;/script&gt;
-	</code>
-</pre>
+```html
+<script>
+	if(localStorage.theme){
+		document.documentElement.setAttribute('data-theme', localStorage.getItem("theme"));
+	}
+</script>
+```
 
 ## Conclusion
 Well, if you've noticed, I wrote a simple theme switcher for my blog too. Try it out and you can inspect the code to see how it works.

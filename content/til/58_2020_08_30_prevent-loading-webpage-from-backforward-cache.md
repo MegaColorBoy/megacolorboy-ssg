@@ -9,15 +9,13 @@ I'm working on an eCommerce project and I encountered a really weird problem, wh
 Honestly, I thought this was a bug until I came around to learn about [Back-Forward Caching](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/1.5/Using_Firefox_1.5_caching) a.k.a **bfcache**, which allows the user to navigate between pages faster. That's a good thing, though!
 
 But that didn't help resolve my issue, so I thought of going around with a tiny hack:
-<pre>
-<code class="js">
+```js
 window.onpageshow = function(event) {
     if (event.persisted) {
         window.location.reload() 
     }
 };
-</code>
-</pre>
+```
 
 The code above will look any persistence of the `onpageshow` event. Initially, it's set to `false` and if the page is loaded from **bfcache**, it'll set to `true`.
 

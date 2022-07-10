@@ -32,16 +32,14 @@ A trivial problem, isn't it? Time to see if we can recreate it!
 ## Step 1: Create the bubble
 Let's write the CSS to create a simple bubble with a <mark>width</mark> and <mark>height</mark> of 150px and by giving it a <mark>border-radius</mark> of 50%.
 
-<pre>
-    <code class="css">
+```css
     .stripe-bubble
     {
         width: 150px;
         height: 150px;
         border-radius: 50%;
     }
-    </code>
-</pre>
+```
 
 As for the logo, I inspected their code and figured out that Stripe combined all of their customer logos into a single image, also known as, CSS Spritesheet.
 
@@ -53,8 +51,7 @@ Performance-wise, it's a clever technique used to reduce the number of HTTP requ
 
 Let's give the CSS spritesheet as a background-image property and adjust it enough to fit the size of one bubble.
 
-<pre>
-    <code class="css">
+```css
     .stripe-bubble
     {
         position: absolute;
@@ -65,13 +62,11 @@ Let's give the CSS spritesheet as a background-image property and adjust it enou
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.1);
         background-size: 1076px 1076px;
     }
-    </code>
-</pre>
+```
 
 There are about 43 logos, which means you'll have to create different logos by adjusting the background position property.
 
-<pre>
-    <code class="css">
+```css
     .logo-1
     {
         background-position: 0 0;
@@ -87,8 +82,7 @@ There are about 43 logos, which means you'll have to create different logos by a
         background-position: 0 -308px;
     }
     ...
-    </code>
-</pre>
+```
 
 In the next step, using JavaScript, we'll create the classes for the bubbles and the header.
 
@@ -96,8 +90,7 @@ In the next step, using JavaScript, we'll create the classes for the bubbles and
 
 Before we get in deep, let's create the foundation for our code, so that it'll make things neat and tidy and easier on the go. Below, I have created two classes: one is for the bubble and the other is for the bubble wrapper (no puns):
 
-<pre>
-    <code class="js">
+```js
     class Bubble{
         constructor(){}
         update(){}
@@ -107,8 +100,7 @@ Before we get in deep, let's create the foundation for our code, so that it'll m
         constructor(){}
         update(){}
     }
-    </code>
-</pre>
+```
 
 Great, you have created the classes, we can now use these to generate the bubbles dynamically in the next step.
 
@@ -126,8 +118,7 @@ As you see in the image above, the logos are randomly placed and scaled. It's cl
 
 Aha! I discovered that the positioning and scaling of the bubbles are hard-coded and then the logos order are randomly shuffled. I won't be adding a randomizer but for now, let's add the bubbles with it's specifications and respective logos.
 
-<pre>
-    <code class="js">
+```js
     const bubbleSettings = [
         {cssClass:'logo-imgAffirm', s: .6, x: 77, y: 1134 }, 
         {cssClass:'logo-imgAllianz', s: .6, x: 271, y: 1620 }, 
@@ -191,24 +182,20 @@ Aha! I discovered that the positioning and scaling of the bubbles are hard-coded
         }
         update(){}
     }
-    </code>
-</pre>
+```
 
 Okay, now off to animating the bubbles!
 
 ## Step 4: Animation
 You could use absolute positioning properties like <mark>top</mark> and <mark>left</mark> but it'd be really expensive in terms of calculations, instead of that, you could use <mark>transform</mark> to move the elements.
 
-<pre>
-    <code class="js">
+```js
     this.el.style.transform = `translate(${this.x}px, ${this.y}px) scale(${this.scale})`;
-    </code>
-</pre>
+```
 
 As for the animation, you could use <mark>setInterval</mark> but don't do that, stop here and read about [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame).
 
-<pre>
-    <code class="js">
+```js
     constructor(settings){
         this.bubbles = [];
 
@@ -223,8 +210,7 @@ As for the animation, you could use <mark>setInterval</mark> but don't do that, 
         this.bubbles.forEach(bubble => bubble.update());
         this.raf = requestAnimationFrame(this.update.bind(this));
     }
-    </code>
-</pre>
+```
 
 Alright, you've done it! It's animating and looks cool but hey, did you notice that there animation doesn't look stale but is more organic-like? That's because they have added some random movement to each bubble.
 
@@ -234,8 +220,7 @@ I didn't implement the algorithm instead I made use of an existing [implementati
 
 This is how your <mark>update()</mark> method should look like after adding the Perlin Noise:
 
-<pre>
-    <code class="js">
+```js
     update(){
         this.noiseSeedX += noise_speed;
         this.noiseSeedY += noise_speed;
@@ -255,8 +240,7 @@ This is how your <mark>update()</mark> method should look like after adding the 
 
         this.el.style.transform = `translate(${this.xNoisePos}px, ${this.yNoisePos}px) scale(${this.scale})`;
     }
-    </code>
-</pre>
+```
 
 After adding that, you have finally achieved what you wanted! Oh, you can find the source code for this project on my [GitHub](https://github.com/MegaColorBoy/BlogProjects/tree/master/stripe-bubbles) repository.
 

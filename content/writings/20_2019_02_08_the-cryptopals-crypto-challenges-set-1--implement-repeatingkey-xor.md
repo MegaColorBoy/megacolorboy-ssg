@@ -25,29 +25,23 @@ challenges, if you haven't read them, here are the links:
 For this challenge, you have to implement a ***Repeating-Key XOR*** method
 to encrypt the following message:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     Burning 'em, if you ain't quick and nimble
     I go crazy when I hear a cymbal
-    </code>
-</pre>
+```
 
 With a given key:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     ICE
-    </code>
-</pre>
+```
 
 The final message should look like this:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a26226324272765272
     a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27282f
-    </code>
-</pre>
+```
 
 If you've already understood the concept of
 [XOR](/posts/base64-encoding-decoding-using-bitwise-manipulation-in-c)
@@ -73,8 +67,7 @@ Let's dive in to the code:
 
 **Implementation of the method(s):**
 
-<pre>
-    <code class="cpp">
+```cpp
     //Convert ASCII to HEX
     string CryptoLib::con_ascii_2_hex(string str)
     {
@@ -123,13 +116,11 @@ Let's dive in to the code:
         final += con_ascii_2_hex(newStr);
         return final;
     }
-    </code>
-</pre>
+```
 
 **Final code:**
 
-<pre>
-    <code class="cpp">
+```cpp
     //Cryptopals Set 1 Challenge 5
     #include "crypto.h"
 
@@ -144,8 +135,7 @@ Let's dive in to the code:
         cout << "ENCODED: " << crypt.repeatingKeyXOR(str, key) << endl;
         return 0;
     }
-    </code>
-</pre>
+```
 
 ***Note: This solution and the library named <mark>crypto.h</mark> was
 built using the C++ programming language. The source code for this

@@ -33,8 +33,7 @@ There are two important mechanics that made it challenging to build this game:
 While I was building Pong, I thought of making it a 2 player game but later I decided to build a simple AI to make things interesting. Building the AI logic for this was simple, ***"When the player paddle hits the ball, the AI should try it's best to position itself by tracking the ball's destination to hit the it's center"***.
 
 **Code snippet of the AI object:**
-<pre>
-    <code class="js">
+```js
     var ai = {
         x: null,
         y: null,
@@ -51,16 +50,14 @@ While I was building Pong, I thought of making it a 2 player game but later I de
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
     };  
-    </code>
-</pre>
+```
 
 ## Ball Collision
 In this game, the collision works a little different than [Breakout](#)'s version. I came across an algorithm called [Axis Aligned Bounding Box](https://en.wikipedia.org/wiki/Minimum_bounding_box#Axis-aligned_minimum_bounding_box), which is one of the simpler forms of detecting a collision between a set of objects that are axis aligned that means no rotation. This algorithm also inspired me to use it in my next game, Tetris. 
 
 **Code snippet of the Axis Aligned Bounding Boxes collision:**
 
-<pre>
-    <code class="js">
+```js
     //AABB Collision function
     var AABBCollision = function(px, py, pw, ph, bx, by, bw, bh)
     {
@@ -83,8 +80,7 @@ In this game, the collision works a little different than [Breakout](#)'s versio
         this.velocity.x = impact * dir * this.speed * Math.cos(phi);
         this.velocity.y = impact * this.speed * Math.sin(phi);
     }
-    </code>
-</pre>
+```
 
 The game was built using HTML5 Canvas and Javascript, so please feel free to read the source code to understand the logic of the game.
 

@@ -10,11 +10,9 @@ However, you can't use this file in Linux servers as both private key and the ce
 
 Here's how you can extract both private key and certificate files:
 
-<pre>
-<code class="bash">
+```bash
 openssl pkcs12 -in file.pfx -nocerts -out privatekey.pem -nodes
 openssl pkcs12 -in file.pfx -nokeys -out certificate.crt
-</code>
-</pre>
+```
 
 Hope this tip helps you out!

@@ -8,15 +8,13 @@ I read about [variable variables](https://www.php.net/language.variables.variabl
 
 Here's a sample:
 
-<pre>
-<code class="php">
-&lt;php
+```php
+<?php
     $a = "hello";
     // Remove special characters and tags to prevent it from crashing.
     $foo = preg_replace('/[^a-zA-Z0-9\s]/', '', $$a);
     echo $foo;
-?&gt;
-</code>
-</pre>
+?>
+```
 
 Not sure if this is a good practice but it sure gets the job done!

@@ -8,14 +8,12 @@ Wanted to fetch a specific file from your Git repository except that the reposit
 
 Try this out:
 
-<pre>
-<code class="bash">
+```bash
 git init
 git remote add origin &lt;your_repo_link&gt;.git
 git fetch
 git checkout &lt;your_branch_name&gt; -- &lt;/path/to/file&gt;
-</code>
-</pre>
+```
 
 After executing these commands, you should be able to see the selected directory/file in your project directory.
 

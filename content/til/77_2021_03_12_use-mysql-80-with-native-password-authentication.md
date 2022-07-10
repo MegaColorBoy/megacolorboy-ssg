@@ -17,25 +17,19 @@ If you're running PHP 7.2 and facing this error, you should know that PHP 7.2 do
 2. [Create a new user with native password authentication](#opt2)
 
 ## <a id="opt1"></a> Alter the current user's authentication to native password
-<pre>
-<code class="mysql">
+```mysql
 ALTER USER 'your_user'@'your_server_host' IDENTIFIED WITH mysql_native_password BY 'your_password';
-</code>
-</pre>
+```
 
 ## <a id="opt2"></a> Create a new user with native password authentication
-<pre>
-<code class="mysql">
+```mysql
 CREATE USER 'your_user'@'your_server_host ' IDENTIFIED WITH mysql_native_password BY 'your_password'
-</code>
-</pre>
+```
 
 For the changes to take effect, you need to reload the privileges by typing the following:
 
-<pre>
-<code class="mysql">
+```mysql
 FLUSH PRIVILEGES;
-</code>
-</pre>
+```
 
 Hope this helps you out!

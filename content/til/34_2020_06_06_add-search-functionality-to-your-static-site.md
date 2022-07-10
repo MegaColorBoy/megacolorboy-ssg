@@ -17,20 +17,17 @@ Is your site generated using Python and want to create a JSON dump? [Read this a
 I won't go through the aspects of UI design in this article as I feel that it's subjective and depends on one's preferences but let's keep it simple enough for this tutorial.
 
 Before you begin writing the function, place this component in your HTML template:
-<pre>
-<code class="html">
+```html
 &lt;div class="searchbox"&gt;
     &lt;input id="searchinput" type="text"&gt;
     &lt;div id="searchresults"&gt;
         &lt;ul&gt;&lt;/ul&gt;
     &lt;/div&gt;
 &lt;/div&gt;
-</code>
-</pre>
+```
 
 Anyway, here's the function and you can place it directly on your template or in a separate `.js` file:
-<pre>
-<code class="js">
+```js
 var _url = "path-of-your-file.json";
 
 $(document).ready(function(){
@@ -57,8 +54,7 @@ $(document).ready(function(){
         }
     });
 });
-</code>
-</pre>
+```
 That's it! Now, when you execute your script, you should be able to view your search results just like as if it were using a database.
 
 If you want to make it similar to mine, please feel free to inspect the code on the browser or go to my [repository](https://github.com/megacolorboy/personal-blog/blob/master/static/js/search.js) to see how it works.

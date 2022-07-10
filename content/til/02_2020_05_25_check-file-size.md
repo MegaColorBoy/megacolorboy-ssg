@@ -5,8 +5,6 @@ category: Terminal
 
 Wanted to view the size of a file in terminal but don't understand the number of bytes displayed? No worries, just type this command and it'll display the size of the in human-readable format:
 
-<pre>
-<code class="bash">
+```bash
 du -sh filename.ext
-</code>
-</pre>
+```

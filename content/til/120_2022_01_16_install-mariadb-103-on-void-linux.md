@@ -21,22 +21,18 @@ Alright, go ahead and follow these steps one-by-one:
 
 Type the following command to install the package:
 
-<pre>
-<code class="bash">
+```bash
 sudo xbps-install -S mariadb
-</code>
-</pre>
+```
 
 
 ### 2. Initialize MySQL data directory
 
 The following command will initialize a MariaDB data directory and create system tables in the MySQL database, if they are not present.
 
-<pre>
-<code class="bash">
+```bash
 mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
-</code>
-</pre>
+```
 
 The options used:
 
@@ -52,45 +48,35 @@ If you are used to Ubuntu or CentOS, enabling services in Void Linux is a bit di
 
 Type the following command to enable the `mysqld` service:
 
-<pre>
-<code>
+```bash
 sudo ln -s /etc/sv/mysqld /var/service/mysqld
-</code>
-</pre>
+```
 
 ### 4. Start MySQL service
 
 Type the following command to start the `mysqld` service:
 
-<pre>
-<code>
+```bash
 sudo sv start mysqld
-</code>
-</pre>
+```
 
 To confirm, if the service is running, type the following:
 
-<pre>
-<code>
+```bash
 sudo sv status mysqld
-</code>
-</pre>
+```
 
 And you'll see something like this:
-<pre>
-<code class="bash">
+```bash
 run: mysqld: (pid 15136) 1116s; run: log: (pid 15025) 1172s
-</code>
-</pre>
+```
 
 ### <a id="secure-mysql-installation"></a> 5. Secure MySQL installation
 
 It's recommended to secure your installation, so type the following command:
-<pre>
-<code class="bash">
+```bash
 sudo mysql_secure_installation
-</code>
-</pre>
+```
 
 Once the command is executed, you'll be prompted with a few questions, respond according to your needs and you're done!
 
@@ -98,11 +84,9 @@ Once the command is executed, you'll be prompted with a few questions, respond a
 
 Now, all you have to do is, try to log in to your database by typing the following:
 
-<pre>
-<code class="bash">
+```bash
 mysql -u root -p
-</code>
-</pre>
+```
 
 Once executed, it would prompt you for your password (which you must have set in the [previous step](#secure-mysql-installation) and if you are able to log in, you are good to go!
 

@@ -67,8 +67,7 @@ So, the first term that contains the 1000 digit Fibonacci Number is
 
 Here's the solution using Python that solved in 0.000194 seconds:
 
-<pre>
-    <code class="python">
+```python
     import math
 
     limit = 999
@@ -77,8 +76,7 @@ Here's the solution using Python that solved in 0.000194 seconds:
     n = round(((limit * math.log(10)) + (math.log(5)/2))/(math.log(golden_ratio)))
 
     print n
-    </code>
-</pre>
+```
 
 So, this is how it would look in our first equation above:
 

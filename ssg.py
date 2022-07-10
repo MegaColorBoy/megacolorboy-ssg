@@ -13,7 +13,8 @@ from collections import namedtuple
 from datetime import datetime, date
 from dateutil.parser import parse
 from jinja2 import Environment, PackageLoader
-from markdown2 import markdown
+# from markdown2 import markdown
+import markdown2
 import typer
 from time import sleep
 from progress.bar import IncrementalBar
@@ -48,8 +49,8 @@ def generate_categories():
 
 # TODO: Use archive_posts method to fetch all posts in archive order
 # Generate archive posts
-def generate_archive_posts():
-    pass
+#def generate_archive_posts():
+#    pass
 
 # Generate menu
 def generate_menu():
@@ -160,7 +161,7 @@ def get_posts(content_directories = []):
     # List of posts
     posts = []
     # Refer to https://github.com/trentm/python-markdown2/wiki/Extras for documentation
-    extras = ['metadata', 'fenced-code-blocks']
+    extras = ['metadata', 'code-friendly', 'fenced-code-blocks']
 
     paths = []
     
@@ -175,7 +176,7 @@ def get_posts(content_directories = []):
                     file_path = os.path.join(root, post)
                     if post.endswith('.md'):
                         with open(file_path, 'r') as file:
-                            post_content = markdown(file.read(), extras=extras)
+                            post_content = markdown2.markdown(file.read(), extras=extras)
 
                             # Fetch metadata of each article
                             index = get_file_index(file_path)
@@ -187,9 +188,10 @@ def get_posts(content_directories = []):
                             slug = post_content.metadata['slug']
                             category = post_content.metadata['category']
                             # summary = post_content.metadata['summary'] if 'summary' in post_content.metadata else 'Tips & Tricks &mdash; ' + category
-                            summary = post_content.metadata['summary'] if 'summary' in post_content.metadata else "".join(filter_text(extract_text(post_content)))
+                            # summary = post_content.metadata['summary'] if 'summary' in post_content.metadata else "".join(filter_text(extract_text(post_content)))
+                            summary = post_content.metadata['summary'] if 'summary' in post_content.metadata else ""
                             reading_time = estimate_reading_time(post_content)
-                            post_url = '/'.join([path, 'posts', slug])
+                            post_url = '/'.join([path.replace('content/', ''), 'posts', slug])
 
                             # if the status is not present in the file, it's assumed that the post is active.
                             status = post_content.metadata['status'] if 'status' in post_content.metadata else 'active'
@@ -247,16 +249,18 @@ def generate_index_with_paginator(section, posts_per_page):
     # If the current section is not root, then create it as a sub_directory instead.
     if section['page_type'] != 'main': 
         root_directory = 'output/' + section['content_directory'] + '/'
-    print(section['page_type'])
+    
     create_directory(root_directory)    
     
+    page_directory = "/" + section['content_directory'] + "/pages/" if section['page_type'] != 'main' else "/pages/" 
+
     """
     Split the posts in even chunks
     """
     it = iter(section['posts'])
     chunked_posts = list(iter(lambda: tuple(islice(it, posts_per_page)), ()))
 
-    for page_number in range(0, number_of_pages + 1):
+    for page_number in range(0, number_of_pages+1):
         current_page_number = page_number + 1
         
         sub_directory = ''
@@ -282,6 +286,8 @@ def generate_index_with_paginator(section, posts_per_page):
             prev=previous_page,
             next=next_page,
             total=number_of_pages+1,
+            directory = page_directory,
+            pagination_links = generate_pagination_links(page_directory, current_page_number, number_of_pages+1),
             page = {
                 'title': section['seo']['title'], 
                 'description': section['seo']['description']
@@ -293,6 +299,46 @@ def generate_index_with_paginator(section, posts_per_page):
 
         write_to_file(page_index_file, rendered_html.encode('utf-8'))
 
+# Generate links for each "pages/" index directory
+def generate_pagination_links(page_directory, current, max):
+    current_page = current
+    last = max
+    delta = 2
+    left = current_page - delta
+    right = current_page + delta + 1
+    page_range = []
+    page_range_with_dots = []
+    limit = None
+
+    for i in range(1, last + 1):
+        if i == 1 or i == last or (i >= left and i < right):
+            page_range.append(i)
+
+    for i in page_range:
+        if limit:
+            if i - limit == 2:
+                page_range_with_dots.append({
+                    'url': page_directory + str(limit + 1) if limit + 1 > 1 else page_directory.replace('/pages/', '/'),
+                    'page': limit + 1,
+                    'has_dots': False
+                })
+            elif i - limit != 1:
+                page_range_with_dots.append({
+                    'url': page_directory + str(i - limit) if i - limit > 1 else page_directory.replace('/pages/', '/'),
+                    'page': i - limit,
+                    'has_dots': True
+                })
+
+        page_range_with_dots.append({
+            'url': page_directory + str(i) if i > 1 else page_directory.replace('/pages/', '/'),
+            'page': i,
+            'has_dots': False
+        })
+
+        limit = i
+
+    return page_range_with_dots
+
 # Generate index page without pagination links
 def generate_index_without_paginator(section):
     template = env.get_template('listing.html')
@@ -300,6 +346,9 @@ def generate_index_without_paginator(section):
     # Check if it's a custom page
     if section['page_type'] == 'custom':
         template = env.get_template(section['template']['custom'])
+    # Check if it's an archive page
+    elif section['page_type'] == 'archive':
+        template = env.get_template('archive.html')
     # Check if section has specified any template config to override default configuration.
     elif 'template' in section:
         template = env.get_template(section['template']['listing'])        
@@ -411,6 +460,17 @@ def generate_main_page(section):
     section['posts'] = get_recent_articles()
     generate_index_with_paginator(section, 8)
 
+# Generate the archive section of the blog
+def generate_archive_page(section):
+    template = env.get_template('archive.html')
+
+    # Check if section has specified any template config to override default configuration.
+    if 'template' in section:
+        template = env.get_template(section['template']['archive'])
+
+    section['posts'] = archive_posts(all_posts)
+    generate_index_without_paginator(section)
+
 # Generate all pages i.e. index, details and RSS required for the section
 def generate_pages(section):    
     page_type = section['page_type']
@@ -461,6 +521,8 @@ def build_section(section):
     else:
         if section['page_type'] == 'main':
             generate_main_page(section)
+        elif section['page_type'] == 'archive':
+            generate_archive_page(section)
         else:
             section['posts'] = get_posts_by_content_directory([section['content_directory']])
             generate_pages(section)

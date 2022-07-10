@@ -5,11 +5,9 @@ category: jQuery
 
 If you don't want the current element to be selected in an array of elements that belongs to same class or type, just use the `.not()` method like the example below:
 
-<pre>
-<code class="js">
+```js
 $(".btn").click(function(){
     $(".btn").not(this).text('selected');
 });
-</code>
-</pre>
+```
 The above code will change the text for all buttons except the current element.

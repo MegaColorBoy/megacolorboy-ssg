@@ -20,8 +20,7 @@ The logic is quite similar to the [Overlapping Rectangles](https://stackoverflow
 
 ## Generate circles with dynamic radius
 This method will help generate valid circles with a random radius. Circles that don't overlap or collide with other circles are considered to be valid.
-<pre>
-    <code class="js">
+```js
     // Generate a valid circle
     const generateCircle = () => {
         let newCircle;
@@ -56,8 +55,7 @@ This method will help generate valid circles with a random radius. Circles that 
         circles.push(newCircle);
         drawCircleOnCanvas(context, newCircle, colors[Math.floor(Math.random() * colors.length)]);
     }
-    </code>
-</pre>
+```
 
 ## Look for collision with other circles
 Thanks to some online research, I was able implement the [Euclidean Distance](https://en.wikipedia.org/wiki/Euclidean_distance) equation that helped with calculating the distances between each circle and detect for collisions. Along with that, I also found another article on [Touching Circles](http://www.mathsmutt.co.uk/files/tcirc.htm) that was quite useful.
@@ -72,8 +70,7 @@ These are the formulas used to detect the collision:
 
 If the radii is greater than or equal to the euclidean distance of both circles, then it's a valid circle with no collisions.
 
-<pre>
-    <code class="js">
+```js
     // Check for collision in a canvas
     const checkForCollision = (newCircle) => {
         
@@ -119,8 +116,7 @@ If the radii is greater than or equal to the euclidean distance of both circles,
         //else return false
         return false;
     }
-    </code>
-</pre>
+```
 
 ## Conclusion
 I'm thinking of implementing more generative patterns like [Triangular Mesh](https://en.wikipedia.org/wiki/Triangle_mesh) and Piet Mondrian's [Red, Blue and Yellow composition](https://en.wikipedia.org/wiki/Composition_with_Red_Blue_and_Yellow).

@@ -39,11 +39,9 @@ Since, each DOM element is generated in a top-down manner, it would display the 
 ### <a id="reason2"></a> Inefficient database queries
 Let's say, you have a page that displays a list of products from your SQL database and you execute this query:
 
-<pre>
-    <code class="sql">
+```sql
     SELECT * FROM products
-    </code>
-</pre>
+```
 
 Sorry, it's inefficient. Why? In a real-life scenario, a table may contain a lot of columns and multiply that with **x** number of database calls the server has to make for EVERY request that comes from a visitor. You get it, right?
 
@@ -95,18 +93,14 @@ I created an ad hoc solution using a PHP-based image extension named [ImageMagic
 Since it can be used directly from the terminal, I wrote a small script using PowerShell to compress and resize the images in all folders in one go!
 
 **Snippet to resize images:**
-<pre>
-    <code class="bash">
+```bash
     magick mogrify -resize 256x256 -format *.jpg *.jpeg *.png
-    </code>
-</pre>
+```
 
 **Snippet to compress images:**
-<pre>
-    <code class="bash">
+```bash
     magick mogrify -quality 70% *.jpg *.jpeg *.png
-    </code>
-</pre>
+```
 
 The logic of the code is pretty straightforward. All it has to do is get a list of files with ends with image extensions (.jpg, .jpeg, .png) and modify the resolution to 640x480 and reduce the quality to a 70%.
 
@@ -115,21 +109,17 @@ Previously, all images of the website combined was around 800MB and after execut
 ### <a id="tip2"></a> Minify Javascript
 Ever inspected someone's CSS or JS code on Chrome Debugger and saw something like this:
 
-<pre>
-    <code class="js">
+```js
     for(var a=[i=0];i<20;a[i]=i++);
-    </code>
-</pre>
+```
 
 This code above is unreadable but it still retains it's previous functionality:
-<pre>
-    <code class="js">
+```js
     var array = [];
     for (var i = 0; i < 20; i++) {
         array[i] = i;
     }
-    </code>
-</pre>
+```
 
 This process is known as [minification](https://en.wikipedia.org/wiki/Minification_(programming)). It's a way of removing all spaces, unnecessary characters and comments that would help reduce the size of the source code and make it more efficient to be transferred over the network.
 
@@ -150,11 +140,9 @@ Oh, you can also create a minified version of your CSS code and push it into pro
 The <mark>defer</mark> attribute used in the <mark>&lt;script&gt;</mark> tag will allow the JS file to be executed after the page has finished parsing all the DOM elements.
 
 When the attribute is used, it'll look like this:
-<pre>
-    <code class="html">
+```html
     &lt;script type="text/javascript" src="script.js" defer&gt;&lt;/script&gt;
-    </code>
-</pre>
+```
 
 This could save a lot of time especially if it contains code that is not critical.
 

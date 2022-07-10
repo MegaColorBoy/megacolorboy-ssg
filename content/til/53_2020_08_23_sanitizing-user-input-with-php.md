@@ -11,20 +11,17 @@ This method uses a number of flags to validate and sanitize a string. Here are s
 
 ### Removing special characters
 Want to strip out all tags and certain characters? Try this:
-<pre>
-<code class="php">
+```php
 &lt;?php
 $str = "&lt;h1&gt;Hello World&lt;/h1&gt;";
 $filtered = filter_var($str, FILTER_SANITIZE_STRING);
 echo $filtered;
 ?&gt;
-</code>
-</pre>
+```
 
 ### Integer validation
 You can check if the input is an integer and if it's a value between 1 and 20:
-<pre>
-<code class="php">
+```php
 &lt;?php
 $x = 10;
 $min = 1;
@@ -41,13 +38,11 @@ else {
     echo "This input is valid.";
 }
 ?&gt;
-</code>
-</pre>
+```
 
 ### URL validation
 Want to check if the input is a valid URL? Try this out:
-<pre>
-<code class="php">
+```php
 &lt;?php
 // Make sure the URL is sanitized
 $url = filter_var("https://www.google.com", FILTER_SANITIZE_URL);
@@ -58,8 +53,7 @@ else {
     echo "This URL is invalid.";
 }
 ?&gt;
-</code>
-</pre>
+```
 
 Using these in-built features makes it easier for PHP developers to process data from external sources in a safer manner and also adds an extra layer of protection to your web application.
 

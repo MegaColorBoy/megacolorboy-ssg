@@ -44,8 +44,7 @@ I'd like to give a shout out to the [person](https://www.erdavids.com/) who buil
 I was inspired and I thought of writing it in JavaScript and as you can see above, it did turn out pretty well.
 
 Here's the code for your reference and please read the comments to know how it functions:
-<pre>
-    <code class="javascript">
+```javascript
     // To store any used colors
     var colorStack = [];
 
@@ -164,8 +163,7 @@ Here's the code for your reference and please read the comments to know how it f
     }
 
     main();
-    </code>
-</pre>
+```
 
 Well, I won't say that is a perfect solution but hey, it works and yes, it doesn't take a lot of code to achieve something like this.
 

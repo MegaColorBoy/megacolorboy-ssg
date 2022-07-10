@@ -19,14 +19,12 @@ more simpler to understand and it's quite efficient.
 
 The following algorithm is quite simple and easy to understand:
 
-<pre>
-    <code class="plaintext">
+```plaintext
     1. Find i such that a[i-1] is greater than or equal to a[i].
     2. Find j such that a[j-1] is less than or equal to a[i-1].
     3. Swap a[i] with a[j].
     4. Reverse the suffix from a[i+1] to the last element.
-    </code>
-</pre>
+```
 
 Suppose, if the first step fails, it means the current permutation is
 the last one because such an index that does not exist. However, it's
@@ -41,8 +39,7 @@ especially, for very large lists, this function can be useful.
 
 **Implementation of the method(s):**
 
-<pre>
-    <code class="python">
+```python
     # Swap numbers in a list
     def swap(list, i, j):
         list[i], list[j] = list[j], list[i]
@@ -75,13 +72,11 @@ especially, for very large lists, this function can be useful.
             j = j-1
 
         return list
-    </code>
-</pre>
+```
 
 **Final code:**
 
-<pre>
-    <code class="python">
+```python
     #!usr/bin/python
     import math, time, pe_lib
 
@@ -98,8 +93,7 @@ especially, for very large lists, this function can be useful.
 
     print "".join(str(x) for x in list)
     print "Finished: %f seconds" % (time.time() - start)
-    </code>
-</pre>
+```
 
 This code in executed in approximately **2.37 seconds** with an
 algorithmic complexity of **O(n)** i.e. linear time complexity and the

@@ -9,11 +9,9 @@ Recently, started using Visual Studio Code as I'm yet figure out a way to instal
 I'm always used to looking for my files using keyboard shortcuts in Sublime Text and I was kind of surprised this feature isn't enabled by default in Visual Studio Code.
 
 Anyway, after a little digging, I found out that adding this line to your `settings.json` file would allow you to look for files in your workspace:
-<pre>
-<code class="json">
+```json
 "search.useIgnoreFiles": false
-</code>
-</pre>
+```
 
 And, now try `Ctrl+P` and you'll be able to search for your file(s) easily.
 

@@ -6,8 +6,7 @@ status: active
 
 Do you work on a project with multiple Git branches but don't know which one you're in? Open your `.bashrc` file and add this:
 
-<pre>
-<code class="bash">
+```bash
 force_color_prompt=yes
 color_prompt=yes
 
@@ -22,15 +21,12 @@ else
 fi
 
 unset color_prompt force_color_prompt
-</code>
-</pre>
+```
 
 Save the file and execute this command for your changes to take effect:
-<pre>
-<code class="">
+```bash
 source ~/.bashrc
-</code>
-</pre>
+```
 
 Now, you should see your colors in your Bash prompt along with the Git branch that you're working on (**Note: this will be shown if you're in a project that uses a Git repository**).
 

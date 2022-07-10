@@ -42,8 +42,7 @@ You can add more but this is just to give you an idea. Let's see take a look at 
 ### <a id="approach-1"></a> Functional
 If you're using an MVC framework (Laravel, in our case), you'd do this in a controller with a bunch of methods like so:
 
-<pre>
-    <code class="php">
+```php
     &lt;?php
     namespace App\Http\Controllers;
 
@@ -79,8 +78,7 @@ If you're using an MVC framework (Laravel, in our case), you'd do this in a cont
         }
     }
     ?&gt;
-    </code>
-</pre>
+```
 
 This is approach is self-contained and simple to follow but you're also adding in a lot of responsibility to your controller.
 
@@ -89,8 +87,7 @@ Not only that, what if the user wants to register from another place in your app
 ### <a id="approach-2"></a> Events and Listeners
 Using this approach, you can split this into <mark>Event</mark> and <mark>Listener</mark> files in your application.
 
-<pre>
-    <code class="php">
+```php
     &lt;?php
     namespace App\Http\Controllers;
 
@@ -116,13 +113,11 @@ Using this approach, you can split this into <mark>Event</mark> and <mark>Listen
         }
     }
     ?&gt;
-    </code>
-</pre>
+```
 
 This is how your <mark>UserRegistered</mark> event would look like:
 
-<pre>
-    <code class="php">
+```php
     &lt;?php
     namespace App\Events;
 
@@ -139,13 +134,11 @@ This is how your <mark>UserRegistered</mark> event would look like:
         }
     }
     ?&gt;
-    </code>
-</pre>
+```
 
 And this is how your <mark>SendConfirmationEmail</mark> listener would look like:
 
-<pre>
-    <code class="php">
+```php
     &lt;?php
     namespace App\Listeners;
 
@@ -162,20 +155,17 @@ And this is how your <mark>SendConfirmationEmail</mark> listener would look like
         }
     }
     ?&gt;
-    </code>
-</pre>
+```
 
 Using this approach, you can use the <mark>UserRegistered</mark> event anywhere you wanted in your application. No matter what happens, it will trigger the same actions as it was intended to do so. If you want to add a new functionality, create a new listener and register it with the event in your <mark>EventServiceProvider</mark> file like this:
 
-<pre>
-    <code class="php">
+```php
     protected $listen = [
         'App\Events\UserRegistered' => [
         'App\Listeners\SendConfirmationEmail',
         ],
     ];
-    </code>
-</pre>
+```
 
 If you follow this approach, your logic complexity is toned down and the controller will have less responsibility.
 

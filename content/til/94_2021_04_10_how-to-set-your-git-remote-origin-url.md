@@ -7,10 +7,8 @@ status: active
 Did you make a typo while typing out your Git remote origin URL? Is it pointing towards the wrong repository?
 
 You can easily update it using the following command:
-<pre>
-<code class="bash">
+```bash
 git remote set-url origin https://example.com/username/repository.git
-</code>
-</pre>
+```
 
 Hope you found this useful!

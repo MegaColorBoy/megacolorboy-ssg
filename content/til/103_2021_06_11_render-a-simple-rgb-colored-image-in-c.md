@@ -12,9 +12,8 @@ Just like any graphics renderer, in order to view your image. you must be able t
 
 Below, I wrote a really simple code to generate the entire RGB colored spectrum from top to bottom:
 
-<pre>
-<code class="cpp">
-#include &lt;iostream&gt;
+```cpp
+#include <iostream>
 using namespace std;
 
 int main() {
@@ -23,39 +22,34 @@ int main() {
 
     std::cout << "P3\n" << width << " " << height << "\n255\n";
 
-    for(int j=height-1; j&gt;=0; j--) {
-        for(int i=0; i&lt;width; i++) {
+    for(int j=height-1; j>=0; j--) {
+        for(int i=0; i<width; i++) {
             auto r = double(i) / (width-1);
             auto g = double(j) / (height-1);
             auto b = 0.25;
 
-            int ir = static_cast&lt;int&gt;(255.999 * r);
-            int ig = static_cast&lt;int&gt;(255.999 * g);
-            int ib = static_cast&lt;int&gt;(255.999 * b);
+            int ir = static_cast<int>(255.999 * r);
+            int ig = static_cast<int>(255.999 * g);
+            int ib = static_cast<int>(255.999 * b);
 
             std::cout << ir << " " << ig << " " << ib << "\n";
         }
     }
 }
-</code>
-</pre>
+```
 
 You can generate it by simply creating an executable like this:
-<pre>
-<code class="bash">
+```bash
 g++ -o pixels pixels.cpp
-</code>
-</pre>
+```
 
 Now, when you execute it by typing `./pixels`, you'll get a list of numbers that's pretty much a combination and permutation of RGB color values.
 
 Lastly, to generate a colored image, like the one above, just redirect the output to an image format, in this example, I used PPM image format:
 
-<pre>
-<code class="bash">
+```bash
 ./pixels > image.ppm && xdg-open image.ppm
-</code>
-</pre>
+```
 
 And that's it, you have generated your own colored image! &#x1F601;
 

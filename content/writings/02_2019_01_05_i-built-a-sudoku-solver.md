@@ -42,8 +42,7 @@ Backtracking is an algorithmic technique used for searching every possible combi
 Imagine, you're playing chess with a friend and you've made a silly move, which prompts you to ask your friend: *"Hey, I made a mistake! Can I go back to my old move?"*, your friend (hopefully, a merciful one) would allow you to return back to your old move. So in this case, you'll return back to your old position and begin to restrategize your plans on how to take down the next pawn or maybe finally hatch your plot to trap your opponent's King (you evil person). If it fails, you can ask again but I don't think your friend would be dumb enough to give you another chance!
 
 **Here's a pseudocode on how this strategy would work:**
-<pre>
-    <code class="plaintext">
+```plaintext
     Find [row,col] of an unassigned cell
     If there is none, then return true
 
@@ -54,12 +53,10 @@ Imagine, you're playing chess with a friend and you've made a silly move, which 
             Otherwise, remove this digit and try another one
         If all digits have been tried for this cell and nothing worked out
             return false, trigger backtracking and try again
-    </code>
-</pre>
+```
 
 **Javascript implementation:**
-<pre>
-    <code class="js">
+```js
     //Sudoku solver 
     function solveSudoku(grid, row, col) {
         var cell = findUnassignedLocation(grid, row, col);
@@ -154,8 +151,7 @@ Imagine, you're playing chess with a friend and you've made a silly move, which 
 
         return true;
     }
-    </code>
-</pre>
+```
 
 ## What's next?
 So now that you have understood the rough concept of how it works, combining and applying these two techniques in a Sudoku puzzle i.e. trying out every possible number to fill an empty square in the 9x9 grid would allow the computer to solve Sudoku puzzles more efficiently and quickly than using a plain [Brute Force](https://en.wikipedia.org/wiki/Brute-force_search) technique on puzzle that has around 4 x 1038 possibilities (which means, you'll probably require next-gen hardware to compute one puzzle that could take billions of years!)

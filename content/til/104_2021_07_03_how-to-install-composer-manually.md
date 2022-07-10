@@ -11,22 +11,18 @@ But what if you are using old composer packages or you wanted to skip the checks
 I wouldn't really call it an advanced technique or something but if you know what you're doing, then you should be in the right direction.
 
 The below snippet will show you how to install it manually:
-<pre>
-<code class="bash">
+```bash
 wget "https://getcomposer.org/download/VERSION_X.X.X/composer.phar"
 sudo mv composer.phar /usr/local/bin/composer
 sudo chmod a+x /usr/local/bin/composer
-</code>
-</pre>
+```
 
 ## Yes, that's it!
 By placing Composer in the `/usr/local/bin` directory, it will be accessible from any directory within the system and you can run it globally.
 
 To check if you've installed it correctly, just do the following:
-<pre>
-<code class="bash">
+```bash
 composer -V
-</code>
-</pre>
+```
 
 Hope you found this tip useful!

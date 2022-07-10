@@ -47,51 +47,40 @@ This tutorial assumes that you have Python and it's dependencies installed in yo
 We'll be installing a few extra libraries and dependencies on your system. If you don't want to mess up your current setup, you can set up an isolated environment using <mark>virtualenv</mark>, this will allow you to install all of your Python libraries, locally, instead installing them globally.
 
 Write the following command in your terminal:
-<pre>
-    <code class="bash">
+```bash
     pip install virtualenv
-    </code>
-</pre>
+```
 
 Once you've installed it, you can create a virtual environment by typing the following:
-<pre>
-    <code class="bash">
+```bash
     virtualenv venv
     source venv/bin/activate
-    </code>
-</pre>
+```
 
 Voila, you've successfully created a virtual environment for your project. You can close the environment by simply typing the following:
-<pre>
-    <code class="bash">
+```bash
     deactivate
-    </code>
-</pre>        
+```        
 
 ### Install scrapy framework
 Type the following command to install scrapy in your system:
-<pre>
-    <code class="bash">
+```bash
     pip install scrapy
-    </code>
-</pre>
+```
 
 ## Hello, world!
 Let's start by writing a basic spider that extracts HTML content of multiple pages that belongs to the GoodReads website.
 
 ### Create a new project
 Create a new project named <mark>test_project</mark> by typing the following in your terminal:
-<pre>
-    <code class="bash">
+```bash
     scrapy startproject test_project
-    </code>
-</pre>
+```
 
 ### Write a basic spider class
 Create a new file named "test.py" in the <mark>spiders</mark> folder of your project directory and copy-paste the following code:
 
-<pre>
-    <code class="python">
+```python
     import scrapy
 
     class GoodReadsSpider(scrapy.Spider):
@@ -112,8 +101,7 @@ Create a new file named "test.py" in the <mark>spiders</mark> folder of your pro
             html_file = "{0}.html".format(page_number)
             with open(file, "wb") as f:
                 f.write(response.body)
-    </code>
-</pre>
+```
 
 The above code is divided into 3 parts:
 
@@ -137,11 +125,9 @@ According to [Scrapy's documentation](https://docs.scrapy.org/en/latest), you ne
 The <mark>parse()</mark> method is called to handle the requests and download the requested response, in our case, it'll be just the HTML content of a webpage.
 
 To execute the Spider, type the following:
-<pre>
-    <code class="bash">
+```bash
     scrapy crawl goodreads_spider
-    </code>
-</pre>
+```
 
 After it's complete, you should be able to see 3 HTML pages in your project directory.
 
@@ -150,11 +136,9 @@ Before we complete the Spider, let's dive into a few concepts, shall we?
 ## XPath selectors
 Just like CSS selectors, XPath is a query language used by webscrapers to select nodes in HTML webpages. It's syntax is similar to traversing files in the terminal, like this:
 
-<pre>
-    <code class="xml">
+```xml
     div[class="someclass"]/span/p/text()
-    </code>
- </pre>
+```
 
 The version of XPath goes upto 3.1 but most browsers and scrapers support version XPath 1.0.:
 

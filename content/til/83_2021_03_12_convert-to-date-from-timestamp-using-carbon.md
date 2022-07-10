@@ -8,14 +8,12 @@ Using Carbon's `createFromFormat()` method is basically a wrapper for `DateTime:
 
 Here's a sample on how you can convert to date using timestamp using Carbon:
 
-<pre>
-<code class="php">
-&lt;php
+```php
+<?php
     function formatDate(Request $request) {
         return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $request->date)->format('Y-m-d');
     }
-?&gt;
-</code>
-</pre>
+?>
+```
 
 Hope you found this useful!

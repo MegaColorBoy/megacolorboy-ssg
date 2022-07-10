@@ -9,13 +9,11 @@ Ever process a file that's larger than 2GB and got an error that said something 
 
 Though, PHP doesn't have an efficient way of processing files of large sizes, you can prevent your web application from timing out by adding this to your code:
 
-<pre>
-<code class="php">
+```php
 &lt;?php
 // 300 seconds == 5 minutes
 ini_set('max_execution_time', 300);
 ?&gt;
-</code>
-</pre>
+```
 
 Hopefully, some day, this might come in handy for you! &#128540;

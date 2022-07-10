@@ -23,8 +23,7 @@ However, the movement is limited to the numbered tiles that are adjacent to the 
 The player wins the game after ordering all the numbered tiles in the grid in an order of ascending sequence.
 
 ## Source code
-<pre>
-    <code class="js">
+```js
     var board = [], rows = 4, cols = 4;
     var possibleMoves, zx, zy, oldzx = -1, oldzy = -1;
 
@@ -249,8 +248,7 @@ The player wins the game after ordering all the numbered tiles in the grid in an
         generateCells();
         restart();
     }
-    </code>
-</pre>
+```
 
 As I had mentioned above, today's article has nothing to do with Artificial Intelligence but in the future, I plan to write a solver for this game that makes use of Heuristics.
 

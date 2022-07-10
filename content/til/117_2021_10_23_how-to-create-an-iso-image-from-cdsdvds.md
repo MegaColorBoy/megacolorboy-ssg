@@ -8,11 +8,9 @@ I used to create ISO images using DAEMON Tools but I wanted to try something dif
 
 Turns out, you can do in just a single line using the `dd` utility like so:
 
-<pre>
-<code class="bash">
+```bash
 dd if=/dev/cdrom of=/path/to/your/directory/image.iso
-</code>
-</pre>
+```
 
 The `if` stands for input file and `of` stands for output file.
 

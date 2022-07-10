@@ -4,8 +4,7 @@ slug: rename-extensions-of-multiple-files
 category: Bash
  
 In this example, we're going to change a list of `.txt` files to `.md` files:
-<pre>
-<code class="bash">
+```bash
 #!/bin/bash
 
 shopt -s nullglob
@@ -15,6 +14,5 @@ for file in "${files[@]}"
 do
     mv ${file} ${file}.md
 done
-</code>
-</pre>
+```
 You can use modify this script to rename any extension you want.

@@ -26,8 +26,7 @@ Here are some of the game mechanics:
 
 ### <a id="generate-cells"></a> Generate cells
 Generating the grid is pretty much straightforward. Each cell will have an attribute named <mark>data-mine</mark> with a boolean value of <mark>true</mark> or <mark>false</mark>.
-<pre>
-    <code class="js">
+```js
     //Generate minesweeper grid
     const generateGrid = () => {
         allowClick = true;
@@ -44,13 +43,11 @@ Generating the grid is pretty much straightforward. Each cell will have an attri
         }
         setMines();
     }
-    </code>
-</pre>
+```
 
 ### <a id="place-mines"></a> Placing the mines
 After the grid is generated, a mine will be added to each random cell.
-<pre>
-    <code class="js">
+```js
     //Set mines
     const setMines = () => {
         for(let i=0; i&lt;size*2; i++) {
@@ -61,13 +58,11 @@ After the grid is generated, a mine will be added to each random cell.
             if(testMode){cell.innerHTML = "&#x1f4a3;";}
         }
     }
-    </code>
-</pre>
+```
 
 ### <a id="reveal-mines"></a> Reveal the mines
 If you've clicked on a mine, every cell that has a mine will be exposed and then it's game over.
-<pre>
-    <code class="js">
+```js
     //Reveal mines
     const revealMines = () => {
         for(let i=0; i&lt;size; i++) {
@@ -80,8 +75,7 @@ If you've clicked on a mine, every cell that has a mine will be exposed and then
             }
         }
     }
-    </code>
-</pre>
+```
 
 ### <a id="scan-mines"></a> Scan for mines
 When you click on a tile, there are 2 possibilities i.e. either the cell is a mine or not.
@@ -98,8 +92,7 @@ If it's a mine, we know what happens, it's self explanatory. If it's not a mine,
 - ***Bottom Right*** (row + 1, col + 1)
 
 If there aren't any mines adjacent to it, it'll reveal all adjacent cells via recursion.
-<pre>
-    <code class="js">
+```js
     //Click a cell
     const clickCell = (cell) => {
         if(allowClick != false) {
@@ -148,13 +141,11 @@ If there aren't any mines adjacent to it, it'll reveal all adjacent cells via re
             }
         }
     }
-    </code>
-</pre>
+```
 
 ### <a id="level-complete"></a> Level completion
 If the player completed the game without clicking on any mine, the level is complete.
-<pre>
-    <code class="js">
+```js
     //Check game status
     const checkGameStatus = () => {
         let levelComplete = true;
@@ -172,8 +163,7 @@ If the player completed the game without clicking on any mine, the level is comp
             revealMines();
         }
     }
-    </code>
-</pre>
+```
 
 ## Conclusion
 Well, that's about it. I had fun writing this game. Do you want me to build more games like this? Send me an email about it and I'll see what I can do from my end.

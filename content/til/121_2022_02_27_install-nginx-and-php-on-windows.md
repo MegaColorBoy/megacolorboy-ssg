@@ -64,27 +64,10 @@ NSSM Service Manager is a free open-source alternative that helps you create a s
 7. Press `Win+R` and type `services.msc`.
 8. Look for `php` and start the service.
 
-### Useful commands while using NSSM
-<pre>
-<code class="bash">
-nssm start  "servicename" -- Start a service
-nssm restart "servicename" -- Restart a service
-nssm stop "servicename" -- Stop a service
-nssm install "servicename" -- Install a service
-nssm remove "servicename" -- Remove/Uninstall a service
-</code>
-</pre>
-
 ### Test to see if it works!
-
 Before you proceed with the following steps, ensure that you include the `*.conf` files from the `sites-enabled` folder in your `nginx.conf` file.
 
-Add the following line to your `nginx.conf` file:
-<pre>
-<code class="bash">
-include "C:/nginx/sites-enabled/*.conf";
-</code>
-</pre>
+Add the line `include "C:/nginx/sites-enabled/*.conf";` in your `nginx.conf` file and follow the steps below:
 
 1. Go to `C:/nginx/sites-available` directory and create `example.com.conf`.
 2. Go to `C:/nginx/html` and create directory.
@@ -100,10 +83,29 @@ include "C:/nginx/sites-enabled/*.conf";
 	<p>If you get a "Connection Refused" or error that is similar to that, it's most probably due to firewall or maybe the PHP service isn't running.</p>
 </div>
 
+### Useful commands while using NSSM
+
+```bash
+# Start a service
+nssm start "servicename" 
+
+# Restart a service
+nssm restart "servicename" 
+
+# Stop a service
+nssm stop "servicename" 
+
+# Install a service
+nssm install "servicename" 
+
+# Remove/Uninstall a service
+nssm remove "servicename" 
+```
+
+
 ### Sample NGINX Virtual Host Configuration
 
-<pre id="nginx-config">
-<code class="bash">
+```bash
 server {
 
 	# Your Domain Name
@@ -165,8 +167,7 @@ server {
 		include        fastcgi_params;
 	}
 }
-</code>
-</pre>
+```
 
 ## Conclusion
 If you've gotten this far, give yourself a pat in the back.

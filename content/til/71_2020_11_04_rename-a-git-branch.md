@@ -13,34 +13,26 @@ Luckily, I was able to resolve this issue by renaming my branch using `git branc
 Here's a short guide on how you can do that too!
 
 ## 1. Switch to the remote branch you want to rename
-<pre>
-<code class="bash">
+```bash
 git checkout &lt;your_old_branch&gt;
-</code>
-</pre>
+```
 
 ## 2. Rename the current remote branch
-<pre>
-<code class="bash">
+```bash
 git branch -m &lt;your_new_branch&gt;
-</code>
-</pre>
+```
 
 Proceed to the next step, if you've pushed your old branch to the remote repository.
 
 ## 3. Push the renamed remote branch 
-<pre>
-<code class="bash">
+```bash
 git push origin -u &lt;your_new_branch&gt;
-</code>
-</pre>
+```
 
 ## 4. Delete the old remote branch
-<pre>
-<code class="bash">
+```bash
 git push origin --delete &lt;your_old_branch&gt;
-</code>
-</pre>
+```
 
 If you've come this far without any issues, you've successfully renamed your local and remote Git branch.
 
