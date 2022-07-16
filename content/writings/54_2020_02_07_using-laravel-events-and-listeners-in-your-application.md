@@ -8,17 +8,19 @@ Recently, I have started learning Laravel and now, I'm building an application f
 
 My senior developer was curious and thought of having a conversation with me that went like this:
 
->Senior dev: Hmm, can I have a look at your code?
+```text
+Senior dev: Hmm, can I have a look at your code?
 
->Me: Oh sure, here take a look.
+Me: Oh sure, here take a look.
 
->Senior: (Goes through project file structure)
+Senior: (Goes through project file structure)
 
->Senior: So, have you ever thought of using events in your application?
+Senior: So, have you ever thought of using events in your application?
 
->Me: Yeah, I wrote a custom JavaScript file to handle and fire events on the client-side like validating the forms and passing async requests to the server.
+Me: Yeah, I wrote a custom JavaScript file to handle and fire events on the client-side like validating the forms and passing async requests to the server.
 
->Senior: Hmm, that's okay but I'm talking events using Laravel.
+Senior: Hmm, that's okay but I'm talking using events in Laravel.
+```
 
 At this point, I was pretty clueless and I didn't know what the heck was going on. Events in PHP? I mean, I know about it in JavaScript because of it's event-driven architecture that we are all familiar with. But in PHP? I didn't know that.
 
@@ -43,41 +45,41 @@ You can add more but this is just to give you an idea. Let's see take a look at 
 If you're using an MVC framework (Laravel, in our case), you'd do this in a controller with a bunch of methods like so:
 
 ```php
-    &lt;?php
-    namespace App\Http\Controllers;
+<?php
+namespace App\Http\Controllers;
 
-    use App\Http\Controllers\Controller;
-    use App\User;
+use App\Http\Controllers\Controller;
+use App\User;
 
-    class UserController extends Controller {
-        public function index() {
-            // insert code to view users page
-        }
-
-        public function create(Request $request) {
-            $arr = [
-                'username' => $request->username,
-                'email' => $request->email,
-                'password' => bcrypt('something')
-            ];
-
-            $user = User::create($arr);
-
-            $this->sendConfirmationEmail($user);
-            $this->subscribeToMailingList($user);
-        }
-
-        // Send confirmation email to user
-        private function sendConfirmationEmail($user) {
-            // insert code
-        }
-
-        // Subscribe user to mailing list
-        private function subscribeToMailingList($user) {
-            // insert code
-        }
+class UserController extends Controller {
+    public function index() {
+        // insert code to view users page
     }
-    ?&gt;
+
+    public function create(Request $request) {
+        $arr = [
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => bcrypt('something')
+        ];
+
+        $user = User::create($arr);
+
+        $this->sendConfirmationEmail($user);
+        $this->subscribeToMailingList($user);
+    }
+
+    // Send confirmation email to user
+    private function sendConfirmationEmail($user) {
+        // insert code
+    }
+
+    // Subscribe user to mailing list
+    private function subscribeToMailingList($user) {
+        // insert code
+    }
+}
+?>
 ```
 
 This is approach is self-contained and simple to follow but you're also adding in a lot of responsibility to your controller.
@@ -88,83 +90,85 @@ Not only that, what if the user wants to register from another place in your app
 Using this approach, you can split this into <mark>Event</mark> and <mark>Listener</mark> files in your application.
 
 ```php
-    &lt;?php
-    namespace App\Http\Controllers;
+<?php
+namespace App\Http\Controllers;
 
-    use App\Http\Controllers\Controller;
-    use App\User;
+use App\Http\Controllers\Controller;
+use App\User;
 
-    class UserController extends Controller {
-        public function index() {
-            // insert code to view users page
-        }
-
-        public function create(Request $request) {
-            $arr = [
-                'username' => $request->username,
-                'email' => $request->email,
-                'password' => bcrypt('something')
-            ];
-
-            $user = User::create($arr);
-
-            // Emit event
-            event(new UserRegistered($user));
-        }
+class UserController extends Controller {
+    public function index() {
+        // insert code to view users page
     }
-    ?&gt;
+
+    public function create(Request $request) {
+        $arr = [
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => bcrypt('something')
+        ];
+
+        $user = User::create($arr);
+
+        // Emit event
+        event(new UserRegistered($user));
+    }
+}
+?>
 ```
 
 This is how your <mark>UserRegistered</mark> event would look like:
 
 ```php
-    &lt;?php
-    namespace App\Events;
+<?php
+namespace App\Events;
 
-    use Illuminate\Queue\SerializeModels;
-    use App\User;
+use Illuminate\Queue\SerializeModels;
+use App\User;
 
-    class UserRegistered {
-        use SerializesModels;
+class UserRegistered {
+    use SerializesModels;
 
-        public $user;
+    public $user;
 
-        public function __construct(User $user) {
-            $this->user = $user;
-        }
+    public function __construct(User $user) {
+        $this->user = $user;
     }
-    ?&gt;
+}
+?>
 ```
 
 And this is how your <mark>SendConfirmationEmail</mark> listener would look like:
 
 ```php
-    &lt;?php
-    namespace App\Listeners;
+<?php
+namespace App\Listeners;
 
-    use App\Events\UserRegistered;
+use App\Events\UserRegistered;
 
-    class SendConfirmationEmail {
+class SendConfirmationEmail {
 
-        public function __construct(User $user) {
-            // insert code
-        }
-
-        public function handle(UserRegister $event) {
-            // insert code
-        }
+    public function __construct(User $user) {
+        // insert code
     }
-    ?&gt;
+
+    public function handle(UserRegister $event) {
+        // insert code
+    }
+}
+?>
 ```
 
 Using this approach, you can use the <mark>UserRegistered</mark> event anywhere you wanted in your application. No matter what happens, it will trigger the same actions as it was intended to do so. If you want to add a new functionality, create a new listener and register it with the event in your <mark>EventServiceProvider</mark> file like this:
 
 ```php
-    protected $listen = [
-        'App\Events\UserRegistered' => [
-        'App\Listeners\SendConfirmationEmail',
-        ],
-    ];
+<?php
+protected $listen = [
+    'App\Events\UserRegistered' => [
+    'App\Listeners\SendConfirmationEmail',
+    ],
+];
+?>
 ```
 
 If you follow this approach, your logic complexity is toned down and the controller will have less responsibility.

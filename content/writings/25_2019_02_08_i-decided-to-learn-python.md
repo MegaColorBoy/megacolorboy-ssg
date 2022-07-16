@@ -90,69 +90,69 @@ inefficient, instead I did a bottom-up approach:
 **Implementation of the method(s):**
 
 ```python
-    # Sum of numbers
-    def sumOfNumbers(n):
-        return (n*(n+1))/2
+# Sum of numbers
+def sumOfNumbers(n):
+    return (n*(n+1))/2
 
-    # Return the maximum path sum in a Binary Tree
-    # Bottom Up Approach
-    def maxPathSum(list):
-        # the last number of the list
-        last = len(list)
+# Return the maximum path sum in a Binary Tree
+# Bottom Up Approach
+def maxPathSum(list):
+    # the last number of the list
+    last = len(list)
 
-        # number of rows in the Binary Tree
-        nrow = 1
+    # number of rows in the Binary Tree
+    nrow = 1
 
-        # count the number of rows in the Binary Tree
-        # use the sum of numbers method to count the number of rows
-        while sumOfNumbers(nrow) < last:
-            # print (sumOfNumbers(nrow))
-            nrow += 1
+    # count the number of rows in the Binary Tree
+    # use the sum of numbers method to count the number of rows
+    while sumOfNumbers(nrow) < last:
+        # print (sumOfNumbers(nrow))
+        nrow += 1
 
-        last -= 1
+    last -= 1
 
-        for i in range(nrow, 0, -1):
-            # print list[last - i]
+    for i in range(nrow, 0, -1):
+        # print list[last - i]
 
-            # iterate through each number in each row
-            for j in range(2, i+1):
-                # pick a number from the row above the current row
-                # and pick the 2 numbers from the current row
-                # Find the max between the two numbers and add it
-                list[last - i] = list[last - i] + max(list[last - 1], list[last])
-                
-                # shift to the next number in the row above
-                last -= 1
-
+        # iterate through each number in each row
+        for j in range(2, i+1):
+            # pick a number from the row above the current row
+            # and pick the 2 numbers from the current row
+            # Find the max between the two numbers and add it
+            list[last - i] = list[last - i] + max(list[last - 1], list[last])
+            
             # shift to the next number in the row above
             last -= 1
 
-        # return the max sum
-        return list[0]
+        # shift to the next number in the row above
+        last -= 1
+
+    # return the max sum
+    return list[0]
 ```
 
 **Final code:**
 
 ```python
-    # Project Euler: Problem 18 and 67 - Maximum Path Sum I and II
+# Project Euler: Problem 18 and 67 - Maximum Path Sum I and II
 
-    #!usr/bin/python
-    import time, math, pe_lib
+#!usr/bin/python
+import time, math, pe_lib
 
-    num_str = ""
+num_str = ""
 
-    # read text file
-    f = open("triangle2.txt", "r")
-    for line in f:
-        num_str += line
-    f.close()
+# read text file
+f = open("triangle2.txt", "r")
+for line in f:
+    num_str += line
+f.close()
 
-    # convert the string numbers to integers in the list
-    list = map(int, num_str.replace('n', ' ').split(' '))
+# convert the string numbers to integers in the list
+list = map(int, num_str.replace('n', ' ').split(' '))
 
-    start = time.time()
-    print pe_lib.maxPathSum(list)
-    print "Finished: %f seconds" % (time.time() - start)
+start = time.time()
+print pe_lib.maxPathSum(list)
+print "Finished: %f seconds" % (time.time() - start)
 ```
 
 The maximum path sum for ***Problem 67*** is ***7273*** and it compiled in

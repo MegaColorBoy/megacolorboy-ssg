@@ -21,40 +21,40 @@ The logic is quite similar to the [Overlapping Rectangles](https://stackoverflow
 ## Generate circles with dynamic radius
 This method will help generate valid circles with a random radius. Circles that don't overlap or collide with other circles are considered to be valid.
 ```js
-    // Generate a valid circle
-    const generateCircle = () => {
-        let newCircle;
-        let isValidCircle = false;
+// Generate a valid circle
+const generateCircle = () => {
+    let newCircle;
+    let isValidCircle = false;
 
-        for(let i=0; i&lt;attempts; i++) {
-            newCircle = {
-                x: Math.floor(Math.random() * width),
-                y: Math.floor(Math.random() * width),
-                radius: minRadius
-            };
+    for(let i=0; i<attempts; i++) {
+        newCircle = {
+            x: Math.floor(Math.random() * width),
+            y: Math.floor(Math.random() * width),
+            radius: minRadius
+        };
 
-            if(checkForCollision(newCircle)) {
-                continue;
-            }
-            else {
-                isValidCircle = true;
-                break;
-            }
+        if(checkForCollision(newCircle)) {
+            continue;
         }
-
-        if(!isValidCircle) { return; }
-
-        for(let i=minRadius; i&lt;=maxRadius; i++) {
-            newCircle.radius = i;
-            if(checkForCollision(newCircle)) {
-                newCircle.radius--;
-                break;
-            }
+        else {
+            isValidCircle = true;
+            break;
         }
-
-        circles.push(newCircle);
-        drawCircleOnCanvas(context, newCircle, colors[Math.floor(Math.random() * colors.length)]);
     }
+
+    if(!isValidCircle) { return; }
+
+    for(let i=minRadius; i<=maxRadius; i++) {
+        newCircle.radius = i;
+        if(checkForCollision(newCircle)) {
+            newCircle.radius--;
+            break;
+        }
+    }
+
+    circles.push(newCircle);
+    drawCircleOnCanvas(context, newCircle, colors[Math.floor(Math.random() * colors.length)]);
+}
 ```
 
 ## Look for collision with other circles
@@ -71,51 +71,51 @@ These are the formulas used to detect the collision:
 If the radii is greater than or equal to the euclidean distance of both circles, then it's a valid circle with no collisions.
 
 ```js
-    // Check for collision in a canvas
-    const checkForCollision = (newCircle) => {
-        
-        let x2 = newCircle.x;
-        let y2 = newCircle.y;
-        let r2 = newCircle.radius;
+// Check for collision in a canvas
+const checkForCollision = (newCircle) => {
+    
+    let x2 = newCircle.x;
+    let y2 = newCircle.y;
+    let r2 = newCircle.radius;
 
-        /*
-            Determine the euclidean distance between two circle
-            using Pythagorean Theorem.
+    
+    // Determine the euclidean distance between two circle
+    // using Pythagorean Theorem.
 
-            Refer to: 
-            https://en.wikipedia.org/wiki/Euclidean_distance
-        */
-        for(let i=0; i<circles.length; i++) {
+    // Refer to: 
+    // https://en.wikipedia.org/wiki/Euclidean_distance
 
-            let otherCircle = circles[i];
-            let r1 = otherCircle.radius;
-            let x1 = otherCircle.x;
-            let y1 = otherCircle.y;
-            let xx = ((x2 - x1) * (x2 - x1));
-            let yy = ((y2 - y1) * (y2 - y1));
-            let radii = r2 + r1;
-            let euclidDistance = Math.sqrt(xx + yy);
+    for(let i=0; i<circles.length; i++) {
 
-            if(radii >= euclidDistance) {
-                return true;
-            }
-        }
+        let otherCircle = circles[i];
+        let r1 = otherCircle.radius;
+        let x1 = otherCircle.x;
+        let y1 = otherCircle.y;
+        let xx = ((x2 - x1) * (x2 - x1));
+        let yy = ((y2 - y1) * (y2 - y1));
+        let radii = r2 + r1;
+        let euclidDistance = Math.sqrt(xx + yy);
 
-        // Check collision on top
-        if(x2 + r2 >= width || 
-            x2 - r2 <= 0) {
+        if(radii >= euclidDistance) {
             return true;
         }
-
-        // Check collision on bottom
-        if(y2 + r2 >= width || 
-            y2 - r2 <= 0) {
-            return true;
-        }
-
-        //else return false
-        return false;
     }
+
+    // Check collision on top
+    if(x2 + r2 >= width || 
+        x2 - r2 <= 0) {
+        return true;
+    }
+
+    // Check collision on bottom
+    if(y2 + r2 >= width || 
+        y2 - r2 <= 0) {
+        return true;
+    }
+
+    //else return false
+    return false;
+}
 ```
 
 ## Conclusion

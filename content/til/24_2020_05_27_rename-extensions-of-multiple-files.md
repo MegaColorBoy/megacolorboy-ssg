@@ -15,4 +15,5 @@ do
     mv ${file} ${file}.md
 done
 ```
+s
 You can use modify this script to rename any extension you want.

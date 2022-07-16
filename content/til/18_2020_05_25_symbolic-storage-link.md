@@ -12,6 +12,8 @@ php artisan storage:link
 Once, it has been created, you can use access those files using the `public_path` or `asset` methods.
 
 ```php
+<?php
 echo public_path('images/sample_1.jpg');
 echo asset('images/sample_2.jpg');
+?>
 ```

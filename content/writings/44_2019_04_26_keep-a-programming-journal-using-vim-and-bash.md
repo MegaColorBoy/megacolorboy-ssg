@@ -28,63 +28,63 @@ I looked on some options like Google Docs, Dropbox Paper and Evernote but I just
 
 First, you need to create a directory to store your journal notes and create a file to create them:
 ```bash
-    mkdir journal
-    cd journal
-    touch writer.sh
-    chmod u+rwx writer.sh
+mkdir journal
+cd journal
+touch writer.sh
+chmod u+rwx writer.sh
 ```
 
 Next, you need to write a few lines of code in Bash:
 ```bash
-    #!/bin/bash
+#!/bin/bash
 
-    folder=`date +%Y_%m_%d`
-    mkdir -p $folder
-    cd $folder
-    
-    vi +star `date +%Y%m%d`".jrnl"
+folder=`date +%Y_%m_%d`
+mkdir -p $folder
+cd $folder
+
+vi +star `date +%Y%m%d`".jrnl"
 ```
 
 One more step, create an alias on your ***bash_profile*** in order to access it from anywhere:
 ```bash
-    alias jrnl="cd /journal;./writer.sh"
+alias jrnl="cd /journal;./writer.sh"
 ```
 
 Alright, that's the basic setup! To test it, just do the following in your Terminal:
 ```bash
-    journal
+journal
 ```
 
 ## VIM Customization
 Are you one of those people who gets confused on how to get out of VIM? Don't worry, you'll figure it out [over here](https://google.com/search?q=how-to-get-out-of-vim)!
 
-The following setup can be done in your <mark>~/.vimrc</mark> file to enhance your journaling experience like adding a spellchecker, word counter, highlight colors and so on.
+The following setup can be done in your `~/.vimrc` file to enhance your journaling experience like adding a spellchecker, word counter, highlight colors and so on.
 
 Below are the configurations:
 ```bash
-    set spell spelllang=en_gb
-    cmap <F6> setlocal spell!
+set spell spelllang=en_gb
+cmap <F6> setlocal spell!
 
-    function! WordCount()
-            let s:old_status = v:statusmsg
-            let position = getpos(".")
-            exe ":silent normal g\<c-g>"
-            let stat = v:statusmsg
-            let s:word_count = 0
-            if stat != '--No lines in buffer--'
-                    let s:word_count = str2nr(split(v:statusmsg)[11])
-                    let v:statusmsg = s:old_status
-            end
-            call setpos('.', position)
-            return s:word_count
-    endfunction
+function! WordCount()
+        let s:old_status = v:statusmsg
+        let position = getpos(".")
+        exe ":silent normal g\<c-g>"
+        let stat = v:statusmsg
+        let s:word_count = 0
+        if stat != '--No lines in buffer--'
+                let s:word_count = str2nr(split(v:statusmsg)[11])
+                let v:statusmsg = s:old_status
+        end
+        call setpos('.', position)
+        return s:word_count
+endfunction
 
-    hi User1 ctermbg=black ctermfg=red cterm=BOLD guibg=black guifg=red gui=BOLD
+hi User1 ctermbg=black ctermfg=red cterm=BOLD guibg=black guifg=red gui=BOLD
 
-    set laststatus=2
-    set statusline=
-    set statusline+=%1*
-    set statusline+=%<\
+set laststatus=2
+set statusline=
+set statusline+=%1*
+set statusline+=%<\
 ```
 
 Now, you can start writing your own journal whenever and wherever you want using VIM.

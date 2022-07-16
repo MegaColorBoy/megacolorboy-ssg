@@ -18,12 +18,12 @@ I won't go through the aspects of UI design in this article as I feel that it's 
 
 Before you begin writing the function, place this component in your HTML template:
 ```html
-&lt;div class="searchbox"&gt;
-    &lt;input id="searchinput" type="text"&gt;
-    &lt;div id="searchresults"&gt;
-        &lt;ul&gt;&lt;/ul&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+<div class="searchbox">
+    <input id="searchinput" type="text">
+    <div id="searchresults">
+        <ul></ul>
+    </div>
+</div>
 ```
 
 Anyway, here's the function and you can place it directly on your template or in a separate `.js` file:
@@ -45,7 +45,7 @@ $(document).ready(function(){
                 if(data.articles.length > 0){
                     $.each(data.articles, function(key, value){
                         if(v.title.search(pattern) != -1 || v.category.search(pattern) != -1){
-                            results += `&lt;li&gt;&lt;a href="${v.slug}"&gt;${v.title}&lt;/a&gt;&lt;/li&gt;`;
+                            results += `<li><a href="${v.slug}">${v.title}</a></li>`;
                         }
                     });
                     $("#searchresults ul").html(results);

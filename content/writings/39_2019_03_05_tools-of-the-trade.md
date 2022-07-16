@@ -15,17 +15,17 @@ I thought of writing an article about the tools that I use on a regular basis, s
 
 ### <a id="iphone-5s"></a> iPhone 5s
 
-<figure>
+<!-- <figure>
     <img src="https://cnet3.cbsistatic.com/img/-Iaz053dbN-f0VaL8R063v6qq3Q=/830x467/2013/09/17/61d7c805-67c2-11e3-a665-14feb5ca9861/SeptimiusAdd05.jpg"/>
-</figure>
+</figure> -->
 
 I used to have a ***Samsung Galaxy Pocket***, it was a really slow phone that made me hate Android OS. When I got the iPhone 5s, I never turned back. Not that I'm an Apple fanboy (Well, yes I am) but I believe it is one of Apple's best iPhones till date. The build quality is great. It's still one of those iPhones that has a headphone jack and also, it has a really nice form factor.
 
 ### <a id="dell-xps-13"></a> Dell XPS 13 9360
 
-<figure>
+<!-- <figure>
     <img src="https://img.purch.com/o/aHR0cHM6Ly93d3cubGFwdG9wbWFnLmNvbS9pbWFnZXMvdXBsb2Fkcy81MzUxL2cvZGVsbC14cHMtMTMtMjAxNy0wMDMuanBn"/>
-</figure>
+</figure> -->
 
 Before purchasing this laptop, I was going to buy a 13" MacBook Pro 2017 but the internet convinced me that it might not be the right choice as it had a lot of flaws like the unresponsive butterfly keyboard, less ports and in terms of specs, it was a bit outdated.
 
@@ -44,9 +44,9 @@ If you are planning on getting one, I do recommend it!
 
 ### <a id="apple-earphones"></a> Apple earphones
 
-<figure>
+<!-- <figure>
     <img src="https://cnet2.cbsistatic.com/img/MOkOGGszic1FaFrxFttQ_5JoRto=/830x467/2012/09/13/f5dea89d-67c2-11e3-a665-14feb5ca9861/Apple_EarPods_35446297_03.jpg"/>
-</figure>
+</figure> -->
 
 I got these earphones with my iPhone 5s, the sound quality is pretty decent and yes, it portable enough for me to listen to my favorite soundtracks on the go.
 
@@ -64,9 +64,9 @@ I got these earphones with my iPhone 5s, the sound quality is pretty decent and 
 
 ### <a id="ubuntu"></a> Ubuntu 18.04 LTS
 
-<figure>
+<!-- <figure>
     <img src="https://www.linuxnov.com/wp-content/uploads/2018/04/Ubuntu-18-04-LTS-Bionic-Beaver-Screenshot.png"/>
-</figure>
+</figure> -->
 
 I don't hate Windows, in fact, I do use it at work and for graphic design and entertainment purposes but I personally like using Linux as my development environment.
 

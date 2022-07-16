@@ -1,7 +1,7 @@
 title: Queues & Stacks
 date: May 30th, 2020
 slug: queues-and-stacks
-category: Algorithms and Data Structures
+category: Algorithms + Data Structures
 status: active
 
 Let's look at the differences between the two data structures:
@@ -26,7 +26,7 @@ Removes the first element of a queue i.e. the head element. Once, it's removed, 
 class Queue {
     private:
         int pos;
-        vector&lt;int&gt; data;
+        vector<int> data;
 
     public:
         Queue() {
@@ -73,7 +73,7 @@ It removes the most recent element i.e. the newly added element from the stack.
 ```cpp
 class Stack {
     private:
-        vector&ltint&gt; data;
+        vector&ltint> data;
     public:
         void push(int value) {
             data.push_back(value);

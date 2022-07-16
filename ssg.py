@@ -1,7 +1,9 @@
 """
 Author: Abdush Shakoor
-megacolorboy-ssg: A simple static site generator written in Python 3
-Updated on: 19-02-2021
+megacolorboy-ssg: A simple static site generator written in Python 3.10
+Updated on: 11-07-2022
+
+Version: 2.0
 """
 
 #!/usr/bin/env python3
@@ -13,7 +15,6 @@ from collections import namedtuple
 from datetime import datetime, date
 from dateutil.parser import parse
 from jinja2 import Environment, PackageLoader
-# from markdown2 import markdown
 import markdown2
 import typer
 from time import sleep
@@ -40,24 +41,78 @@ menu_config = []
 # All posts
 all_posts = []
 
+# Categories
+categories = []
+
+# Categories with posts
+categories_with_posts = []
+
 # Jinja2 Environment
 env = None
 
 # Generate categories
+# This will create pages for each category, which would contain a list of posts that belong to it.
+# Currently, as per the design, it will be displayed in an archive list, for simplicity.
 def generate_categories():
-    pass
+    global categories_with_posts
+    # Create directories for category
+    template = env.get_template('category.html')
+    delete_directory('output/category/')
 
-# TODO: Use archive_posts method to fetch all posts in archive order
-# Generate archive posts
-#def generate_archive_posts():
-#    pass
+    with IncrementalBar('Generating categories...', suffix='%(percent)d%%') as bar:
+        for post in all_posts:
+            category = post['category']
+            category_arr = category.split('+')
+            for item in category_arr:
+                if item.strip() not in categories:
+                    categories.append(item.strip())
+
+        # Store all posts based on their category
+        for category in categories:
+            posts = []        
+            for post in all_posts:
+                category_arr = post['category'].split('+')
+                for item in category_arr:
+                    if item.strip() == category:
+                        posts.append(post)
+        
+            categories_with_posts.append({
+                'title': category,
+                'link': '/category/' + generate_slug(category) + '/',
+                'posts': archive_posts(posts),
+                'count': len(posts)
+            })
+
+        # OPTIONAL: Sort by highest to lowest count in number of posts per category
+        categories_with_posts = sorted(categories_with_posts, key=lambda x: (x['count']), reverse=True)
+
+        for category in categories_with_posts:
+            directory = 'output/category/' + generate_slug(category['title']) + '/'
+
+            rendered_html = template.render(
+                body_class= "",
+                posts = category['posts'], 
+                page = {
+                    'title': category['title'], 
+                    'description': "There are <b>{number_of_posts}</b> posts linked to this category.".format(number_of_posts=category['count'])
+                }, 
+                pagination = False,
+                site = site_config, 
+                menu = menu_config
+            )        
+            
+            create_directory(directory)
+            file_path = os.path.join(directory, 'index.html')
+            write_to_file(file_path, rendered_html.encode('utf-8'))
+
 
 # Generate menu
 def generate_menu():
     menu = []
-    for section in cfg.sections:
-        if 'display_in_menu' in section and section['display_in_menu'] == True:
-            menu.append({'link': section['url'], 'title': section['title']})
+    with IncrementalBar('Generating menu...', suffix='%(percent)d%%') as bar:
+        for section in cfg.sections:
+            if 'display_in_menu' in section and section['display_in_menu'] == True:
+                menu.append({'link': section['url'], 'title': section['title']})
     return menu
 
 # TODO: Need to rewrite method for optimization
@@ -169,7 +224,7 @@ def get_posts(content_directories = []):
         paths.append("content/" + directory)
     
     # Look for Markdown file recursively in the specified directory
-    with IncrementalBar('Processing...', suffix='%(percent)d%%') as bar:
+    with IncrementalBar('Converting markdown to HTML...', suffix='%(percent)d%%') as bar:
         for path in paths:
             for root, directories, files in os.walk(path):
                 for post in files:
@@ -187,11 +242,19 @@ def get_posts(content_directories = []):
                             post_year = datetime.fromisoformat(date_raw).strftime("%Y")
                             slug = post_content.metadata['slug']
                             category = post_content.metadata['category']
+                            categories = [{'title': category.strip(), 'link': '/category/' + generate_slug(category.strip()) + '/'} for category in post_content.metadata['category'].split('+')]
                             # summary = post_content.metadata['summary'] if 'summary' in post_content.metadata else 'Tips & Tricks &mdash; ' + category
                             # summary = post_content.metadata['summary'] if 'summary' in post_content.metadata else "".join(filter_text(extract_text(post_content)))
                             summary = post_content.metadata['summary'] if 'summary' in post_content.metadata else ""
                             reading_time = estimate_reading_time(post_content)
-                            post_url = '/'.join([path.replace('content/', ''), 'posts', slug])
+
+                            # Determine if the current section is a single post.
+                            section = next((section for section in cfg.sections if 'content_directory' in section and section['content_directory'] == path.replace('content/', '')), None)
+
+                            if section['page_type'] == 'single' or section['page_type'] == 'custom':
+                                post_url = '/'.join([path.replace('content/', '')])
+                            else:
+                                post_url = '/'.join([path.replace('content/', ''), 'posts', slug])
 
                             # if the status is not present in the file, it's assumed that the post is active.
                             status = post_content.metadata['status'] if 'status' in post_content.metadata else 'active'
@@ -209,6 +272,7 @@ def get_posts(content_directories = []):
                                         'date_raw': date_raw,
                                         'slug': slug,
                                         'category': category,
+                                        'categories': categories,
                                         'summary': summary,
                                         'reading_time': reading_time,
                                         'filename': file_path,
@@ -292,6 +356,8 @@ def generate_index_with_paginator(section, posts_per_page):
                 'title': section['seo']['title'], 
                 'description': section['seo']['description']
             },
+            generate_meta = True,
+            categories = categories_with_posts,
             pagination = True,
             site = site_config, 
             menu = menu_config
@@ -362,7 +428,9 @@ def generate_index_without_paginator(section):
             page = {
                 'title': section['seo']['title'], 
                 'description': section['seo']['description']
-            }, 
+            },
+            generate_meta = True,
+            categories = categories_with_posts,
             pagination = False,
             site = site_config, 
             menu = menu_config
@@ -387,7 +455,7 @@ def generate_index_page(section):
     if 'enable_pagination' not in section or section['enable_pagination'] == False:
         generate_index_without_paginator(section)        
     else:
-        generate_index_with_paginator(section, 8)
+        generate_index_with_paginator(section, site_config['pagination_limit'])
 
 # Generate pages with content
 def generate_content(section):
@@ -410,7 +478,8 @@ def generate_content(section):
         for post in posts:
             rendered_html = render_post(template, {
                 'post': post,
-                'content_directory': section['content_directory']    
+                'content_directory': section['content_directory'],
+                'generate_meta': True
             })
             file_path = posts_directory + '{slug}/index.html'.format(slug=post['slug'])
             # Create directory for the post
@@ -419,7 +488,8 @@ def generate_content(section):
     else:
         rendered_html = render_post(template, {
             'post': posts[0],
-            'content_directory': section['content_directory']    
+            'content_directory': section['content_directory'],
+            'generate_meta': True
         })
         file_path = posts_directory + 'index.html'
         write_to_file(file_path, rendered_html.encode('utf-8'))
@@ -427,11 +497,13 @@ def generate_content(section):
 # Method to render a single article
 def render_post(template, options):
    return template.render(
-        post=options['post'],  
-        directory=options['content_directory'],
+        post = options['post'],  
+        directory = options['content_directory'],
+        generate_meta = options['generate_meta'],
         page = {
             'title': options['post']['title'], 
-            'description': options['post']['summary']
+            'description': options['post']['summary'],
+            'url': options['post']['link']
         }, 
         site = site_config, 
         menu = menu_config
@@ -458,15 +530,15 @@ def generate_main_page(section):
         template = env.get_template(section['template']['main'])        
     
     section['posts'] = get_recent_articles()
-    generate_index_with_paginator(section, 8)
+    generate_index_with_paginator(section, site_config['pagination_limit'])
 
 # Generate the archive section of the blog
 def generate_archive_page(section):
-    template = env.get_template('archive.html')
+    #template = env.get_template('archive.html')
 
     # Check if section has specified any template config to override default configuration.
-    if 'template' in section:
-        template = env.get_template(section['template']['archive'])
+    #if 'template' in section:
+    #    template = env.get_template(section['template']['archive'])
 
     section['posts'] = archive_posts(all_posts)
     generate_index_without_paginator(section)
@@ -526,9 +598,6 @@ def build_section(section):
         else:
             section['posts'] = get_posts_by_content_directory([section['content_directory']])
             generate_pages(section)
-
-def is_archive_mode_enabled(section):
-    return True if 'archive' in section and section['archive'] else False
 
 # Build entire or section(s) of the blog
 @app.command()
@@ -720,8 +789,9 @@ def delete_file(file: str):
 Execute app
 """
 if __name__ == "__main__":
-    all_posts = load_posts()
     site_config = cfg.site
     menu_config = generate_menu()
+    all_posts = load_posts()
     env = Environment(loader=PackageLoader('ssg','templates/' + site_config['theme']))
+    generate_categories()
     app()

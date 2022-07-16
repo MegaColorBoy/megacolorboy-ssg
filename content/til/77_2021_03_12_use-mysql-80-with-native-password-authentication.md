@@ -9,7 +9,9 @@ So, I installed the necessary dependencies and finally installed MySQL 8.0, crea
 
 Next, I typed the project URL and ran into this error:
 
-> Unable to load plugin 'caching_sha2_password'
+```text
+Unable to load plugin 'caching_sha2_password'
+```
 
 If you're running PHP 7.2 and facing this error, you should know that PHP 7.2 doesn't support native password authentication by default. But it's a simple fix, all you have to do is either one of the following:
 
@@ -17,11 +19,13 @@ If you're running PHP 7.2 and facing this error, you should know that PHP 7.2 do
 2. [Create a new user with native password authentication](#opt2)
 
 ## <a id="opt1"></a> Alter the current user's authentication to native password
+
 ```mysql
 ALTER USER 'your_user'@'your_server_host' IDENTIFIED WITH mysql_native_password BY 'your_password';
 ```
 
 ## <a id="opt2"></a> Create a new user with native password authentication
+
 ```mysql
 CREATE USER 'your_user'@'your_server_host ' IDENTIFIED WITH mysql_native_password BY 'your_password'
 ```

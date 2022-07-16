@@ -41,37 +41,37 @@ works, I decided to build a tool that converts ***web.config*** to
 **Code snippet:**
 
 ```js
-    //web.config to .htaccess converter
-    function webConfigToHtaccess()
-    {
-        /*
-            Take input from textarea
-            and parse it into XML
-        */
-        var xml = $("#webconfig-xml").val(), 
-        xmlDoc = $.parseXML(xml), 
-        $xml = $(xmlDoc);
+//web.config to .htaccess converter
+function webConfigToHtaccess()
+{
+    
+    // Take input from textarea
+    // and parse it into XML
+    
+    var xml = $("#webconfig-xml").val(), 
+    xmlDoc = $.parseXML(xml), 
+    $xml = $(xmlDoc);
 
-        /*
-            - Inside each "rule", look for the "action" child node
-            - If it contains multiple parameters, follow the 
-            regular expression pattern: /{R:(d{1})}/
-            - Replace that pattern with a dollar sign and it's parameter
-            - Append "RewriteRule" along with the url and it's rules
-        */
-        $xml.find('rule').each(function(){
-            var str = $(this).find("rule>action").attr('url');
-            var regex = /{R:(d{1})}/;
-            while(regex.test(str))
-            {
-                str = str.replace(regex, '$' + RegExp.$1);
-            }
+    
+    // - Inside each "rule", look for the "action" child node
+    // - If it contains multiple parameters, follow the 
+    // regular expression pattern: /{R:(d{1})}/
+    // - Replace that pattern with a dollar sign and it's parameter
+    // - Append "RewriteRule" along with the url and it's rules
+    
+    $xml.find('rule').each(function(){
+        var str = $(this).find("rule>action").attr('url');
+        var regex = /{R:(d{1})}/;
+        while(regex.test(str))
+        {
+            str = str.replace(regex, '$' + RegExp.$1);
+        }
 
-            $("#htaccess-code").append("RewriteRule " + $(this).find("rule>match").attr('url')
-                + " " + str + "&lt;br&gt;"
-            );
-        });
-    }
+        $("#htaccess-code").append("RewriteRule " + $(this).find("rule>match").attr('url')
+            + " " + str + "<br>"
+        );
+    });
+}
 ```
 
 Although, I can't really say that it's perfect because I had to make

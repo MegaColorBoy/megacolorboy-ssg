@@ -7,6 +7,7 @@ site = {
     "author": "Abdush Shakoor",
     "theme": "minimalist-v2",
     "logo": "logo.gif",
+    "pagination_limit": 8,
     "enable_archive": True,
     "enable_tags": False,
     "export_rss_feed": False,

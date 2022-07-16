@@ -4,7 +4,7 @@ slug: remove-patterns-from-multiple-files
 category: Terminal
 
 If you wanted to remove a specific pattern in a list of files, like the ones below:
-```bash
+```text
 23_2020_03_01_article-three.md
 22_2020_02_01_article-two.md
 21_2020_01_01_article-one.md
@@ -16,7 +16,7 @@ rename 's/[0-9]+_[0-9]+_[0-9]+_[0-9]+_//' *.md
 ```
 
 Now, the desired output should look like this:
-```bash
+```text
 article-three.md
 article-two.md
 article-one.md

@@ -37,7 +37,7 @@ Let's plan before we dive in straight into coding it. This is the file structure
 
 ### Create file structure
 This is the file structure we're going to follow in this tutorial, so create it before you proceed with the tutorial.
-```plaintext
+```text
 \blog-ssg
     \content
     \output

@@ -15,7 +15,7 @@ I always loved the idea and simplicity of using recursion. So, I thought of exer
 The following example is written in PHP:
 
 ```php
-
+<?php
 class FooController extends Controller {
     protected $menuHTML = "";
 
@@ -53,24 +53,24 @@ class FooController extends Controller {
     // Build a menu tree
     private function buildMenu($menu) {
         foreach($menu as $menuItem){
-            $this->menuHTML .= '&lt;li class="item"&gt;';
-            $this->menuHTML .= '&lt;a href="'.$menuItem['link'].'"&gt;'.$menuItem['title'].'&lt;/a&gt;';
+            $this->menuHTML .= '<li class="item">';
+            $this->menuHTML .= '<a href="'.$menuItem['link'].'">'.$menuItem['title'].'</a>';
     
             // Check if it has any child items
             if(array_key_exists("child_items", $menuItem){
-                $this->menuHTML .= '&lt;ul class="submenu"&gt;';
+                $this->menuHTML .= '<ul class="submenu">';
                 $this->buildMenu($menuItem['child_items']);
-                $this->menuHTML .= '&lt;/ul&gt;';
+                $this->menuHTML .= '</ul>';
             }
 
-            $this->menuHTML .= '&lt;/li&gt;'
+            $this->menuHTML .= '</li>'
         }
     }
 
     // Return the complete menu
     private function getMenu($menu) {
         $this->buildMenu($menu);
-        return '&lt;ul class="mainmenu"&gt;'.$this->menuHTML.'&lt;/ul&gt;';
+        return '<ul class="mainmenu">'.$this->menuHTML.'</ul>';
     }
 
     public function __construct() {
@@ -78,22 +78,22 @@ class FooController extends Controller {
         die;
     }
 }
-
+?>
 ```
 
 Once you run it, you'll see something like this:
 ```html
-&lt;ul class="mainmenu"&gt;
-    &lt;li class="item"&gt;&lt;a href="/item-1"&gt;Item 1&lt;/a&gt;&lt;/li&gt;
-    &lt;li class="item"&gt;&lt;a href="/item-2"&gt;Item 2&lt;/a&gt;
-        &lt;ul class="submenu"&gt;
-            &lt;li class="item"&gt;&lt;a href="/item-2.1"&gt;Item 2.1&lt;/a&gt;&lt;/li&gt;
-            &lt;li class="item"&gt;&lt;a href="/item-2.2"&gt;Item 2.2&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/li&gt;
-    &lt;li class="item"&gt;&lt;a href="/item-3"&gt;Item 3&lt;/a&gt;&lt;/li&gt;
-    &lt;li class="item"&gt;&lt;a href="/item-4"&gt;Item 4&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+<ul class="mainmenu">
+    <li class="item"><a href="/item-1">Item 1</a></li>
+    <li class="item"><a href="/item-2">Item 2</a>
+        <ul class="submenu">
+            <li class="item"><a href="/item-2.1">Item 2.1</a></li>
+            <li class="item"><a href="/item-2.2">Item 2.2</a></li>
+        </ul>
+    </li>
+    <li class="item"><a href="/item-3">Item 3</a></li>
+    <li class="item"><a href="/item-4">Item 4</a></li>
+</ul>
 ```
 
 There a lot of ways to achieve this same result using recursion but it sure is easier to read, scalable and extensible, ain't it?

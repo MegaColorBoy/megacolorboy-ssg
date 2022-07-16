@@ -6,7 +6,7 @@ status: active
 
 This happened like two days ago, when one of the client sites went down. Upon inspecting the error logs, I found this:
 
-```plaintext
+```text
 SQLSTATE[HY000]: General error: 1835 Malformed communication packet
 ```
 

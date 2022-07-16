@@ -40,7 +40,7 @@ Since, each DOM element is generated in a top-down manner, it would display the 
 Let's say, you have a page that displays a list of products from your SQL database and you execute this query:
 
 ```sql
-    SELECT * FROM products
+SELECT * FROM products
 ```
 
 Sorry, it's inefficient. Why? In a real-life scenario, a table may contain a lot of columns and multiply that with **x** number of database calls the server has to make for EVERY request that comes from a visitor. You get it, right?
@@ -94,12 +94,12 @@ Since it can be used directly from the terminal, I wrote a small script using Po
 
 **Snippet to resize images:**
 ```bash
-    magick mogrify -resize 256x256 -format *.jpg *.jpeg *.png
+magick mogrify -resize 256x256 -format *.jpg *.jpeg *.png
 ```
 
 **Snippet to compress images:**
 ```bash
-    magick mogrify -quality 70% *.jpg *.jpeg *.png
+magick mogrify -quality 70% *.jpg *.jpeg *.png
 ```
 
 The logic of the code is pretty straightforward. All it has to do is get a list of files with ends with image extensions (.jpg, .jpeg, .png) and modify the resolution to 640x480 and reduce the quality to a 70%.
@@ -110,15 +110,15 @@ Previously, all images of the website combined was around 800MB and after execut
 Ever inspected someone's CSS or JS code on Chrome Debugger and saw something like this:
 
 ```js
-    for(var a=[i=0];i<20;a[i]=i++);
+for(var a=[i=0];i<20;a[i]=i++);
 ```
 
 This code above is unreadable but it still retains it's previous functionality:
 ```js
-    var array = [];
-    for (var i = 0; i < 20; i++) {
-        array[i] = i;
-    }
+var array = [];
+for (var i = 0; i < 20; i++) {
+    array[i] = i;
+}
 ```
 
 This process is known as [minification](https://en.wikipedia.org/wiki/Minification_(programming)). It's a way of removing all spaces, unnecessary characters and comments that would help reduce the size of the source code and make it more efficient to be transferred over the network.
@@ -130,18 +130,18 @@ Want to know to configure it? Check out this [thread from StackOverflow](https:/
 ### <a id="tip3"></a> CSS Preprocessors to the rescue!
 Trust me, these are life-savers. I used to hate writing a lot of CSS but now, I like writing CSS because of this reason. I chose ***SASS*** as my CSS preprocessor and it's basically CSS-on-steroids!
 
-It's got some cool features like reusable CSS code, writing functions a.k.a <mark>@mixin</mark> and calling them using <mark>@include</mark>, nested syntaxes and import multiple CSS modules.
+It's got some cool features like reusable CSS code, writing functions a.k.a `@mixin` and calling them using `@include`, nested syntaxes and import multiple CSS modules.
 
 Writing in ***SASS*** is no different than writing in CSS but it allows you to modularize and organize your code in a fashionable manner. This allows you to even split CSS code to different modules, especially, if your HTML component uses a lot of CSS elements.
 
 Oh, you can also create a minified version of your CSS code and push it into production.
 
 ### <a id="tip4"></a> Defer Javascript
-The <mark>defer</mark> attribute used in the <mark>&lt;script&gt;</mark> tag will allow the JS file to be executed after the page has finished parsing all the DOM elements.
+The `defer` attribute used in the `<script>` tag will allow the JS file to be executed after the page has finished parsing all the DOM elements.
 
 When the attribute is used, it'll look like this:
 ```html
-    &lt;script type="text/javascript" src="script.js" defer&gt;&lt;/script&gt;
+<script type="text/javascript" src="script.js" defer></script>
 ```
 
 This could save a lot of time especially if it contains code that is not critical.
@@ -155,7 +155,7 @@ As mentioned above, inefficient database queries could be detrimental to your we
 - Keep your database architecture organized. Read more about [Database Normalization](https://en.wikipedia.org/wiki/Database_normalization)
 - Keep your SQL query as simple as possible
 
-Usage of clauses like <mark>WHERE</mark>, <mark>JOIN</mark> and <mark>GROUP BY</mark> are important but when it comes to performance, use it wisely.
+Usage of clauses like `WHERE`, `JOIN` and `GROUP BY` are important but when it comes to performance, use it wisely.
 
 ### <a id="tip6"></a> PHP Page Caching
 My company's website is mostly dynamic and I realized that all it does is fetch data from the servers to generate static information.

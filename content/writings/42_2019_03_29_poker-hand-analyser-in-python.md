@@ -13,9 +13,9 @@ Before writing this article, I didn't know anything about cards or Poker, I had 
 ## Poker Hands
 From what I had understood, a ***hand*** is a set of five cards and each card has a rank, which is in the order shown below:
 
-```plaintext
-    Cards are valued in the order of lowest to highest (Left to Right):
-    2, 3, 4, 5, 6, 7, 8, 9, 10, Jack, Queen, King, Ace
+```text
+Cards are valued in the order of lowest to highest (Left to Right):
+2, 3, 4, 5, 6, 7, 8, 9, 10, Jack, Queen, King, Ace
 ```
 
 Based on the card pattern formed in each hand, the ranking category is determined and it's ranked within it's category based on the ranks of it's cards.
@@ -52,12 +52,12 @@ To make things simple, I created a class named ***Card*** that has two attribute
 This hand contains no pairs and it doesn't fall into any other category.
 
 ```python
-    def high_card(hand):
-        # collect all faces from each card
-        allfaces = [f for f,s in hand]
+def high_card(hand):
+    # collect all faces from each card
+    allfaces = [f for f,s in hand]
 
-        #sort the faces and show the highest card
-        return "high_card", sorted(allfaces, key=lambda f: allfaces.index(f), reverse=True)[0]
+    #sort the faces and show the highest card
+    return "high_card", sorted(allfaces, key=lambda f: allfaces.index(f), reverse=True)[0]
 ```
 
 ### <a id="onepair"></a> One Pair
@@ -73,19 +73,19 @@ This hand contains no pairs and it doesn't fall into any other category.
 This hand contains two cards of one rank and three cards of three other ranks.
 
 ```python
-    def one_pair(hand):
-        allfaces = [f for f,s in hand]
-        allftypes = set(allfaces)
+def one_pair(hand):
+    allfaces = [f for f,s in hand]
+    allftypes = set(allfaces)
 
-        # collect pairs
-        pairs = [f for f in allftypes if allfaces.count(f) == 2]
+    # collect pairs
+    pairs = [f for f in allftypes if allfaces.count(f) == 2]
 
-        # if there's more than one pair
-        if len(pairs) != 1:
-            return False
+    # if there's more than one pair
+    if len(pairs) != 1:
+        return False
 
-        allftypes.remove(pairs[0])
-        return 'one-pair', pairs + sorted(allftypes, key=lambda f: face.index(f), reverse=True)
+    allftypes.remove(pairs[0])
+    return 'one-pair', pairs + sorted(allftypes, key=lambda f: face.index(f), reverse=True)
 ```
 
 ### <a id="twopairs"></a> Two Pairs
@@ -101,21 +101,21 @@ This hand contains two cards of one rank and three cards of three other ranks.
 This hand contains two cards of one rank, two cards of a second rank and one card of a third rank.
 
 ```python
-    def two_pair(hand):
-        allfaces = [f for f,s in hand]
-        allftypes = set(allfaces)
-        
-        # collect pairs
-        pairs = [f for f in allftypes if allfaces.count(f) == 2]
-        
-        # if there are more than two pairs
-        if len(pairs) != 2:
-            return False
+def two_pair(hand):
+    allfaces = [f for f,s in hand]
+    allftypes = set(allfaces)
+    
+    # collect pairs
+    pairs = [f for f in allftypes if allfaces.count(f) == 2]
+    
+    # if there are more than two pairs
+    if len(pairs) != 2:
+        return False
 
-        p1, p2 = pairs
-        # get the difference using sets
-        other_cards = [(allftypes - set(pairs)).pop()]
-        return 'two-pair', pairs + other_cards if(face.index(p1) > face.index(p2)) else pairs[::-1] + other_cards
+    p1, p2 = pairs
+    # get the difference using sets
+    other_cards = [(allftypes - set(pairs)).pop()]
+    return 'two-pair', pairs + other_cards if(face.index(p1) > face.index(p2)) else pairs[::-1] + other_cards
 ```
 
 ### <a id="threeofakind"></a> Three of a Kind
@@ -131,20 +131,20 @@ This hand contains two cards of one rank, two cards of a second rank and one car
 This hand, also known as trips or a set, contains three cards of one rank and two cards of two other ranks.
 
 ```python
-    def three_of_a_kind(hand):
-        allfaces = [f for f,s in hand]
+def three_of_a_kind(hand):
+    allfaces = [f for f,s in hand]
 
-        uniqueRanks = set(allfaces)
+    uniqueRanks = set(allfaces)
 
-        if len(uniqueRanks) != 3:
-            return False
+    if len(uniqueRanks) != 3:
+        return False
 
-        for f in uniqueRanks:
-            if allfaces.count(f) == 3:
-                uniqueRanks.remove(f)
-                return "three-of-a-kind", f
+    for f in uniqueRanks:
+        if allfaces.count(f) == 3:
+            uniqueRanks.remove(f)
+            return "three-of-a-kind", f
 
-        return False;
+    return False;
 ```
 
 ### <a id="straight"></a> Straight
@@ -160,11 +160,11 @@ This hand, also known as trips or a set, contains three cards of one rank and tw
 This hand contains five cards arranged in a sequential order but not all of them have same suits.
 
 ```python
-    def straight(hand):
-        ordered = sorted(hand, key=lambda card: (faces.index(card.face), card.suit))
-        if ''.join(card.face for card in ordered) in ''.join(face):
-            return 'straight', ordered[-1].face
-        return False;
+def straight(hand):
+    ordered = sorted(hand, key=lambda card: (faces.index(card.face), card.suit))
+    if ''.join(card.face for card in ordered) in ''.join(face):
+        return 'straight', ordered[-1].face
+    return False;
 ```
 
 ### <a id="flush"></a> Flush
@@ -180,16 +180,16 @@ This hand contains five cards arranged in a sequential order but not all of them
 This hand contains five cards of the same suit and not necessarily arranged in sequential order.
 
 ```python
-    def flush(hand):
-        allfaces = [f for f,s in hand]
+def flush(hand):
+    allfaces = [f for f,s in hand]
 
-        first_card = hand[0]
-        other_cards = hand[1:]
+    first_card = hand[0]
+    other_cards = hand[1:]
 
-        if all(first_card.suit == card.suit for card in other_cards):
-            return 'flush', sorted(allfaces, key=lambda f: face.index(f), reverse=True)
+    if all(first_card.suit == card.suit for card in other_cards):
+        return 'flush', sorted(allfaces, key=lambda f: face.index(f), reverse=True)
 
-        return False
+    return False
 ```
 
 ### <a id="fullhouse"></a> Full House
@@ -205,16 +205,16 @@ This hand contains five cards of the same suit and not necessarily arranged in s
 This hand, also known as full boat or a boat, contains three cards of one rank and two cards of another rank.
 
 ```python
-    def full_house(hand):
-        allfaces = [f for f,s in hand]
+def full_house(hand):
+    allfaces = [f for f,s in hand]
 
-        rankFrequency = pe_lib.character_frequency(allfaces)
+    rankFrequency = pe_lib.character_frequency(allfaces)
 
-        # if there are 2 types of ranks and there's a card with 1 pair and 3 of a kind
-        if len(rankFrequency) == 2 and (rankFrequency.values()[0] == 2 and rankFrequency.values()[1] == 3):
-            return 'full-house'
+    # if there are 2 types of ranks and there's a card with 1 pair and 3 of a kind
+    if len(rankFrequency) == 2 and (rankFrequency.values()[0] == 2 and rankFrequency.values()[1] == 3):
+        return 'full-house'
 
-        return False
+    return False
 ```
 
 ### <a id="fourofakind"></a> Four of a Kind
@@ -230,23 +230,23 @@ This hand, also known as full boat or a boat, contains three cards of one rank a
 This hand, also known as quads, contains four cards of one rank and one card of another rank.
 
 ```python
-    def four_of_a_kind(hand):
-        allfaces = [f for f,s in hand]
-        
-        # create a unique set of ranks
-        uniqueRanks = set(allfaces)
+def four_of_a_kind(hand):
+    allfaces = [f for f,s in hand]
+    
+    # create a unique set of ranks
+    uniqueRanks = set(allfaces)
 
-        # if there are more than 2 ranks, it's not four of a kind
-        if len(uniqueRanks) != 2:
-            return False
-
-        for f in uniqueRanks:
-            # if there are 4 faces, it is four of a kind
-            if allfaces.count(f) == 4:
-                uniqueRanks.remove(f)
-                return "four-of-a-kind", f
-
+    # if there are more than 2 ranks, it's not four of a kind
+    if len(uniqueRanks) != 2:
         return False
+
+    for f in uniqueRanks:
+        # if there are 4 faces, it is four of a kind
+        if allfaces.count(f) == 4:
+            uniqueRanks.remove(f)
+            return "four-of-a-kind", f
+
+    return False
 ```
 
 ### <a id="straightflush"></a> Straight Flush
@@ -262,20 +262,20 @@ This hand, also known as quads, contains four cards of one rank and one card of 
 This hand contains five cards arranged in a sequential order with all cards having the same suit.
 
 ```python
-    def straight_flush(hand):
-        # sort the cards based on the face rank of each card
-        ordered = sorted(hand, key=lambda card: (faces.index(card.face), card.suit))
+def straight_flush(hand):
+    # sort the cards based on the face rank of each card
+    ordered = sorted(hand, key=lambda card: (faces.index(card.face), card.suit))
 
-        first_card = ordered[0]
-        other_cards = ordered[1:]
+    first_card = ordered[0]
+    other_cards = ordered[1:]
 
-        # check if all are of the same suit
-        if all(first_card.suit == card.suit for card in other_cards):
-            # check if they are in sequential order
-            # compare the ordered faces substring with the face list (which is converted to string)
-            if ''.join(card.face for card in ordered) in ''.join(face):
-                return 'straight-flush', ordered[-1].face
-        return False
+    # check if all are of the same suit
+    if all(first_card.suit == card.suit for card in other_cards):
+        # check if they are in sequential order
+        # compare the ordered faces substring with the face list (which is converted to string)
+        if ''.join(card.face for card in ordered) in ''.join(face):
+            return 'straight-flush', ordered[-1].face
+    return False
 ```
 
 ### <a id="royalflush"></a> Royal Flush
@@ -291,21 +291,21 @@ This hand contains five cards arranged in a sequential order with all cards havi
 This hand contains the ***royal*** ranks in sequential order in the same suit.
 
 ```python
-    def royal_flush(hand):
-        royalface = "TJQKA"
-        # sort the cards based on the face rank of each card
-        ordered = sorted(hand, key=lambda card: (faces.index(card.face), card.suit))
+def royal_flush(hand):
+    royalface = "TJQKA"
+    # sort the cards based on the face rank of each card
+    ordered = sorted(hand, key=lambda card: (faces.index(card.face), card.suit))
 
-        first_card = ordered[0]
-        other_cards = ordered[1:]
+    first_card = ordered[0]
+    other_cards = ordered[1:]
 
-        # check if all are of the same suit
-        if all(first_card.suit == card.suit for card in other_cards):
-            # check if they are in sequential order
-            # compare the ordered faces substring with the face list (which is converted to string)
-            if ''.join(card.face for card in ordered) in royalface:
-                return 'royal-flush', ordered[-1].face
-        return False
+    # check if all are of the same suit
+    if all(first_card.suit == card.suit for card in other_cards):
+        # check if they are in sequential order
+        # compare the ordered faces substring with the face list (which is converted to string)
+        if ''.join(card.face for card in ordered) in royalface:
+            return 'royal-flush', ordered[-1].face
+    return False
 ```
 
 ## Conclusion

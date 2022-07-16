@@ -15,31 +15,31 @@ In it's basic form, a pointer is a variable that contains the memory address of 
 For example, you have a variable named <mark>x</mark> that contains some data, in this case, we'll store an integer:
 
 ```go
-    package main
-    
-    import "fmt"
+package main
 
-    func main() {
-        x := 10
-        fmt.Println(x) // prints 10
-    }
+import "fmt"
+
+func main() {
+    x := 10
+    fmt.Println(x) // prints 10
+}
 ```
 
 The code above prints the variable <mark>x</mark> by referring to it's name. We can do the same using pointers by referring to it's memory address via another variable that points to variable <mark>x</mark>.
 
-To do this, we must use <mark>&</mark> operator to get the address and <mark>*</mark> to return the value stored in the address of variable <mark>x</mark> like this:
+To do this, we must use <mark>&</mark> operator to get the address and `*` to return the value stored in the address of variable <mark>x</mark> like this:
 
 ```go
-    package main
-    
-    import "fmt"
+package main
 
-    func main() {
-        x := 10
-        p := &x
-        fmt.Println(x)   // prints 10
-        fmt.Println(*p)  // also, prints 10
-    }
+import "fmt"
+
+func main() {
+    x := 10
+    p := &x
+    fmt.Println(x)   // prints 10
+    fmt.Println(*p)  // also, prints 10
+}
 ```
 
 Hmm, that was pretty straight forward.

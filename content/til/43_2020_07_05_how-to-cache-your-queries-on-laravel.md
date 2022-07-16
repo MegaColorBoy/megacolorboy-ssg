@@ -12,10 +12,12 @@ Quite handy when you're having a content-heavy website and huge amount of user t
 
 Using the `Cache` class, you can cache your queries like this:
 ```php
+<?php
 $apples = \Cache::rememberForever('apples_cache', function(){
     return FruitsModel::where('item_name', 'LIKE', '%apples')
         ->get();
 });
+?>
 ```
 In the above example, `apples_cache` is the key that stores your queries of apples forever and which will be used to obtain your cached results from the server. 
 
@@ -23,9 +25,12 @@ Oh, be sure to create distinctive names for different types of queries or else, 
 
 You can also give it a time limit in milliseconds:
 ```php
+<?php
 $apples = \Cache::remember('apples_cache', 300000, function(){
     return FruitsModel::where('item_name', 'LIKE', '%apples')
         ->get();
 });
+?>
 ```
+
 Hope this tip helps you out! &#x1F600;

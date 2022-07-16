@@ -15,7 +15,7 @@ This blog article will have all the links available to everyone to learn from an
 In addition, I have created a math library module named [pe_lib.py](https://github.com/MegaColorBoy/ProjectEuler/blob/master/pe_lib.py), which contains all the mathematical functions that are used in every problem. I find it pretty useful as it allows me to re-use some of the functions instead of re-writing it for each solution.
 
 <script defer src="/static/js/pe_solutions.js" type="text/javascript"></script>
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>Problem Link</th>

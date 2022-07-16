@@ -10,7 +10,7 @@ SELECT title FROM hobbies WHERE user_id = 8;
 ```
 
 This would return a list of hobbies like this:
-```plaintext
+```text
 Boxing
 Coding
 Reading
@@ -18,7 +18,7 @@ Fishing
 ```
 
 That's simple but what if you wanted to display them in one row? Like this:
-```plaintext
+```text
 Boxing, Coding, Reading, Fishing
 ```
 

@@ -31,41 +31,41 @@ Nothing complicated, the concept is pretty simple. All you have to do is write d
 For example, let's say you have a markdown file named <mark>hello-world.md</mark> and you wrote your content:
 
 ```markdown
-    title: Hello World
-    date: 2019-03-01 20:00
+title: Hello World
+date: 2019-03-01 20:00
 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut sollicitudin dui, 
-    pulvinar vulputate nibh. Cras eu nunc mauris. Vestibulum quis diam at diam feugiat semper vitae at sem. 
-    Mauris in orci iaculis mauris semper gravida at nec augue. Phasellus luctus accumsan velit, 
-    in molestie odio luctus at. Curabitur neque erat, pretium vitae condimentum placerat, sodales eu 
-    nisi. Cras pretium nulla ac est interdum, vitae tempor mauris ornare. 
-    Nullam tortor nisi, scelerisque vel purus id, dictum finibus erat. Nulla tincidunt egestas 
-    sodales. Sed sit amet elit placerat, pellentesque est in, bibendum enim. Nam dolor lorem, venenatis sit 
-    amet sem at, sagittis feugiat risus. Fusce turpis felis, sodales a tortor vitae, volutpat semper 
-    justo. Donec porta id mi non porttitor. Fusce id est sit amet leo consectetur consequat.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut sollicitudin dui, 
+pulvinar vulputate nibh. Cras eu nunc mauris. Vestibulum quis diam at diam feugiat semper vitae at sem. 
+Mauris in orci iaculis mauris semper gravida at nec augue. Phasellus luctus accumsan velit, 
+in molestie odio luctus at. Curabitur neque erat, pretium vitae condimentum placerat, sodales eu 
+nisi. Cras pretium nulla ac est interdum, vitae tempor mauris ornare. 
+Nullam tortor nisi, scelerisque vel purus id, dictum finibus erat. Nulla tincidunt egestas 
+sodales. Sed sit amet elit placerat, pellentesque est in, bibendum enim. Nam dolor lorem, venenatis sit 
+amet sem at, sagittis feugiat risus. Fusce turpis felis, sodales a tortor vitae, volutpat semper 
+justo. Donec porta id mi non porttitor. Fusce id est sit amet leo consectetur consequat.
 ```
 
 Also, this is your template:
 ```html
-    &lt;html&gt;
-    &lt;head&gt;
-        &lt;title&gt;{{ title }}&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-    &lt;div&gt;Published on: {{ date }}&lt;/div&gt;
+<html>
+    <head>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+    <div>Published on: {{ date }}</div>
     {{ content }}
-    &lt;/body&gt;
-    &lt;/html&gt;
+    </body>
+</html>
 ```
 
 And when you execute the application, this is what happens:
 ```html
-    &lt;html&gt;
-    &lt;head&gt;
-        &lt;title&gt;Hello World&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-    &lt;div&gt;Published on: 2019-03-01 20:00&lt;/div&gt;
+<html>
+    <head>
+        <title>Hello World</title>
+    </head>
+    <body>
+    <div>Published on: 2019-03-01 20:00</div>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut sollicitudin dui, 
     pulvinar vulputate nibh. Cras eu nunc mauris. Vestibulum quis diam at diam feugiat semper vitae at sem. 
     Mauris in orci iaculis mauris semper gravida at nec augue. Phasellus luctus accumsan velit, 
@@ -75,8 +75,8 @@ And when you execute the application, this is what happens:
     sodales. Sed sit amet elit placerat, pellentesque est in, bibendum enim. Nam dolor lorem, venenatis sit 
     amet sem at, sagittis feugiat risus. Fusce turpis felis, sodales a tortor vitae, volutpat semper 
     justo. Donec porta id mi non porttitor. Fusce id est sit amet leo consectetur consequat.
-    &lt;/body&gt;
-    &lt;/html&gt;
+    </body>
+</html>
 ```
 
 The generator just parsed your article on Markdown and put the details on the template and tada, the article is generated. Easy peasy!

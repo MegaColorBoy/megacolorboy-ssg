@@ -15,22 +15,24 @@ mkdir app/Constants
 Next, create a file named `MyConstants.php` in the `app/Constants` directory and copy-paste the following code:
 
 ```php
-&lt;?php
+<?php
 namespace App\Constants;
 
 class MyConstants {
     const HELLO = 'hello';
 }
-?&gt;
+?>
 ```
 
 Then, go to the `config/app.php` file and define your new alias:
 
 ```php
+<?php
 'aliases' => [
     // previously defined aliases...
     'MyConstants' => App\Constants\MyConstants::class,
 ]
+?>
 ```
 
 Lastly, execute the following commands to update your app's configuration:
@@ -44,9 +46,9 @@ php artisan config:cache
 After that, you can use your new constants anywhere (Controllers, Models or Blades) like this:
 
 ```php
-&lt;?php
+<?php
 echo MyConstants::HELLO;
-?&gt;
+?>
 ```
 
 Learning this new technique helps me keep the code clean and makes it easier to trace the constants.

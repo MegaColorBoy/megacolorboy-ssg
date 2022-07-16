@@ -15,12 +15,16 @@ composer require anhskohbo/no-captcha
 ## 2. Add provider and alias to configuration
 Open your `config/app.php` file and add this to your providers array:
 ```php
+<?php
 Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
+?>
 ```
 
 And this to your aliases array:
 ```php
+<?php
 'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
+?>
 ```
 
 ## 3. Publish configuration
@@ -30,7 +34,7 @@ php artisan vendor:publish --provider="Anhskohbo\NoCaptcha\NoCaptchaServiceProvi
 
 ## 4. Add sitekey and secret key to .env file
 Open your `.env` file and add this:
-```php
+```text
 NOCAPTCHA_SITEKEY=yoursitekey
 NOCAPTCHA_SECRET=yoursecret
 ```
@@ -38,7 +42,9 @@ NOCAPTCHA_SECRET=yoursecret
 ## How to use it?
 Now, you can use it in your validator using like this:
 ```php
+<?php
 $validate = Validator::make(Input::all(),[
     'g-recaptcha-response' => 'required|captcha'
 ]);
+?>
 ```
