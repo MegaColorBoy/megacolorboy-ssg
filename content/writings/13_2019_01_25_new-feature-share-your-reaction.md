@@ -13,14 +13,14 @@ Last night, I was thinking on how to improve my blog posts and post better artic
 
 But, in order to do that, I'll require some simple analytics on how people react to my articles on my blog. Taking inspiration from web applications like Facebook, Instagram, Twitter and Medium, I decided to build a small feature named "Share your reaction", from scratch, that would contain six different emotions.
 
-<figure>
+<figure style="text-align: center;">
     <div>
-        <img width="32" height="32" style="display: inline-block; margin-left: 10px; margin-right: 10px;" src="/static/images/new_emojis/like.png"> 
-        <img width="32" height="32" style="display: inline-block; margin-left: 10px; margin-right: 10px;" src="/static/images/new_emojis/love.png"> 
-        <img width="32" height="32" style="display: inline-block; margin-left: 10px; margin-right: 10px;" src="/static/images/new_emojis/haha.png"> 
-        <img width="32" height="32" style="display: inline-block; margin-left: 10px; margin-right: 10px;" src="/static/images/new_emojis/wow.png"> 
-        <img width="32" height="32" style="display: inline-block; margin-left: 10px; margin-right: 10px;" src="/static/images/new_emojis/sad.png"> 
-        <img width="32" height="32" style="display: inline-block; margin-left: 10px; margin-right: 10px;" src="/static/images/new_emojis/angry.png">
+        <img style="width: 32px; height:32px; display: inline-block; margin-left: 10px; margin-right: 10px;" src="/static/images/new_emojis/like.png"> 
+        <img style="width: 32px; height:32px; display: inline-block; margin-left: 10px; margin-right: 10px;" src="/static/images/new_emojis/love.png"> 
+        <img style="width: 32px; height:32px; display: inline-block; margin-left: 10px; margin-right: 10px;" src="/static/images/new_emojis/haha.png"> 
+        <img style="width: 32px; height:32px; display: inline-block; margin-left: 10px; margin-right: 10px;" src="/static/images/new_emojis/wow.png"> 
+        <img style="width: 32px; height:32px; display: inline-block; margin-left: 10px; margin-right: 10px;" src="/static/images/new_emojis/sad.png"> 
+        <img style="width: 32px; height:32px; display: inline-block; margin-left: 10px; margin-right: 10px;" src="/static/images/new_emojis/angry.png">
     </div>
     <figcaption>The six different emotions used in this new feature</figcaption>
 </figure>

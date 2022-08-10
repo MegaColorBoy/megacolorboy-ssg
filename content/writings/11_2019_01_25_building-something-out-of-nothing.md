@@ -8,7 +8,7 @@ I know, it's been a while since my last article and this time, I felt that I wan
 
 I'd like to share one of my favorite quotes:
 
->"I'm personally convinced that computer science has a lot in common with physics. Both are about how the world works at a rather fundamental level. The difference, of course, is that while in physics you're supposed to figure out how the world is made up, in computer science you create the world. Within the confines of the computer, you're the creator. You get to ultimately control everything that happens. If you're good enough, you can be God. On a small scale." - Linus Torvalds, The Beauty of Programming
+>"I'm personally convinced that computer science has a lot in common with physics. Both are about how the world works at a rather fundamental level. The difference, of course, is that while in physics you're supposed to figure out how the world is made up, in computer science you create the world. Within the confines of the computer, you're the creator. You get to ultimately control everything that happens. If you're good enough, you can be God. On a small scale." &mdash; <cite>[Linus Torvalds in The Beauty of Programming](https://tildesites.bowdoin.edu/~ltoma/teaching/beautyOfProgramming.pdf)</cite>
 
 Sometimes when working with huge complex systems, useless error messages, unusually long SQL queries or an abominable APIs, I forget why I enjoy computer science. Every once in a while, reading a quote like the one above, would put me back in the right direction.
 

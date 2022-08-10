@@ -11,7 +11,7 @@ summary: This is the second post of this month's personal challenge. I'll be tal
     <canvas style="border-radius: 0px;" id="breakout_canvas" width="500" height="500"></canvas>
 </figure>
 
-Before you read more about this article, play with the above game. You can control the paddle using the mouse or left-right arrow keys. Press ***"P"*** to pause the game. Press ***"S"*** to resume and ***"R"*** to restart the game.
+Before you read more about this article, play with the above game. You can control the paddle using the mouse or left-right arrow keys. Press <kbd>P</kbd> to pause the game. Press <kbd>S</kbd> to resume and <kbd>R</kbd> to restart the game.
 
 This is part of the [Arcade Challenge](/posts/i-challenged-myself-to-build-4-arcade-games/) series. In the previous post, I built a snake game, [click here](/posts/arcade-challenge-1-snake-game/) if you've not read the article.
 
@@ -48,57 +48,57 @@ If the distance between the ball radius and the wall's edge is the same, it will
 
 **Code for Ball Movement and Collision Detection:**
 ```js
-    $(document).ready(function(){
-        //Canvas stuff
-        var canvas = document.getElementById("ball_collision_canvas");
-        var height = canvas.height;
-        var width = canvas.width;
-        var ctx = canvas.getContext("2d");
+$(document).ready(function(){
+    //Canvas stuff
+    var canvas = document.getElementById("ball_collision_canvas");
+    var height = canvas.height;
+    var width = canvas.width;
+    var ctx = canvas.getContext("2d");
 
-        //coordinates of the ball
-        var x = canvas.width / 2;
-        var y = canvas.height - 30;
-        var dir_x = 2;
-        var dir_y = 4;
-        var ball_r = 10;
+    //coordinates of the ball
+    var x = canvas.width / 2;
+    var y = canvas.height - 30;
+    var dir_x = 2;
+    var dir_y = 4;
+    var ball_r = 10;
 
-        //Draw a circle
-        function circle(x,y,r)
+    //Draw a circle
+    function circle(x,y,r)
+    {
+        ctx.fillStyle = "#FF6D6D";
+        ctx.beginPath();
+        ctx.arc(x,y,r,0,Math.PI*2, true);
+        ctx.closePath();
+        ctx.fill();
+    }
+
+    //Draw canvas
+    function draw()
+    {
+        ctx.clearRect(0, 0, width, height);
+        circle(x,y,ball_r);
+
+        /*
+            If the distance between the ball radius and the wall's edge is the same,
+            it will change the ball direction. This would allow a proper ball collision
+            to bounce off the walls.
+        */
+        if(x + dir_x > width - ball_r || x + dir_x < ball_r)
         {
-            ctx.fillStyle = "#FF6D6D";
-            ctx.beginPath();
-            ctx.arc(x,y,r,0,Math.PI*2, true);
-            ctx.closePath();
-            ctx.fill();
+            dir_x = -dir_x;
+        }
+        
+        if(y + dir_y > height - ball_r || y + dir_y < ball_r)
+        {
+            dir_y = -dir_y;
         }
 
-        //Draw canvas
-        function draw()
-        {
-            ctx.clearRect(0, 0, width, height);
-            circle(x,y,ball_r);
+        x += dir_x;
+        y += dir_y;
+    }
 
-            /*
-                If the distance between the ball radius and the wall's edge is the same,
-                it will change the ball direction. This would allow a proper ball collision
-                to bounce off the walls.
-            */
-            if(x + dir_x > width - ball_r || x + dir_x < ball_r)
-            {
-                dir_x = -dir_x;
-            }
-            
-            if(y + dir_y > height - ball_r || y + dir_y < ball_r)
-            {
-                dir_y = -dir_y;
-            }
-
-            x += dir_x;
-            y += dir_y;
-        }
-
-        setInterval(draw, 10);
-    });
+    setInterval(draw, 10);
+});
 ```
 
 The game was built using HTML5 Canvas and Javascript, so please feel free to read the source code to understand the logic of the game.

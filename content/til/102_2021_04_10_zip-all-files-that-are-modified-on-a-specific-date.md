@@ -1,7 +1,7 @@
 title: Zip all files that are modified on a specific date
 date: April 10th, 2021
 slug: zip-all-files-that-are-modified-on-a-specific-date
-category: Unix
+category: UNIX
 status: active
 
 I wrote a nifty command to make an archive of the files that I have modified on a particular date. By doing so, this script comes in handy during urgent deployments, so that I don't lose track of the files that I should be updating.

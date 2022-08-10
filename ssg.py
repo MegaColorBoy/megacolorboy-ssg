@@ -263,7 +263,7 @@ def get_posts(content_directories = []):
                             if status == 'active':
                                 posts.extend([
                                     {
-                                        'section': root,
+                                        'section': root.replace('content/', ''),
                                         'title': title,
                                         'link': post_url,
                                         'date': post_date,
@@ -443,6 +443,8 @@ def generate_index_without_paginator(section):
                 'title': section['seo']['title'], 
                 'description': section['seo']['description']
             },
+            site = site_config, 
+            menu = menu_config
         )
     
     # if the current section is the root of the blog
@@ -562,10 +564,11 @@ def generate_json_section(section):
 
     # Check if this JSON data exists for this section
     if 'data_type' in section and section['data_type'] == 'json':
-        file = section['content_directory'] + "/data.json"
+        # file = section['content_directory'] + "/data.json"
+        file = "data/{content_directory}.json".format(content_directory=section['content_directory'])
         if os.path.exists(file):
             # Fetch data
-            with open(section['content_directory']) as json_file:
+            with open(file) as json_file:
                 section['json_data'] = json.load(json_file)
 
             # Delete section
@@ -602,6 +605,13 @@ def build_section(section):
 # Build entire or section(s) of the blog
 @app.command()
 def build(mode=""):
+    global menu_config
+    global all_posts
+
+    menu_config = generate_menu()
+    all_posts = load_posts()
+    generate_categories()
+    
     message = "The posts for all sections are generated successfully!"
     
     # if no mode has been specified, prompt the user
@@ -790,8 +800,5 @@ Execute app
 """
 if __name__ == "__main__":
     site_config = cfg.site
-    menu_config = generate_menu()
-    all_posts = load_posts()
     env = Environment(loader=PackageLoader('ssg','templates/' + site_config['theme']))
-    generate_categories()
     app()

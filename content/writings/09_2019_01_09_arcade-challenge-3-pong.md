@@ -10,7 +10,7 @@ summary: This is the third article of the Arcade Challenge series. In this artic
     <canvas style="border-radius: 0px;" id="pong_canvas" width="500" height="500"></canvas>
 </figure>
 
-Before you read more about this article, play with the above game. The rules are simple, control the paddle using ***"W"*** and ***"S"*** keys.
+Before you read more about this article, play with the above game. The rules are simple, control the paddle using <kbd>W</kbd> and <kbd>S</kbd> keys.
 
 This is part of the [Arcade Challenge](/posts/i-challenged-myself-to-build-4-arcade-games/) series. If you haven't read the previous articles, here you go:
 
@@ -34,22 +34,22 @@ While I was building Pong, I thought of making it a 2 player game but later I de
 
 **Code snippet of the AI object:**
 ```js
-    var ai = {
-        x: null,
-        y: null,
-        width: 10,
-        height:100,
+var ai = {
+    x: null,
+    y: null,
+    width: 10,
+    height:100,
 
-        //Update the AI paddle position based on the ball's direction
-        update: function(){
-            var dest_y = ball.y - (this.height - ball.side) * 0.5;
-            this.y += (dest_y - this.y) * 0.1;
-            this.y = Math.max(Math.min(this.y, height-this.height), 0);
-        },
-        draw: function(){
-            ctx.fillRect(this.x, this.y, this.width, this.height);
-        }
-    };  
+    //Update the AI paddle position based on the ball's direction
+    update: function(){
+        var dest_y = ball.y - (this.height - ball.side) * 0.5;
+        this.y += (dest_y - this.y) * 0.1;
+        this.y = Math.max(Math.min(this.y, height-this.height), 0);
+    },
+    draw: function(){
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+};  
 ```
 
 ## Ball Collision
@@ -58,28 +58,28 @@ In this game, the collision works a little different than [Breakout](#)'s versio
 **Code snippet of the Axis Aligned Bounding Boxes collision:**
 
 ```js
-    //AABB Collision function
-    var AABBCollision = function(px, py, pw, ph, bx, by, bw, bh)
-    {
-        return px < bx+bw && py < by+bh && bx < px+pw && by < py+ph;
-    }
+//AABB Collision function
+var AABBCollision = function(px, py, pw, ph, bx, by, bw, bh)
+{
+    return px < bx+bw && py < by+bh && bx < px+pw && by < py+ph;
+}
 
-    //if the ball has -ve velocity, it's hit by AI paddle and it's the player's turn
-    //if the ball has +ve velocity, it's hit by player paddle and it's the AI's turn
-    var paddle = this.velocity.x < 0 ? player : ai;
+//if the ball has -ve velocity, it's hit by AI paddle and it's the player's turn
+//if the ball has +ve velocity, it's hit by player paddle and it's the AI's turn
+var paddle = this.velocity.x < 0 ? player : ai;
 
-    if(AABBCollision(paddle.x, paddle.y, paddle.width, paddle.height, this.x, this.y, this.side, this.side))
-    {
-        this.x = (paddle == player ? player.x+player.width : ai.x - this.side);
-        var n = (this.y+this.side - paddle.y)/(paddle.height+this.side);
-        var phi = 0.25 * pi * (2 * n - 1);
-        var dir = (paddle == player ? 1 : -1);
+if(AABBCollision(paddle.x, paddle.y, paddle.width, paddle.height, this.x, this.y, this.side, this.side))
+{
+    this.x = (paddle == player ? player.x+player.width : ai.x - this.side);
+    var n = (this.y+this.side - paddle.y)/(paddle.height+this.side);
+    var phi = 0.25 * pi * (2 * n - 1);
+    var dir = (paddle == player ? 1 : -1);
 
-        var impact = Math.abs(phi) > 0.2 * pi ? 1.5 : 1;
+    var impact = Math.abs(phi) > 0.2 * pi ? 1.5 : 1;
 
-        this.velocity.x = impact * dir * this.speed * Math.cos(phi);
-        this.velocity.y = impact * this.speed * Math.sin(phi);
-    }
+    this.velocity.x = impact * dir * this.speed * Math.cos(phi);
+    this.velocity.y = impact * this.speed * Math.sin(phi);
+}
 ```
 
 The game was built using HTML5 Canvas and Javascript, so please feel free to read the source code to understand the logic of the game.

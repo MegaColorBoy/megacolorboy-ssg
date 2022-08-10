@@ -1,7 +1,7 @@
 title: Get a list of directories with their sizes in the current directory
 date: April 10th, 2021
 slug: get-a-list-of-directories-with-their-sizes-in-the-current-directory
-category: Unix
+category: UNIX
 status: active
 
 If you want to sizes of each directory in a list, try the following command:

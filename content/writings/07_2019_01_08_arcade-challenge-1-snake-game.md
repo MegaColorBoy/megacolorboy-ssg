@@ -10,7 +10,7 @@ summary: This is the first post of this month's personal challenge. I'll be talk
     <canvas style="border-radius: 5px;" id="snake_canvas" width="500" height="500"></canvas>
 </figure>
 
-Before you read more about this article, play with the above game. You can control the snake using ***"WASD"*** or the ***"arrow"*** keys. Orange block is for food, it'll increase your score. Yellow block is for poison, if eaten, it'll reduce your score. Press ***"Spacebar"*** to pause the game. Press ***"P"*** to resume and ***"R"*** to restart the game. Oh and avoid hitting the white walls!
+Before you read more about this article, play with the above game. You can control the snake using <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or the <kbd>&larr;</kbd> <kbd>&uarr;</kbd> <kbd>&darr;</kbd> <kbd>&rarr;</kbd> keys. Orange block is for food, it'll increase your score. Yellow block is for poison, if eaten, it'll reduce your score. Press <kbd>Space</kbd> to pause the game. Press <kbd>P</kbd> to resume and <kbd>R</kbd> to restart the game. Oh and avoid hitting the white walls!
 
 ## Background
 Snake is a game of simple concept where the player manuevers the snake in all 4 straight directions (reverse movement is not possible i.e. UP, DOWN, LEFT, RIGHT only) to eat the fruit and as a result, the length of the snake increases, making the game difficult for the player. The player will have to prevent the snake to hit the walls or from eating the poison, which will decrease the snake's length, and also prevent it from hitting itself.
@@ -30,56 +30,56 @@ The game makes use of [Linked Lists](https://en.wikipedia.org/wiki/Linked_list),
 
 **Movement of the Snake:**
 
-```plaintext
-    for node in the list (always starts from the end of the list):
-        if node is not equal to head node:
-            shift the snake's position to node+1 (by making it closer to the snake)
-        set head node to new position
-    endfor
+```text
+for node in the list (always starts from the end of the list):
+    if node is not equal to head node:
+        shift the snake's position to node+1 (by making it closer to the snake)
+    set head node to new position
+endfor
 ```
 
 **Length of the Snake:**
 
-```plaintext
-    nx: current x coordinate of the snake head
-    ny: current y coordinate of the snake head
+```text
+nx: current x coordinate of the snake head
+ny: current y coordinate of the snake head
 
-    fx: x coordinate of the food
-    fy: y coordinate of the food
+fx: x coordinate of the food
+fy: y coordinate of the food
 
-    px: x coordinate of the poison
-    py: y coordinate of the poison
+px: x coordinate of the poison
+py: y coordinate of the poison
 
-    if [nx] matches with [fx] and if [ny] matches with [fy]:
-        push the new cell to the snake's tail node
-        shift the new cell from tail node to the head node
-        increment score + 1
+if [nx] matches with [fx] and if [ny] matches with [fy]:
+    push the new cell to the snake's tail node
+    shift the new cell from tail node to the head node
+    increment score + 1
 
-    if [nx] matches with [px] and if [ny] matches with [py]:
-        pop the cell from the tail node
-        shift cell from tail node to head node
-        decrement life - 1
+if [nx] matches with [px] and if [ny] matches with [py]:
+    pop the cell from the tail node
+    shift cell from tail node to head node
+    decrement life - 1
 ```
 
 **Collision of the Snake:**
 
-```plaintext
-    nx: current x coordinate of the snake head
-    ny: current y coordinate of the snake head
+```text
+nx: current x coordinate of the snake head
+ny: current y coordinate of the snake head
 
-    sx: x coordinate of the snake cell
-    sy: y coordinate of the snake cell
+sx: x coordinate of the snake cell
+sy: y coordinate of the snake cell
 
-    wx: x coordinate of the wall cell
-    wy: y coordinate of the wall cell
+wx: x coordinate of the wall cell
+wy: y coordinate of the wall cell
 
-    for cell in the wall array:
-        if [nx] matches with [wx] and if [ny] matches with [wy]:
-            display "game over" message
+for cell in the wall array:
+    if [nx] matches with [wx] and if [ny] matches with [wy]:
+        display "game over" message
 
-    for cell in the snake list:
-        if [nx] matches with [sx] and if [ny] matches with [sy]:
-            display "game over" message
+for cell in the snake list:
+    if [nx] matches with [sx] and if [ny] matches with [sy]:
+        display "game over" message
 ```
 
 Oh yeah, please feel free to study the source code of this game in order to understand how this game was implemented on Javascript.

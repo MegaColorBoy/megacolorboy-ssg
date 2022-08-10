@@ -11,11 +11,9 @@ summary: I built a sudoku solver using Javascript by implementing the Exhaustive
     <div id="sudokusolver"></div>
 </figure>
 
-Before you read about this article, try playing the Sudoku Solver above. You can only insert numbers ranging from 1 to 9 in any empty cell. Press ***"Random Level"*** to generate a random sudoku puzzle. Made a mistake? Press ***"Reset"*** to clear the board. To test the algorithm, Press ***"Solve"*** to complete the entire puzzle.
+Before you read about this article, try playing the Sudoku Solver above. You can only insert numbers ranging from 1 to 9 in any empty cell. Press <kbd>Random Level</kbd> to generate a random sudoku puzzle. Made a mistake? Press <kbd>Reset</kbd> to clear the board. To test the algorithm, Press <kbd>Solve</kbd> to complete the entire puzzle.
 
 As for the source code, you can view it in my [GitHub repository](https://www.github.com/megacolorboy) or can be found near the end of this article.
-
----
 
 ## What is Sudoku?
 Sudoku stems from the two Japanese words: "Su" and "doku", when translated to English, it means "single numbers only". Although, many people feel that Sudoku was invented by the Japanese, it was actually invented by an American named [Howard Garns](https://en.wikipedia.org/wiki/Howard_Garns) in 1979 under the name "Number Place" but died in 1989 before a Japanese publisher named [Nikoli](https://en.wikipedia.org/wiki/Nikoli_(publisher)) made it popular, renamed it as "Sudoku" and which of course, became mainstream in 1986.
@@ -42,115 +40,115 @@ Backtracking is an algorithmic technique used for searching every possible combi
 Imagine, you're playing chess with a friend and you've made a silly move, which prompts you to ask your friend: *"Hey, I made a mistake! Can I go back to my old move?"*, your friend (hopefully, a merciful one) would allow you to return back to your old move. So in this case, you'll return back to your old position and begin to restrategize your plans on how to take down the next pawn or maybe finally hatch your plot to trap your opponent's King (you evil person). If it fails, you can ask again but I don't think your friend would be dumb enough to give you another chance!
 
 **Here's a pseudocode on how this strategy would work:**
-```plaintext
-    Find [row,col] of an unassigned cell
-    If there is none, then return true
+```text
+Find [row,col] of an unassigned cell
+If there is none, then return true
 
-    For digits from 1 to 9
-        If there is no conflict for digit at [row,col]
-            Assign digit to [row,col] and recursively try to fill in the rest of the grid
-            If this recursion is successful, return true
-            Otherwise, remove this digit and try another one
-        If all digits have been tried for this cell and nothing worked out
-            return false, trigger backtracking and try again
+For digits from 1 to 9
+    If there is no conflict for digit at [row,col]
+        Assign digit to [row,col] and recursively try to fill in the rest of the grid
+        If this recursion is successful, return true
+        Otherwise, remove this digit and try another one
+    If all digits have been tried for this cell and nothing worked out
+        return false, trigger backtracking and try again
 ```
 
 **Javascript implementation:**
 ```js
-    //Sudoku solver 
-    function solveSudoku(grid, row, col) {
-        var cell = findUnassignedLocation(grid, row, col);
-        row = cell[0];
-        col = cell[1];
+//Sudoku solver 
+function solveSudoku(grid, row, col) {
+    var cell = findUnassignedLocation(grid, row, col);
+    row = cell[0];
+    col = cell[1];
 
-        // base case: if there's no empty cell  
-        if (row == -1) {
-            return true;
-        }
-
-        for (var num = 1; num <= 9; num++) {
-
-            if (noConflicts(grid, row, col, num)) {   
-                grid[row][col] = num;
-
-                if (solveSudoku(grid, row, col)) {                
-                    return true;
-                }
-
-                // mark cell as empty (with 0)    
-                grid[row][col] = 0;
-            }
-        }
-
-        // trigger back tracking
-        return false;
+    // base case: if there's no empty cell  
+    if (row == -1) {
+        return true;
     }
 
-    //Find an empty cell
-    function findUnassignedLocation(grid, row, col) {
-        var done = false;
-        var res = [-1, -1];
+    for (var num = 1; num <= 9; num++) {
 
-        while (!done) {
-            if (row == 9) {
+        if (noConflicts(grid, row, col, num)) {   
+            grid[row][col] = num;
+
+            if (solveSudoku(grid, row, col)) {                
+                return true;
+            }
+
+            // mark cell as empty (with 0)    
+            grid[row][col] = 0;
+        }
+    }
+
+    // trigger back tracking
+    return false;
+}
+
+//Find an empty cell
+function findUnassignedLocation(grid, row, col) {
+    var done = false;
+    var res = [-1, -1];
+
+    while (!done) {
+        if (row == 9) {
+            done = true;
+        }
+        else {
+            if (grid[row][col] == 0) {
+                res[0] = row;
+                res[1] = col;
                 done = true;
             }
             else {
-                if (grid[row][col] == 0) {
-                    res[0] = row;
-                    res[1] = col;
-                    done = true;
+                if (col < 8) {
+                    col++;
                 }
                 else {
-                    if (col < 8) {
-                        col++;
-                    }
-                    else {
-                        row++;
-                        col = 0;
-                    }
+                    row++;
+                    col = 0;
                 }
             }
         }
-
-        return res;
     }
 
-    //Check if there are any conflicts in row, column or 3x3 subgrid
-    function noConflicts(grid, row, col, num) {
-        return isRowOk(grid, row, num) && isColOk(grid, col, num) && isBoxOk(grid, row, col, num);
-    }
+    return res;
+}
 
-    //Check if this number is valid in this row
-    function isRowOk(grid, row, num) {
-        for (var col = 0; col < 9; col++)
-            if (grid[row][col] == num)
-                return false;
+//Check if there are any conflicts in row, column or 3x3 subgrid
+function noConflicts(grid, row, col, num) {
+    return isRowOk(grid, row, num) && isColOk(grid, col, num) && isBoxOk(grid, row, col, num);
+}
 
-        return true;
-    }
-
-    //Check if this number is valid in this column
-    function isColOk(grid, col, num) {
-        for (var row = 0; row < 9; row++)
+//Check if this number is valid in this row
+function isRowOk(grid, row, num) {
+    for (var col = 0; col < 9; col++)
         if (grid[row][col] == num)
             return false;
 
-        return true;    
-    }
+    return true;
+}
 
-    //check if this number is valid in 3x3 subgrid
-    function isBoxOk(grid, row, col, num) {
-        row = Math.floor(row / 3) * 3;
-        col = Math.floor(col / 3) * 3;
+//Check if this number is valid in this column
+function isColOk(grid, col, num) {
+    for (var row = 0; row < 9; row++)
+    if (grid[row][col] == num)
+        return false;
 
-        for (var r = 0; r < 3; r++)
-            for (var c = 0; c < 3; c++)
-                if (grid[row + r][col + c] == num)
-                    return false;
+    return true;    
+}
 
-        return true;
-    }
+//check if this number is valid in 3x3 subgrid
+function isBoxOk(grid, row, col, num) {
+    row = Math.floor(row / 3) * 3;
+    col = Math.floor(col / 3) * 3;
+
+    for (var r = 0; r < 3; r++)
+        for (var c = 0; c < 3; c++)
+            if (grid[row + r][col + c] == num)
+                return false;
+
+    return true;
+}
 ```
 
 ## What's next?

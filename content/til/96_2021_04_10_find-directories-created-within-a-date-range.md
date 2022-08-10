@@ -1,7 +1,7 @@
 title: Find directories created within a date range
 date: April 10th, 2021
 slug: find-directories-created-within-a-date-range
-category: Unix
+category: UNIX
 status: active
 
 Executing these commands helps me create a sorted list of files/directories created within a specific date range:

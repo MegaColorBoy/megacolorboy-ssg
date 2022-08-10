@@ -1,7 +1,7 @@
 title: View your wget progress even after closing your SSH session
 date: August 13th, 2021
 slug: view-your-wget-progress-even-after-closing-your-ssh-session
-category: DevOps
+category: DevOps + wget
 status: active
 
 Few days back, I ran a `wget` command to download a file and accidentally closed the SSH client.

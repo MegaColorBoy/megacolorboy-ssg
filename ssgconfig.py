@@ -77,22 +77,36 @@ sections = [
         'enable_listing': True,
         'enable_pagination': True,
         'show_in_recent_articles': True
+	},
+    {
+        'title': 'Blogmarks',
+        'url': '/blogmarks',
+        'content_directory': "blogmarks",
+        'seo': {
+            'title': "Blogmarks",
+            'description': "A collection of short write-ups on the things that I learn on a day-to-day basis."
+        },
+        'page_type': 'multiple',
+        'display_in_menu': False,
+        'enable_listing': True,
+        'enable_pagination': True,
+        'show_in_recent_articles': True
+    },
+	{
+		'title': 'Resume',
+		'url': '/resume',
+        'content_directory': "resume",
+        'data_type': 'json',
+        'seo': {
+            'title': "Resume",
+            'description': "My resume"
+        },
+        'page_type': 'custom',
+        'display_in_menu': True,
+        'template': {
+            'custom': "resume-v2.html"
+        }
 	}
-	# {
-	# 	'title': 'Resume',
-	# 	'url': '/resume',
- #        'content_directory': "resume",
- #        'data_type': 'json',
- #        'seo': {
- #            'title': "Resume",
- #            'description': "My resume"
- #        },
- #        'page_type': 'custom',
- #        'display_in_menu': False,
- #        'template': {
- #            'custom': "resume.html"
- #        }
-	# }
 ]
 
 

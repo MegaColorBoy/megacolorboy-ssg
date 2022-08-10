@@ -1,7 +1,7 @@
 title: How to perform mysqldump without a password prompt?
 date: April 10th, 2021
 slug: how-to-perform-mysqldump-without-a-password-prompt
-category: Unix
+category: UNIX
 status: active
 
 If you're performing a mass database backup using `mysqldump`, you'll pretty much find it annoying to type in the password every single time.
