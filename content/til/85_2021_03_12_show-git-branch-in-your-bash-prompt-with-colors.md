@@ -23,6 +23,18 @@ fi
 unset color_prompt force_color_prompt
 ```
 
+<div class="post-notification info">
+    <h3>Updated: November 26th, 2022</h3>
+    The above script works fine for Ubuntu but doesn't work fine on other distros. Here's an alternative one that works on all distros:
+```bash
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+export PS1="\u@\h \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]$ "
+```
+</div>
+
 Save the file and execute this command for your changes to take effect:
 ```bash
 source ~/.bashrc

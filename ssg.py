@@ -1,9 +1,14 @@
 """
 Author: Abdush Shakoor
 megacolorboy-ssg: A simple static site generator written in Python 3.10
-Updated on: 11-07-2022
+Updated on: 08-10-2022
 
 Version: 2.0
+"""
+
+
+"""
+TODO: Don't display categories if they are part of inactive posts
 """
 
 #!/usr/bin/env python3
@@ -133,30 +138,20 @@ def generate_json(section):
     with open(json_directory + section['content_directory'] + '.json', 'w') as file:
         json.dump(json_data, file)
     
-
-# TODO: Need to rewrite method for optimization
 # Generate RSS Feed in XML
-def generate_rss(section):
-    posts = section['posts']
+def generate_rss_feed(posts, path_to_generate):
 
-    post_url = "posts"
-
-    if not section['root']:
-        post_url = '/'.join([section['content_directory'], "posts"])
-
-    xml_directory = 'output/rss/'
-    create_directory(xml_directory)
+    create_directory(path_to_generate)
 
     xml_items = []
 
     for post in posts:
-        title = post['title']
-        link = '/'.join([site_config['url'], post_url, post['slug']])
-
-        date_raw = convert_to_raw_date(post['date'])
-        date = datetime.fromisoformat(date_raw).strftime("%a, %d %b %Y %X")
+        title = htmlentities.encode(post['title'])
+        link = post['link']
+        date = post['date']
+        # date_raw = post['date_raw']
                 
-        summary = post['summary']
+        summary = htmlentities.encode(post['summary']) if len(post['summary']) == 0 else title
 
         xml_items.append("""
             <item>
@@ -166,12 +161,12 @@ def generate_rss(section):
                 <pubDate>{date} GMT</pubDate>
                 <description>{summary}</description>
             </item>
-        """.format(title=htmlentities.encode(title), link=link, date=date, summary=htmlentities.encode(summary))
+        """.format(title=title, link=link, date=date, summary=summary)
         )
     
-    rss_title = ' | '.join([section['seo']['title'], site_config['name']])
-    rss_link = site_config['url'] if section['root'] else '/'.join([site_config['url'], section['content_directory']])
-    rss_description = section['seo']['description']
+    rss_title = htmlentities.encode(' | '.join(["Abdush Shakoor's Weblog", cfg.site['name']]))
+    rss_link = cfg.site['url']
+    rss_description = htmlentities.encode("Writings, experiments & ideas.")
 
     xml = """
       <?xml version="1.0" encoding="UTF-8"?>
@@ -184,10 +179,11 @@ def generate_rss(section):
             {items}
         </channel>
        </rss>
-    """.format(title=htmlentities.encode(rss_title), link=rss_link, description=htmlentities.encode(rss_description), items=''.join(xml_items).strip())
+    """.format(title=rss_title, link=rss_link, description=rss_description, items=''.join(xml_items).strip())
 
-    file_path = xml_directory + section['content_directory'] + '.xml'
+    file_path = path_to_generate +  '/rss.xml'
     write_to_file(file_path, xml.strip().encode('utf-8'))
+    typer.echo("RSS Feed Generated.")
 
 # Format date in YYYY-MM-DD
 def convert_to_raw_date(date_time_str: str):
@@ -247,7 +243,7 @@ def get_posts(content_directories = []):
                             # summary = post_content.metadata['summary'] if 'summary' in post_content.metadata else "".join(filter_text(extract_text(post_content)))
                             summary = post_content.metadata['summary'] if 'summary' in post_content.metadata else ""
                             reading_time = estimate_reading_time(post_content)
-
+                            preview_image_url = post_content.metadata['preview_image_url'] if 'preview_image_url' in post_content.metadata else ""
                             # Determine if the current section is a single post.
                             section = next((section for section in cfg.sections if 'content_directory' in section and section['content_directory'] == path.replace('content/', '')), None)
 
@@ -275,6 +271,7 @@ def get_posts(content_directories = []):
                                         'categories': categories,
                                         'summary': summary,
                                         'reading_time': reading_time,
+                                        'preview_image_url': preview_image_url,
                                         'filename': file_path,
                                         'status': status,
                                         'content': post_content,
@@ -298,7 +295,7 @@ def generate_index_with_paginator(section, posts_per_page):
     # Check if section has specified any template config to override default configuration.
     if section['page_type'] == 'main':
         template = env.get_template('main.html') 
-    elif 'template' in section:
+    elif 'template' in section and 'listing' in section['template']:
         template = env.get_template(section['template']['listing'])
 
     # Total number of posts per section
@@ -306,7 +303,7 @@ def generate_index_with_paginator(section, posts_per_page):
     
     # Number of pagination links to generate
     number_of_pages = int(total_number_of_posts / posts_per_page)
-
+    
     # Create a directory to store the pagination links (By default, it's root)
     root_directory = 'output/'
 
@@ -324,7 +321,7 @@ def generate_index_with_paginator(section, posts_per_page):
     it = iter(section['posts'])
     chunked_posts = list(iter(lambda: tuple(islice(it, posts_per_page)), ()))
 
-    for page_number in range(0, number_of_pages+1):
+    for page_number in range(0, number_of_pages):
         current_page_number = page_number + 1
         
         sub_directory = ''
@@ -349,9 +346,9 @@ def generate_index_with_paginator(section, posts_per_page):
             curr=current_page_number,
             prev=previous_page,
             next=next_page,
-            total=number_of_pages+1,
+            total=number_of_pages,
             directory = page_directory,
-            pagination_links = generate_pagination_links(page_directory, current_page_number, number_of_pages+1),
+            pagination_links = generate_pagination_links(page_directory, current_page_number, number_of_pages),
             page = {
                 'title': section['seo']['title'], 
                 'description': section['seo']['description']
@@ -667,6 +664,41 @@ def create():
         file.write(meta)
     
     typer.echo("Your file has been created: " + post_file_path)
+
+""" 
+Export all posts into JSON format
+Could come in handy, if im going to convert the website's stack using JS
+in the future.
+"""
+@app.command()
+def export_as_json():
+    global menu_config
+    global all_posts
+
+    menu_config = generate_menu()
+    all_posts = load_posts()
+    generate_categories()
+
+    json_data = {
+        'posts': []
+    }
+    
+    for post in all_posts:
+        json_data['posts'].append(post)
+    
+    json_directory = 'output/json/'
+    create_directory(json_directory)
+    
+    with open(json_directory + 'posts.json', 'w') as file:
+        json.dump(json_data, file)
+
+# Export all posts into RSS Feed XML format
+@app.command()
+def export_rss_feed():
+    global all_posts
+    all_posts = load_posts()
+    generate_rss_feed(all_posts, 'output')
+
 
 # Generate file path
 def generate_file_path(date, directory, slug):

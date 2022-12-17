@@ -92,6 +92,23 @@ sections = [
         'enable_pagination': True,
         'show_in_recent_articles': True
     },
+    {
+        'title': 'Travel',
+        'url': '/travel',
+        'content_directory': "travel",
+        'seo': {
+            'title': "Travel",
+            'description': "Sharing about my travel adventures."
+        },
+        'page_type': 'multiple',
+        'display_in_menu': False,
+        'template': {
+            'single': "travel-single.html",
+        },
+        'enable_listing': True,
+        'enable_pagination': True,
+        'show_in_recent_articles': True
+    },
 	{
 		'title': 'Resume',
 		'url': '/resume',
@@ -116,7 +133,7 @@ title: {title}
 date: {date}
 slug: {slug}
 category: {category}
-tags: your, tags, here
+preview_image_url: Place URL here.
 summary: Write your summary here.
 status: inactive
 
