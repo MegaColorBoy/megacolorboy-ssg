@@ -191,7 +191,7 @@ def convert_to_raw_date(date_time_str: str):
 
 # Get the index of the blog article
 def get_file_index(path):
-    return int(re.search("content\/\w+\/(\d+).*", path, re.IGNORECASE).group(1))
+    return int(re.search(r'content\/\w+\/(\d+).*', path, re.IGNORECASE).group(1))
 
 def json_decoder(json_dict):
     return namedtuple('X', json_dict.keys())(*json_dict.values())
@@ -770,7 +770,7 @@ def estimate_reading_time(content):
 # Extract text from HTML
 def extract_text(content):
     soup = BeautifulSoup(content, features='html.parser')
-    texts = soup.findAll(text=True)
+    texts = soup.findAll(string=True)
     return texts
 
 # Strip out CSS, JS, Scripts or any HTML Tags
