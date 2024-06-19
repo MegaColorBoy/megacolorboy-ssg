@@ -20,7 +20,8 @@ sections = [
         'title': 'Home',
         'url': '/',
         'seo': {
-            'title': "Abdush Shakoor's Weblog",
+            # 'title': "Abdush Shakoor's Weblog",
+            'title': "Home",
             'description': "Writings, experiments & ideas"
         },
         'page_type': 'main',

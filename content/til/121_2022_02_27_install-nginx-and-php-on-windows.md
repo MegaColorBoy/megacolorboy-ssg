@@ -72,7 +72,7 @@ Add the line `include "C:/nginx/sites-enabled/*.conf";` in your `nginx.conf` fil
 1. Go to `C:/nginx/sites-available` directory and create `example.com.conf`.
 2. Go to `C:/nginx/html` and create directory.
 2. Refer to the [sample configuration](#nginx-config) provided and make the necessary changes.
-3. To enable the site, you have to create a symlink: `mklink "C:\nginx\sites-available\example.com.conf" "C:\nginx\sites-enabled\example.com.conf"`.
+3. To enable the site, you have to create a symlink: `mklink "C:\nginx\sites-enabled\example.com.conf" "C:\nginx\sites-available\example.com.conf"`.
 4. Ensure the configuration doesn't have any errors by typing `nginx -t` in `C:/nginx` directory.
 5. Restart the NSSM service.
 6. Add an entry in your hosts file: `127.0.0.1 example.com`.

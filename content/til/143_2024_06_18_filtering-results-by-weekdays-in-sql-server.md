@@ -40,7 +40,7 @@ SELECT * FROM dbo.YourTable WHERE DATENAME(WEEKDAY, YourDateColumn) IN ('Monday'
 
 If you want to know more about filtering your records effectively using these methods, you can the read the documentation:
 
-- (DATENAME (Transact-SQL))[https://learn.microsoft.com/en-us/sql/t-sql/functions/datename-transact-sql?view=sql-server-ver16]
-- (DATEPART (Transact-SQL))[https://learn.microsoft.com/en-us/sql/t-sql/functions/datepart-transact-sql?view=sql-server-ver16]
+- [DATENAME (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/functions/datename-transact-sql?view=sql-server-ver16)
+- [DATEPART (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/functions/datepart-transact-sql?view=sql-server-ver16)
 
 Hope you found this tip useful!

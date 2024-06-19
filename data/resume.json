@@ -29,6 +29,9 @@
 			"date_to": "Ongoing",
 			"tech_used": [
 				"PHP",
+				"C#",
+				".NET Core",
+				"ABP Framework",
 				"JavaScript",
 				"AWS",
 				"Linux",
@@ -38,9 +41,11 @@
 				"Azure DevOps"
 			],
 			"bullets": [
-				"Writing server-side code, developing APIs, Linux server & Database administration & orchestrating deployments.",
-				"Currently working with various government entities such as Ministry of Cabinet Affairs, Ministry of Culture & Youth, Prime Minister's Office & etc.",
-				"Collaborating with UI/UX, Project Management & Stakeholders to improve project features."
+				"Delivered over 50+ web applications leveraging technologies such as PHP, C#, JavaScript, Laravel, .NET Core, ABP Framework, MySQL and Microsoft SQL Server.",
+				"Handles Linux server operations encompassing server hardening, file migrations, backups, server and database configuration and seamless deployments for minimal downtime.",
+				"Made vital contributions to high-profile government projects such as Federal Tax Authority, Ministry of Culture, Ministry of Cabinet Affairs and Ministry of Economy by consistently delivering secure, high-quality solutions with stringent timeframes.",
+				"Hands-on experience of setting up reliable systems and successfully deploying packages on AWS, Microsoft Azure, Windows Server and Linux servers with different flavours such as CentOS, Ubuntu and AMI Linux 2",
+				"Stay current with cutting-edge technologies, best practices, and methodologies, driving the delivery of innovative and effective solutions."
 			]
 		},
 		{
@@ -52,13 +57,16 @@
 			"tech_used": [
 				"PHP",
 				"JavaScript",
+				"C#",
+				"ASP.NET",
 				"MySQL"
 			],
 			"bullets": [
-				"Wrote backend & frontend code for the company's website.",
-				"Built custom tools for HR, Projects & Marketing team.",
-				"Learnt to write reusable UI components.",
-				"Mentored & trained 3 interns."
+				"Developed the company's website using PHP, JavaScript, SCSS and MySQL Server, contributing to its online presence and user engagement.",
+				"Played a key role in developing a Loyalty management application using ASP.NET and Microsoft SQL Server, enhancing customer engagement and retention.",
+				"Spearheaded the creation of customized dashboards and tools for critical departments, including Marketing, Projects, and HR, optimizing internal processes.",
+				"Elevated website visibility and performance through SEO enhancements and optimizations, resulting in improved user experience and higher search rankings.",
+				"Mentored and guided 3 interns, imparting best practices and enhancing their skills, while contributing to a collaborative and productive team environment."
 			]
 		},
 		{
@@ -109,6 +117,15 @@
 			]
 		},
 		{
+			"name": "Project Euler solutions",
+			"description": "Solving mathematical puzzles by writing optimized code.",
+			"tags": [
+				"JavaScript",
+				"C++",
+				"Python"
+			]
+		},
+		{
 			"name": "Space Invaders Generator",
 			"description": "Generates random & beautiful Space Invaders-esque patterns.",
 			"tags": [
@@ -147,6 +164,9 @@
 
 	"tech_professional": [
 		"PHP",
+		"C#",
+		".NET Core",
+		"ABP Framework",
 		"MySQL",
 		"SQL",
 		"Laravel",
@@ -183,6 +203,9 @@
 
 	"interests": [
 		"CTFs",
+		"Backend Development",
+		"Distributed Systems",
+		"Service-Oriented Architecture",
 		"Data Science",
 		"AI/ML",
 		"Computer Graphics",

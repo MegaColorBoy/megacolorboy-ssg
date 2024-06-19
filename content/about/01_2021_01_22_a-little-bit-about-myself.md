@@ -4,19 +4,25 @@ slug: about
 category: Introduction
 summary: Here's a not-so-formal kind of introduction about myself.
 
-Hello there! My name is Abdush Shakoor and I like problem solving and building stuff for fun!
-
-I'm a full stack software engineer living in Dubai, United Arab Emirates with a passion for Computer Science, Mathematics, Software Engineering, Digital Design and Technology.
-
 <!-- During the past years, I've done internships with various companies including Oracle Corporation, Dubai. Find out more about my career on my [LinkedIn](https://www.linkedin.com/in/abdush-shakoor-mohamed-nazeer-b5546546) profile. -->
 
 <!-- As of **October 2019**, I'm looking for **better opportunities** to expand my programming and skills, so if you're a recruiter/well-wisher and interested in me, send me an [email](mailto:abdushshakoor1992@hotmail.com) about it.
 
 My last job was at [Key Information Technology](https://www.kit.ae) in which I was building the company's website and productive tools for teams. Find out more about my career on my [LinkedIn](https://www.linkedin.com/in/abdush-shakoor-mohamed-nazeer-b5546546) profile. -->
 
+<!-- Oh, I'm also part of the Backend team that helped build [FarmsGate](https://www.farmsgate.com), an eCommerce platform for farmers that can sell and deliver fresh fruits and vegetables to your doorstep! -->
+
+Hello there! My name is Abdush Shakoor and I like problem solving and building stuff for fun!
+
+I'm a full stack software engineer with over 8+ years of professional experience. Currently, I'm living in Dubai, United Arab Emirates with a passion for Computer Science, Mathematics, Software Engineering, Digital Design and Technology.
+
+During my early days of my career, I was mostly focused on building websites and designing user interfaces. Later, I opted to specialize in backend development, security, distributed systems and service-oriented architecture using various technologies and programming languages (PHP, C#, JavaScript, Larvael, .NET Core, MySQL and Microsoft SQL Server).
+
+Also, I'm the type of guy who dabbles a lot with Linux, playing CTFs, configuring databases and servers, deployments and loves to live inside a terminal using with multiple split-windows in a single `tmux` session with different tabs.
+
 Currently, I work at [Planet Green Solutions](https://www.pgsuae.com) as a Backend Engineer who develops web applications for various clients that mostly comprises of various Government Entities of the United Arab Emirates.
 
-Oh, I'm also part of the Backend team that helped build [FarmsGate](https://www.farmsgate.com), an eCommerce platform for farmers that can sell and deliver fresh fruits and vegetables to your doorstep!
+Oh, do you have an idea that you're stuck with? Need help with deployments? Want to build an awesome system that implements strong security protocols and best practices? [Mail me about it](mailto:megacolorboy@gmail.com) and I'll check up on you!
 
 [Check out my resume to learn more about my work experiences and projects &rarr;](../resume/)
 
