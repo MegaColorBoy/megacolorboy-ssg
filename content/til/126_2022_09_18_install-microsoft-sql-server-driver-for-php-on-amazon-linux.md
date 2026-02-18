@@ -63,7 +63,7 @@ $connectionOptions = array(
 
 $conn = sqlsrv_connect($serverName, $connectionOptions);
 
-if($conn === false ) {
+if($conn) {
     print "Connected successfully."; 
 } else {
     print "Error while connecting to server.";

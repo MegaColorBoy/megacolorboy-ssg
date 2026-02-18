@@ -16,11 +16,11 @@ Hello there! My name is Abdush Shakoor and I like problem solving and building s
 
 I'm a full stack software engineer with over 8+ years of professional experience. Currently, I'm living in Dubai, United Arab Emirates with a passion for Computer Science, Mathematics, Software Engineering, Digital Design and Technology.
 
-During my early days of my career, I was mostly focused on building websites and designing user interfaces. Later, I opted to specialize in backend development, security, distributed systems and service-oriented architecture using various technologies and programming languages (PHP, C#, JavaScript, Larvael, .NET Core, MySQL and Microsoft SQL Server).
+During my early days of my career, I was mostly focused on building websites and designing user interfaces. Later, I opted to specialize in backend development, security, distributed systems and service-oriented architecture using various technologies and programming languages (PHP, C#, JavaScript, Laravel, .NET Core, MySQL and Microsoft SQL Server).
 
-Also, I'm the type of guy who dabbles a lot with Linux, playing CTFs, configuring databases and servers, deployments and loves to live inside a terminal using with multiple split-windows in a single `tmux` session with different tabs.
+Also, I'm the type of guy who dabbles a lot with Linux, playing CTFs, configuring databases and servers, deployments and loves to live inside a terminal with multiple split-windows in a single `tmux` session in different tabs.
 
-Currently, I work at [Planet Green Solutions](https://www.pgsuae.com) as a Backend Engineer who develops web applications for various clients that mostly comprises of various Government Entities of the United Arab Emirates.
+Currently, I work at [Planet Green Solutions](https://www.pgsuae.com) as a Senior Backend Engineer who develops web applications for various clients that mostly comprises of various Government Entities of the United Arab Emirates.
 
 Oh, do you have an idea that you're stuck with? Need help with deployments? Want to build an awesome system that implements strong security protocols and best practices? [Mail me about it](mailto:megacolorboy@gmail.com) and I'll check up on you!
 
@@ -49,12 +49,14 @@ My areas of interest includes but not limited to:
 + Programming Languages and Compilers
 + Distributed Systems
 + Mathematics
-+ UNIX Operating Systems
++ Linux/UNIX Operating Systems
 + Networking
 + Databases
 + Computer Security and Cryptography
++ Capture The Flag
 + Computer Graphics
 + Artificial Intelligence and Machine Learning
++ Data Science and Engineering
 + User Interface and Experience
 
 ## Books I read
@@ -75,5 +77,5 @@ My username in most places is <mark>@megacolorboy</mark>. This is where you can 
 + [Twitter](https://www.twitter.com/megacolorboy) &mdash; Come and Say Hi!
 + [GitHub](https://www.github.com/megacolorboy) &mdash; Code, Code and More Code
 + [Behance](https://www.behance.net/abdushshakoor) &mdash; Illustrations
-+ [Facebook](https://www.facebook.com/megacolorboy)
+<!-- + [Facebook](https://www.facebook.com/megacolorboy) -->
 + [StackOverflow](https://www.stackoverflow.com/users/6947884/megacolorboy)
